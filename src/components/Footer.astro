@@ -22,28 +22,9 @@ import { USER_NAME, USER_SITE, USER_FOOTER_SOCIAL_ICONS } from "@config";
       <p>
         Powered by <a href="https://github.com/EveSunMaple/Frosti" target="_blank" class="font-bold">Frosti Template</a>
         <br />
-        Copyright © <a href={USER_SITE} target="_blank" class="font-bold">{USER_NAME}</a>
-        {new Date().getFullYear()} - All right reserved
+        Copyright © <a href={USER_SITE} target="_blank" class="font-bold"> {new Date().getFullYear()} {USER_NAME}</a>
+         - All right reserved.
       </p>
     </aside>
-    <nav>
-      <span class="footer-title">Social</span>
-      <div class="grid grid-flow-col gap-4">
-        {
-          USER_FOOTER_SOCIAL_ICONS.map((icon) => (
-            <div class="tooltip" data-tip={icon.title}>
-              <a tabindex="0" href={icon.href} aria-label={icon.ariaLabel}>
-                <Icon name={icon.svg} class="text-2xl md:text-xl" />
-              </a>
-            </div>
-          ))
-        }
-        <div class="tooltip" data-tip="RSS Feed">
-          <a tabindex="0" href="/rss.xml" aria-label="RSS Feed">
-            <Icon name="ri:rss-line" class="text-2xl md:text-xl" />
-          </a>
-        </div>
-      </div>
-    </nav>
   </footer>
 </div>
