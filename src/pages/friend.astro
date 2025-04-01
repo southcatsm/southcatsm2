@@ -2,7 +2,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import BaseCard from '@/components/BaseCard.astro';
-import LinkCard from "@/components/mdx/LinkCard.astro";
 import FriendCard from "@/components/mdx/FriendCard.astro";
 ---
 
@@ -11,35 +10,62 @@ import FriendCard from "@/components/mdx/FriendCard.astro";
       <section>
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
           <Icon name="lucide:users" class="w-6 h-6 text-primary" />
-          <span>Contributors</span>
+          <span>Creators / 创建者</span>
         </h2>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <FriendCard
             name="Southcatsm"
             avatar="/profile.png"
             description="成事不足  败事有余"
             url="https://github.com/southcatsm"
-            type="friend"
+            type="tech"
           />
           <FriendCard
-            name="山田凉"
-            avatar="https://p2-pro.a.yximgs.com/uhead/AB/2025/02/23/15/BMjAyNTAyMjMxNTM4MTJfMzU2NDQ3Nzk0OV8yX2hkOTY5XzU5Mg==_s.jpg"
-            description="橘子不去想苹果的问题"
-            url="https://www.kuaishou.com/profile/3xd3ra98qks7e3u"
-            type="friend"
-          />
-          <FriendCard
-            name="CGYCCS-"
-            avatar="/cgyccs.jpg"
-            description="好生活"
-            url="https://space.bilibili.com/1658622019"
+            name="北兔"
+            avatar="/nya.jpg"
+            description="风乍起，合当奋意向人生"
+            url="https://github.com/northrabsl"
             type="friend"
           />
         </div>
       </section>
       <div class="divider my-8">
         <Icon name="lucide:heart" class="w-10 h-10 text-primary" />
+      </div>
+    </div>
+	
+    <div class="space-y-10">
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <Icon name="lucide:users" class="w-6 h-6 text-primary" />
+          <span>Contributors / 贡献者</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <FriendCard
+            name="我要骑玛玛"
+            avatar="http://q.qlogo.cn/headimg_dl?dst_uin=535531507&spec=640&img_type=jpg"
+            description="Nothing here～"
+            url=""
+            type="contributor"
+          />
+          <FriendCard
+            name="山田凉"
+            avatar="https://p2-pro.a.yximgs.com/uhead/AB/2025/02/23/15/BMjAyNTAyMjMxNTM4MTJfMzU2NDQ3Nzk0OV8yX2hkOTY5XzU5Mg==_s.jpg"
+            description="橘子不去想苹果的问题"
+            url="https://www.kuaishou.com/profile/3xd3ra98qks7e3u"
+            type="contributor"
+          />
+          <FriendCard
+            name="CGYCCS-"
+            avatar="/cgyccs.jpg"
+            description="好生活"
+            url="https://space.bilibili.com/1658622019"
+            type="contributor"
+          />
+        </div>
+      </section>
+      <div class="divider my-8">
+        <Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
       </div>
     </div>
 </BaseLayout>
