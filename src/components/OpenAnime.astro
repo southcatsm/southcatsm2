@@ -22,9 +22,22 @@ import { SITE_THEME } from "@config";
 
 <script is:inline>
 	document.addEventListener("astro:page-load", () => {
+	function isMobile() {
+	    const userAgentInfo = navigator.userAgent;
+	    const mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+	     const mobileFlag = mobileAgents.some((mobileAgent) => {
+	        return userAgentInfo.indexOf(mobileAgent) > 0;
+	    });
+	
+	    return mobileFlag;
+	}
 	const crt = document.documentElement.getAttribute("data-theme");
     const overlay = document.querySelector('.overlay');
     const text = document.querySelector('.halo-text');
+	//true-pe false-pc
+	if(isMobile()){
+		text.style.fontSize="2em";
+	}
 	//dark-dracula light-winter
 	if(crt=="dracula"){
 		overlay.style.background="#000000";
