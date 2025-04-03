@@ -1,12 +1,16 @@
 ---
+import OpenAnime from "@/components/OpenAnime.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import LinkCard from "@/components/mdx/LinkCard.astro";
 ---
 
 <BaseLayout title="主页">
+	<div class="overlay">
+		<div class="halo-text">Southcatsm's Blogs</div>
+	</div>
+	<OpenAnime/>
     <div class="space-y-8">
-      <!-- Hero Section -->
       <section class="py-6">
         <div class="flex flex-col items-center text-center">
           <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -17,41 +21,47 @@ import LinkCard from "@/components/mdx/LinkCard.astro";
           </p>
         </div>
       </section>
-
-      <!-- Features Section -->
+	  
       <section class="py-6">
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
           <Icon name="lucide:sparkles" class="w-6 h-6 text-primary" />
           <span>快捷导航</span>
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <LinkCard
-            title="Blogs"
+            title="博客"
             desc="琐碎即浪漫  点滴皆珍贵"
-            url="https://demo3.southcat.cc/blogs"
+            url="/blog"
             img="/about.png"
+			target="_self"
           />
 		 
           <LinkCard
             title="关于"
             desc="了解Southcatsm"
-            url="https://demo3.southcat.cc/about"
+            url="/about"
             img="/acco.jpg"
+			target="_self"
           />
           <LinkCard
             title="作品"
             desc="千奇百怪的东西"
-            url="https://demo3.southcat.cc/project"
+            url="/project"
             img="/code.png"
+			target="_self"
           />
           <LinkCard
             title="联系"
             desc="欢迎五湖四海的朋友"
-            url="https://demo3.southcat.cc/friend"
+            url="/friend"
             img="/linkc.png"
+			target="_self"
           />
         </div>
-
       </section>
+	  <div class="divider my-8">
+	    <Icon name="lucide:house-plus" class="w-10 h-10 text-primary" />
+	  </div>
     </div>
 </BaseLayout>
+	

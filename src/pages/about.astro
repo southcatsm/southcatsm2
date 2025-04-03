@@ -16,8 +16,7 @@ import MainCard from "@/components/MainCard.astro";
 	</style>
 	<MainCard title="了解Southcatsm">
 		<div class="space-y-10 mb-8">
-		      <!-- Profile Section -->
-			  <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+			  <h3 class="text-2xl font-bold mb-6 flex items-center gap-2" id="heading-1">
 			    <Icon name="lucide:file" class="w-6 h-6 text-primary" />
 			    <span>生平事迹</span>
 			  </h3>
@@ -39,12 +38,12 @@ import MainCard from "@/components/MainCard.astro";
 				  </p>
 				  <Collapse title="说实在话，一路走来也挺坎坷的...">
 				    <p class="text-xl text-base-content/50 mb-4">
-						对于我来说，其实建站这个概念最初在2021年就有了，甚至21年09月我就注册了<strong>Github</strong>，就用着<strong>Github</strong>那种仓库名后加<strong>
-						github.io</strong>的方式建立了自己的网站。可凡是用过<strong>Github</strong>的人都知道，大部分情况下想要正常访问<strong>ta</strong>就不得不科学上网。
+						对于我来说，其实建站这个概念最初在2021年就有了，甚至21年09月我就注册了<strong>Github</strong>，就用着那种仓库名后加<strong>github.io</strong>的方式建立了自己的网站。可凡是用过的人都知道，大部分情况下想要正常访问之就不得不科学上网。
 						<br/>于是又过了两年我决定开始物色国内的服务器商，结果发现了一个残酷的事实：贵就算了，甚至还要备案！（没那实力）<br/>
 						后来有人推荐了<strong>Cloudflare</strong>给我，发现这家还是不错的，于是在23年09月正式购买了这个域名（<strong>southcat.cc</strong>）<s>一年才50几块
-						也就4杯奶茶这种 谁不要谁傻子</s>。<br/>
-						当时就已经建好了，只不过因为技术不精湛做得也只是一般般。后来因学业问题和一些不可控因素鸽了2年，直到现在，真好笑o(*￣︶￣*)o。
+						谁不要谁傻子</s>。<br/>
+						当时就已经建好了，只不过因为技术不精湛做得也只是一般般。后来因学业问题和一些不可控因素鸽了2年，直到现在，真好笑o(*￣︶￣*)o。<br/>
+						温馨提示：本站建站时间以2021年09月起计算。不要问为什么，<s>因为双枪会给出答案</s>。
 					</p>
 				  </Collapse>
 				  
@@ -131,5 +130,8 @@ import MainCard from "@/components/MainCard.astro";
 		        </div>
 		      </section>
 		    </div>
+			<div class="divider my-8">
+			  <Icon name="lucide:file-user" class="w-10 h-10 text-primary" />
+			</div
     </MainCard>
 </BaseLayout>

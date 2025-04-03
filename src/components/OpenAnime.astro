@@ -1,0 +1,62 @@
+---
+import { SITE_THEME } from "@config";
+---
+<style is:global>
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(128, 128, 128, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  .halo-text {
+    font-size: 4em;
+    color: white;
+  }
+</style>
+
+<script is:inline>
+	document.addEventListener("astro:page-load", () => {
+	const crt = document.documentElement.getAttribute("data-theme");
+    const overlay = document.querySelector('.overlay');
+    const text = document.querySelector('.halo-text');
+	//dark-dracula light-winter
+	if(crt=="dracula"){
+		overlay.style.background="#000000";
+	}
+	else if(crt=="winter"){
+		overlay.style.background="#FFFFFF";
+		text.style.color="black";
+	}
+    text.animate([
+      { transform: 'scale(0)', opacity: 0 },
+      { transform: 'scale(1)', opacity: 1 }
+    ], {
+      duration: 1000,
+      easing: 'ease'
+    });
+    setTimeout(() => {
+      text.animate([
+        { transform: 'translateY(0)', opacity: 1 },
+        { transform: 'translateY(-50px)', opacity: 0 }
+      ], {
+        duration: 500,
+        easing: 'ease'
+      });
+    }, 1500);
+    setTimeout(() => {
+      overlay.animate([
+        { opacity: 1 },
+        { opacity: 0 }
+      ], {
+        duration: 500,
+        easing: 'ease'
+      }).onfinish = () => overlay.remove();
+    }, 1550);
+	});
+</script>

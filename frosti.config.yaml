@@ -1,7 +1,7 @@
 # 网站的基本信息
 site:
   tab: Southcatsm 
-  title: scsm 
+  title: southcatsm's blog 
   description: southcatsm的个人网站 
   language: zh 
   favicon: /favicon.ico 
@@ -54,7 +54,7 @@ site:
       target: _self
     - id: contact
       text: 联系
-      href: "mailto:contact.archie26@qq.com"
+      href: "mailto:archie26@qq.com"
       target: _blank 
       svg: "material-symbols:attach-email-outline-rounded"
 
