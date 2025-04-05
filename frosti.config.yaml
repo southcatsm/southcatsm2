@@ -9,7 +9,7 @@ site:
     light: winter 
     dark: dracula 
     code: github-dark
-  date_format: MMM DD YYYY
+  date_format: YYYY MM DD 
   menu:
     - id: home 
       text: 主页 
@@ -64,7 +64,7 @@ user:
   avatar: /profile.png 
   sidebar: 
     social:
-      - href: "https://afdian.com/a/saroprock" #
+      - href: "/donate" 
         ariaLabel: Support my work 
         title: 赞助一手 
         svg: "ri:cup-line"
@@ -82,9 +82,9 @@ user:
         svg: "ri:twitter-line"
   footer:
     social:
-      - href: "https://afdian.com/a/saroprock"
+      - href: "/donate"
         ariaLabel: Support my work 
-        title: Support my work
+        title: Support
         svg: "ri:cup-line"
       - href: "https://github.com/southcatsm"
         ariaLabel: Github

@@ -1,0 +1,61 @@
+---
+
+---
+<style>
+	.typewriter {
+	    font-family: 'Courier New', monospace;
+	    font-size: 24px;
+	    padding: 20px;
+	}
+	
+	#display-text {
+		color: #38A0CF;
+	}
+	
+	.cursor {
+	    position: absolute;
+	    right: -3px;
+	    height: 1em;
+	    width: 2px;
+	    background: #FFFFFF;
+	    animation: blink 0.5s step-end infinite;
+	}
+	@keyframes blink {
+	    0%, 100% { opacity: 0; }
+	    50% { opacity: 1; }
+	}
+</style>
+<script>
+	class TypeWriter {
+	    constructor(selector, text, speed = 100) {
+	        this.element = document.querySelector(selector);
+	        this.text = text;
+	        this.speed = speed;
+	        this.index = 0;
+	        this.isDeleting = false;
+	    }
+	    type() {
+			const currentText = (this.text).substring(0, this.index);
+	        this.element.textContent = currentText;
+	                
+	        if (!this.isDeleting) {
+	            this.index++;
+	            if (this.index > this.text.length) {
+	                this.isDeleting = true;
+	                setTimeout(() => this.type(), 1000);
+	                return;
+	                }
+	            }
+	
+	            setTimeout(() => this.type(), this.speed);
+	    }
+	    start() {
+	        setTimeout(() => this.type(), 200);
+	    }
+	}
+	var response = await fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c').then((response) => response.json());
+	window.addEventListener('openAnimationComplete', () => {
+	    const tw = new TypeWriter('#display-text', response['hitokoto']);
+	    tw.start();
+	});
+</script>

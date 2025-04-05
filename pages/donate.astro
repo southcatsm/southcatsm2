@@ -1,0 +1,17 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+---
+
+<BaseLayout title="赞助">
+  <MainCard title="感谢各位义父!">
+	<div class="grid grid-cols-2 gap-2">
+		<img src="/wechat.jpg"/>
+		<img src="/alipay.jpg" width="828px" height="1128px"/>
+	</div>
+	<div class="divider my-8">
+	  <Icon name="lucide:dollar-sign" class="w-10 h-10 text-primary" />
+	</div>
+  </MainCard>
+</BaseLayout>

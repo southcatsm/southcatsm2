@@ -1,0 +1,135 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import Collapse from "@/components/mdx/Collapse.astro";
+import GitHubStats from "@/components/mdx/GitHubStats.astro";
+import MainCard from "@/components/MainCard.astro";
+---
+
+<BaseLayout title="关于">
+	<style>
+		.delt{
+			text-decoration:line-through;
+			text-decoration-color:yellow;
+			font-style:italic;
+		}
+	</style>
+	<MainCard title="了解笔者">
+		<div class="space-y-10 mb-8">
+			  <h3 class="text-2xl font-bold mb-6 flex items-center gap-2" id="heading-1">
+			    <Icon name="lucide:file" class="w-6 h-6 text-primary" />
+			    <span>生平事迹</span>
+			  </h3>
+		      <section class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+		        <div class="flex-1 text-center md:text-left">
+		          <h1 class="text-3xl md:text-4xl font-bold mb-2">南猫咸莫 / Southcatsm</h1>
+		          <p class="text-xl text-base-content/80 mb-4">一位热爱编程的中学生</p>
+				  <hr/>
+				  <br/>
+				  <p class="text-xl text-base-content/70 mb-6">
+					  目前就读于广西南宁。<br/>
+					  事实证明，笔者的爱好大部分都是三分钟热度，刚提起兴趣没多久就不了了之了，只有编程、摄影还有一些其他的爱好幸存，似乎更倾向于得过且过。<br/>
+					  笔者小的时候就对电子设备很感兴趣，<a class="delt">曾经非常热心地给外公手机设密码结果乱打了128位然后就不幸的忘记了...</a><br/>
+					  读三年级时，有一天玩游戏玩着玩着脑抽突然发愤图强：要做一个像样的游戏！恰好笔者英语很好，于是就阴差阳错的踏入了编程这条路。记得第一次接触的是<strong>Scratch</strong>，
+					  后来又偶然接触到了<strong>Python</strong>，再后来又接触到了<strong>WER</strong>、<strong>C++</strong>和<strong>Java......</strong><s>(过程不再赘述)</s>。<br/>
+					  之后有一次上网，看见别人的网页又炫炸天又萌萌哒，于是又双发愤图强：做一个自己的网站！于是这个网站就这么水灵灵的做出来了...<br/>
+					  总之，生活还要继续呢，未来顺水推舟就好！
+				  </p>
+				  <Collapse title="说实在话，一路走来也挺坎坷的...">
+				    <p class="text-xl text-base-content/50 mb-4">
+						对于笔者来说，其实建站这个概念最初在2021年就有了，甚至21年09月笔者就注册了<strong>Github</strong>，就用着那种仓库名后加<strong>github.io</strong>的方式建立了自己的网站。可凡是用过的人都知道，大部分情况下想要正常访问之就不得不科学上网。
+						<br/>于是又过了两年决定开始物色国内的服务器商，结果发现了一个残酷的事实：贵就算了，甚至还要备案！（没那实力）<br/>
+						后来有人推荐了<strong>Cloudflare</strong>给笔者，发现这家还是不错的，于是在23年09月正式购买了这个域名（<strong>southcat.cc</strong>）<s>一年才50几块
+						谁不要谁傻子</s>。<br/>
+						当时就已经建好了，只不过因为技术不精湛做得也只是一般般。后来因学业问题和一些不可控因素鸽了2年，直到现在，唉o(*￣︶￣*)o。<br/>
+						注：本站建站时间以2021年09月起计算。不要问为什么，<s>因为双枪会给出答案</s>。
+					</p>
+				  </Collapse>
+		        </div>
+		      </section>
+			  
+			  <section>
+			    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+			      <Icon name="lucide:code-2" class="w-6 h-6 text-primary" />
+			      <span>都会点啥</span>
+			    </h2>
+			  
+			    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+			      {
+			        [
+			          { name: "JavaScript", icon: "simple-icons:javascript", color: "oklch(0.8 0.2 80)" },
+			          { name: "Scratch", icon: "simple-icons:scratch", color: "oklch(0.6 0.2 220)" },
+			          { name: "HTML5", icon: "simple-icons:html5", color: "oklch(0.7 0.2 30)" },
+			          { name: "Java", icon: "lucide:coffee", color: "oklch(0.7 0.2 30)" },
+			          { name: "C++", icon: "simple-icons:cplusplus", color: "oklch(0.6 0.2 240)" },
+			          { name: "Python", icon: "simple-icons:python", color: "oklch(0.7 0.2 250)" },
+			        ].map((tech) => (
+			          <div class="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
+			            <div class="text-3xl mb-2" style={`color: ${tech.color}`}>
+			              <Icon name={tech.icon} class="w-10 h-10" />
+			            </div>
+			            <span class="text-sm font-medium">{tech.name}</span>
+			          </div>
+			        ))
+			      }
+			    </div>
+			  </section>
+			  
+		      <section>
+		        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+		          <Icon name="lucide:github" class="w-6 h-6 text-primary" />
+		          <span>Github当前状态</span>
+		        </h2>
+		        <GitHubStats username="southcatsm" showLanguages={false} showCommitGraph={true} />
+		      </section>
+			  
+		      <section>
+		        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+		          <Icon name="lucide:activity" class="w-6 h-6 text-primary" />
+		          <span>近期活动</span>
+		        </h2>
+		
+		        <div class="bg-base-200 rounded-xl p-6 overflow-x-auto">
+		          <div class="flex flex-col md:flex-row gap-8 md:gap-4 md:overflow-x-auto md:pb-2">
+		            {
+		              [
+		                {
+		                  date: "2025年03月",
+		                  title: "网站重组（正在进行中）",
+		                  desc: "由于原来的网站风格≈鸟屎，便去万能的互联网抄了点作业...",
+		                },
+		                {
+		                  date: "2024年04月",
+		                  title: "基本功能完成",
+		                  desc: "加入访问计数、接入CAPTCHA、搞了一些“新奇”的玩意...",
+		                },
+		                {
+		                  date: "2023年09月",
+		                  title: "正式建站",
+		                  desc: "southcat.cc正式建站啦！(*^▽^*)",
+		                },
+		              ].map((item, i) => (
+		                <div class="relative flex gap-4 pb-2 md:pb-0 md:min-w-[250px]">
+		                  <div class="flex flex-col items-center">
+		                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-content text-xl">
+		                      {i + 1}
+		                    </div>
+		                    <div class="w-0.5 h-16 bg-base-300 mt-2 md:hidden" />
+		                  </div>
+		                  <div>
+		                    <div class="text-sm text-base-content/60 mb-1">{item.date}</div>
+		                    <h3 class="text-lg font-bold">{item.title}</h3>
+		                    <p class="text-base-content/80 mt-1">{item.desc}</p>
+		                  </div>
+		                </div>
+		              ))
+		            }
+		          </div>
+		        </div>
+		      </section>
+		    </div>
+			<div class="divider my-8">
+			  <Icon name="lucide:file-user" class="w-10 h-10 text-primary" />
+			</div
+    </MainCard>
+</BaseLayout>
