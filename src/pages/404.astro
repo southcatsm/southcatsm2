@@ -7,12 +7,11 @@ import MainCard from "@/components/MainCard.astro";
 
 <BaseLayout title="404">
   <MainCard
-    title={t("label.404title") || "Page Not Found"}
-    description={t("label.404description") ||
-      "Looks like you've ventured into the unknown. The page you're looking for doesn't exist or has been moved to another dimension."}
-    textOverlay="404"
+    title="页面被小怪兽吞啦!"
+    textOverlay="404Error"
     infoIcon="lucide:help-circle"
   >
+	<h1>看起来您已经进入了未知领域。您查找的页面不存在或已被转移到另一个维度。</h1>
     <div class="flex flex-col sm:flex-row gap-4 justify-center my-8">
       <a href="/" class="btn btn-primary gap-2 btn-shine-effect">
         <Icon name="lucide:home" class="w-5 h-5" />

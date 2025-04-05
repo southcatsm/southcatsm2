@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
+import Collapse from "@/components/mdx/Collapse.astro";
 ---
 
 <BaseLayout title="作品">
@@ -17,9 +18,14 @@ import MainCard from "@/components/MainCard.astro";
             [
               {
                 project: "随机ACG图片",
-                description: "看看就好，别乱传哦♪(･ω･)ﾉ",
+                description: "看看就好，别乱传哦♪(･ω･)ﾉ（当前库存110多张）",
                 url: "https://api-rps.southcat.cc/",
               },
+			  {
+			    project: "随机名言",
+			    description: "随机查看一句经典话语，详情可查看博客内的帮助文档。",
+			    url: "https://api-rdoc.southcat.cc/",
+			  },
             ].map((contrib) => (
               <li class="flex items-start gap-4">
                 <div class="flex-shrink-0 bg-base-300 p-2 rounded-full">
@@ -47,48 +53,50 @@ import MainCard from "@/components/MainCard.astro";
 	  <br/>
 	  <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
 	    <Icon name="lucide:link-2" class="w-6 h-6 text-primary" />
-	    <span>其他东西</span>
+	    <span>特色文化</span>
 	  </h2>
-	  <div class="card bg-base-200 p-6">
-	    <ul class="space-y-6">
-	      {
-	        [
-	          {
-	            project: "登dua郎 - I",
-	            description: "同标题，未成年人严禁进入，违者后果自负！",
-	            url: "https://southcat.cc/ct",
-	          },
-			  {
-			    project: "登dua郎 - II",
-			    description: "同标题，未成年人严禁进入，违者后果自负！",
-			    url: "https://southcat.cc/latenightvd",
-			  },
-	        ].map((contrib) => (
-	          <li class="flex items-start gap-4">
-	            <div class="flex-shrink-0 bg-base-300 p-2 rounded-full">
-	              <Icon name="lucide:line-chart" class="w-6 h-6 text-primary" />
-	            </div>
-	            <div>
-	              <h3 class="text-lg font-bold">
-	                <a
-	                  href={contrib.url}
-	                  target="_blank"
-	                  rel="noopener noreferrer"
-	                  class="hover:text-primary transition-colors flex items-center gap-1"
-	                >
-	                  {contrib.project}
-	                  <Icon name="lucide:external-link" class="w-4 h-4" />
-	                </a>
-	              </h3>
-	              <p class="text-base-content/80">{contrib.description}</p>
-	            </div>
-	          </li>
-	        ))
-	      }
-	    </ul>
-	  </div>
+	  <Collapse title="登dua郎系列">
+		  <div class="card bg-base-200 p-6">
+		    <ul class="space-y-6">
+		      {
+		        [
+		          {
+		            project: "I",
+		            description: "同标题，未成年人严禁进入，违者后果自负！",
+		            url: "https://southcat.cc/ct",
+		          },
+		  			  {
+		  			    project: "II",
+		  			    description: "同上",
+		  			    url: "https://southcat.cc/latenightvd",
+		  			  },
+		        ].map((contrib) => (
+		          <li class="flex items-start gap-4">
+		            <div class="flex-shrink-0 bg-base-300 p-2 rounded-full">
+		              <Icon name="lucide:line-chart" class="w-6 h-6 text-primary" />
+		            </div>
+		            <div>
+		              <h3 class="text-lg font-bold">
+		                <a
+		                  href={contrib.url}
+		                  target="_blank"
+		                  rel="noopener noreferrer"
+		                  class="hover:text-primary transition-colors flex items-center gap-1"
+		                >
+		                  {contrib.project}
+		                  <Icon name="lucide:external-link" class="w-4 h-4" />
+		                </a>
+		              </h3>
+		              <p class="text-base-content/80">{contrib.description}</p>
+		            </div>
+		          </li>
+		        ))
+		      }
+		    </ul>
+		  </div>
+	  </Collapse>
 	  <div class="divider my-8">
-	    <strong>未完待续</strong>
+	    <strong>To Be Continued...</strong>
 	  </div>
     </section>
 	

@@ -3,6 +3,8 @@ import OpenAnime from "@/components/OpenAnime.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import LinkCard from "@/components/mdx/LinkCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+import TypeWriting from "@/components/TypeWriting.astro";
 ---
 
 <BaseLayout title="主页">
@@ -14,15 +16,17 @@ import LinkCard from "@/components/mdx/LinkCard.astro";
       <section class="py-6">
         <div class="flex flex-col items-center text-center">
           <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            🌟 欢迎访问southcatsm的网站！
+            🌟 欢迎访问southcatsm的博客！
           </h1>
-          <p class="text-xl text-base-content/80 max-w-3xl mb-8">
-            浩瀚网络世界，感恩与您相遇于此。
-          </p>
+          <p class="text-xl text-base-content/80 max-w-3xl mb-8" id="display-text"></p>
         </div>
       </section>
-	  
+	  <TypeWriting />
       <section class="py-6">
+		  <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+		    <Icon name="lucide:chart-network" class="w-6 h-6 text-primary" />
+		    <span>浩瀚网络世界，感恩与您相遇于此。</span>
+		  </h2>
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
           <Icon name="lucide:sparkles" class="w-6 h-6 text-primary" />
           <span>快捷导航</span>
@@ -30,7 +34,7 @@ import LinkCard from "@/components/mdx/LinkCard.astro";
         <div class="grid grid-cols-2 gap-4">
           <LinkCard
             title="博客"
-            desc="琐碎即浪漫  点滴皆珍贵"
+            desc="点滴琐碎皆浪漫"
             url="/blog"
             img="/about.png"
 			target="_self"
@@ -40,7 +44,7 @@ import LinkCard from "@/components/mdx/LinkCard.astro";
             title="关于"
             desc="了解Southcatsm"
             url="/about"
-            img="/acco.jpg"
+            img="/acco.png"
 			target="_self"
           />
           <LinkCard
