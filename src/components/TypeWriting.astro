@@ -27,32 +27,43 @@
 </style>
 <script>
 	class TypeWriter {
-	    constructor(selector, text, speed = 100) {
-	        this.element = document.querySelector(selector);
-	        this.text = text;
-	        this.speed = speed;
-	        this.index = 0;
-	        this.isDeleting = false;
-	    }
-	    type() {
-			const currentText = (this.text).substring(0, this.index);
-	        this.element.textContent = currentText;
-	                
-	        if (!this.isDeleting) {
-	            this.index++;
-	            if (this.index > this.text.length) {
-	                this.isDeleting = true;
-	                setTimeout(() => this.type(), 1000);
-	                return;
-	                }
-	            }
-	
-	            setTimeout(() => this.type(), this.speed);
-	    }
-	    start() {
-	        setTimeout(() => this.type(), 200);
-	    }
-	}
+    // 类型声明（核心修复）
+    element: HTMLElement | null;
+    text: string;
+    speed: number;
+    index: number;
+    isDeleting: boolean;
+
+    constructor(selector: string, text: string, speed: number = 100) {
+        this.element = document.querySelector(selector);
+        this.text = text;
+        this.speed = speed;
+        this.index = 0;
+        this.isDeleting = false;
+    }
+
+    type() {
+        if (!this.element) return;
+        
+        const currentText = this.text.substring(0, this.index);
+        this.element.textContent = currentText;
+        
+        if (!this.isDeleting) {
+            this.index++;
+            if (this.index > this.text.length) {
+                this.isDeleting = true;
+                setTimeout(() => this.type(), 1000);
+                return;
+            }
+        }
+
+        setTimeout(() => this.type(), this.speed);
+    }
+
+    start() {
+        setTimeout(() => this.type(), 200);
+    }
+}
 	var response = await fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c').then((response) => response.json());
 	window.addEventListener('openAnimationComplete', () => {
 	    const tw = new TypeWriter('#display-text', response['hitokoto']);
