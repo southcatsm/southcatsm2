@@ -20,36 +20,35 @@ import { USER_NAME, USER_SITE, USER_FOOTER_SOCIAL_ICONS } from "@config";
   </footer>
 </div>
 <script>
-//window.onload=function()
-		function runtime(){
-			var second,minute,hour,day,month,year,n,start,diff,a,b,c,A,B,C,D;
-			n = new Date;
-			start = new Date("09/24/2021 23:24:39");
-			diff = (n.getTime()-start.getTime());
-			year = n.getFullYear();
-			month = n.getMonth() + 1;
-			day = n.getDate();
-			hour = n.getHours();
-			minute = n.getMinutes();
-			second = n.getSeconds();
-			a = diff/(24*60*60*1000);
-			A = Math.floor(a);
-			b = (a-A)*24;
-			B = Math.floor(b);
-			c = (b-B)*60;
-			C = Math.floor((b-B)*60);
-			D = Math.floor((c-C)*60);					
-			if(second<10)second='0'+second;
-			if(minute<10)minute='0'+minute;
-			if(day<10)day='0'+day;
-			if(month<10)month='0'+month;
-			if(hour<10)hour='0' + hour;
-			if(B<10)B='0'+B;
-			if(C<10)C='0'+C;
-			if(D<10)D='0'+D;
-			document.getElementById("running").innerHTML = "本博客已在风雨中漂泊了"+A+"日"+B+"时"+C+"分"+D+"秒";
-			setTimeout(runtime,1000);
-		};
-		runtime();
+    function runtime() {
+        const start = new Date("2021-09-24T23:24:39");
+        
+        const update = () => {
+            const now = new Date();
+            const diff = now.getTime() - start.getTime();
+            
+            // 安全获取元素
+            const runningElement = document.getElementById("running");
+            if (!runningElement) return; // 空值检查
+            
+            // 时间计算优化
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
+            // 格式化显示
+            runningElement.innerHTML = `本博客已在风雨中漂泊了${
+                days.toString().padStart(3, ' ')}日${
+                hours.toString().padStart(2, '0')}时${
+                minutes.toString().padStart(2, '0')}分${
+                seconds.toString().padStart(2, '0')}秒`;
+        };
+
+        update();
+        setTimeout(runtime, 1000);
+    }
+
+    // DOM加载后执行
+    document.addEventListener('DOMContentLoaded', runtime);
 </script>
