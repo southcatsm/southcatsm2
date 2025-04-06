@@ -20,9 +20,9 @@ import { USER_NAME, USER_SITE, USER_FOOTER_SOCIAL_ICONS } from "@config";
   </footer>
 </div>
 <script>
-	window.onload=function(){
+//window.onload=function()
 		function runtime(){
-			var second,minute,hour,day,month,year,n,clockcolor,start,diff,a,b,c,d,A,B,C,D;
+			var second,minute,hour,day,month,year,n,start,diff,a,b,c,A,B,C,D;
 			n = new Date;
 			start = new Date("09/24/2021 23:24:39");
 			diff = (n.getTime()-start.getTime());
@@ -51,5 +51,5 @@ import { USER_NAME, USER_SITE, USER_FOOTER_SOCIAL_ICONS } from "@config";
 			setTimeout(runtime,1000);
 		};
 		runtime();
-	}
+
 </script>
