@@ -9,7 +9,7 @@ tags:
   - Cloudflare
 ---
 import BaseCard from "@/components/BaseCard.astro";
-import Card from "@/components/temple/Card.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
 
 ## 前言
 
@@ -24,9 +24,106 @@ import Card from "@/components/temple/Card.astro";
 工欲善其事，必先利其器。你需要准备以下东西：
 
 - 一个Cloudflare账户
-- Alist应用（PC）
-- 你的小图片
+- 你的精选图片
 
-## Step 1: 创建API，获取令牌
+## 云台开山立柜府 秘钥生成定乾坤
 
-打开<a target="_blank" href="https://dash.cloudflare.com">Cloudflare仪表板</a>。
+打开Cloudflare仪表板→R2对象存储→创建储存桶（**如下图所示**）
+
+![](/image/20250315-01.png)
+
+> 储存桶的名称你可随意填写，能辨别即可，笔者在此以api-rps为例
+
+> 位置**建议**调整为**亚太地区**（*毕竟访问的大半来自大陆...*）
+
+完毕后，返回R2主页，然后如下图操作：点击API→管理API令牌（蓝圈示意）
+
+![](/image/20250315-02.png)
+
+点击“创建API令牌”（蓝色箭头示意）
+
+![](/image/20250315-03.png)
+
+然后就是这样的：
+
+![](/image/20250315-04.png)
+
+> 令牌名称你可随意填写，能辨别即可，笔者在此以api-rps为例
+
+> 权限选择对象读和写即可
+
+> 指定储存桶按需调整
+
+> 其他的设置就不需要调整了
+
+点击完成，你便会进入这个页面：
+<font color="red" size="4">
+千万注意，这个页面暂且不要关闭！这些密钥只会显示一次！一旦关掉就得推翻重来！
+</font>
+
+![](/image/20250315-05.png)
+
+
+## 下载宝器布妙策 巧设玄机待东风
+
+首先，你需要下载一个Alist.exe
+
+<BaseCard>
+<strong>Alist官网：<a target="_blank" href="https://github.com/AlistGo/alist">Github</a></strong>
+<br/>
+<strong>当然，你也可从笔者的分享链接快速下载：<a target="_blank" href="https://cloud.189.cn/web/share?code=NzEr6vNBJ7fe">天翼云盘（访问码：ha5j）</a></strong>
+</BaseCard>
+
+下载好后跳转至Alist.exe所在的目录
+
+按住<Kbd>Shift</Kbd>的同时右键，点击：**在此处打开PowerShell窗口**
+
+在Powershell中键入以下代码：
+
+```powershell
+./alist.exe server
+```
+
+当Powershell的反馈如下时，这就对了
+
+此时，在浏览器访问 localhost:5244 或 127.0.0.1:5244 或 0.0.0.0:5244
+
+![](/image/20250315-06.png)
+
+在登录界面，用户名填写**admin**，密码则是上图第六行，Successfully created the admin user and the initial password is 后面跟着的那一串字符
+
+> 这个密码是随机的，每个人都不一样，不要问为什么填笔者示图的这个密码不对...
+
+登录完毕后，你应该会进入这个页面：
+
+![](/image/20250315-07.png)
+
+点击下方的*管理*，进入这个页面：
+
+![](/image/20250315-08.png)
+
+推荐在这里改一个你熟悉的密码，方便之后登录
+
+然后点击存储→添加，在驱动中选择**对象存储**
+
+<BaseCard>
+<strong>
+I.挂载路径填写一个<Kbd>/</Kbd>即可<br/>
+II.存储桶名称填写你之前所填写的<br/>
+III.Endpoint填写...特定的终结点下方的链接（以cloudflarestorage.com结尾的）<br/>
+IV.地区填写<Kbd>auto</Kbd><br/>
+V.访问密钥ID和安全访问密钥就照着复制就好（注：安全访问密钥=机密访问密钥）<br/>
+VI.其他的设置就不用理它们了
+</strong>
+</BaseCard>
+你最终填写的差不多是这个样子的：
+
+![](/image/20250315-09.png)
+
+下滑，点击添加即可
+
+## 祭旗启程催战鼓 密令入符化龙吟
+
+## 献珍宝图安天下 功成饮马笑江湖
+
+## 后记
