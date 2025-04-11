@@ -2,18 +2,20 @@
 title: 图床自由？保姆级教程，轻松实现！
 description: 【保姆级】Alist + Cloudflare-R2/Worker助你轻松实现图床自由！
 pubDate: 2025 03 15
+updated: 2025 04 11
 image: /image/20250315.jpg
 categories:
   - tech
 tags:
   - Cloudflare
+  - API
 ---
 import BaseCard from "@/components/BaseCard.astro";
 import Kbd from "@/components/mdx/Kbd.astro";
 
 ## 前言
 
-看着别人的随机图床，你是否心动了呢？
+看着别人的网站刷一次新就能跳出不同的美图，你是否心动了呢？
 
 心动不如行动，现在就开始吧！
 
@@ -28,11 +30,11 @@ import Kbd from "@/components/mdx/Kbd.astro";
 
 ## 云台开山立柜府 秘钥生成定乾坤
 
-打开Cloudflare仪表板→R2对象存储→创建储存桶（**如下图所示**）
+打开Cloudflare仪表板→R2对象存储→创建存储桶（**如下图所示**）
 
 ![](/image/20250315-01.png)
 
-> 储存桶的名称你可随意填写，能辨别即可，笔者在此以api-rps为例
+> 存储桶名称你可随意填写，能辨别即可，笔者在此以api-rps为例
 
 > 位置**建议**调整为**亚太地区**（*毕竟访问的大半来自大陆...*）
 
@@ -52,9 +54,7 @@ import Kbd from "@/components/mdx/Kbd.astro";
 
 > 权限选择对象读和写即可
 
-> 指定储存桶按需调整
-
-> 其他的设置就不需要调整了
+> 其他的设置按需调整
 
 点击完成，你便会进入这个页面：
 <font color="red" size="4">
@@ -71,7 +71,7 @@ import Kbd from "@/components/mdx/Kbd.astro";
 <BaseCard>
 <strong>Alist官网：<a target="_blank" href="https://github.com/AlistGo/alist">Github</a></strong>
 <br/>
-<strong>当然，你也可从笔者的分享链接快速下载：<a target="_blank" href="https://cloud.189.cn/web/share?code=NzEr6vNBJ7fe">天翼云盘（访问码：ha5j）</a></strong>
+<strong>当然，你也可从笔者朋友的分享链接快速下载：<a target="_blank" href="https://cloud.189.cn/web/share?code=NzEr6vNBJ7fe">天翼云盘（访问码：ha5j）</a></strong>
 </BaseCard>
 
 下载好后跳转至Alist.exe所在的目录
@@ -110,7 +110,7 @@ import Kbd from "@/components/mdx/Kbd.astro";
 <strong>
 I.挂载路径填写一个<Kbd>/</Kbd>即可<br/>
 II.存储桶名称填写你之前所填写的<br/>
-III.Endpoint填写...特定的终结点下方的链接（以cloudflarestorage.com结尾的）<br/>
+III.Endpoint填写S3终结点下方的链接（以cloudflarestorage.com结尾的）<br/>
 IV.地区填写<Kbd>auto</Kbd><br/>
 V.访问密钥ID和安全访问密钥就照着复制就好（注：安全访问密钥=机密访问密钥）<br/>
 VI.其他的设置就不用理它们了
@@ -124,6 +124,96 @@ VI.其他的设置就不用理它们了
 
 ## 祭旗启程催战鼓 密令入符化龙吟
 
+打开Cloudflare仪表板→Workers和Pages→创建（**如下图所示**）
+
+![](/image/20250315-10.png)
+
+进入页面只管点击蓝框蓝字的**Hello world**，然后你应该进入这个页面：
+
+![](/image/20250315-11.png)
+
+> 名称你可随意填写，能辨别即可，笔者在此以api-rps为例
+
+下滑，点击部署，然后部署成功页面点击“地球”右上的**编辑代码**按钮
+
+进入页面后，删光原有代码，然后粘贴以下代码：
+
+```javascript
+export default {
+  async fetch(request, env, ctx) {
+    const bucket = env.randompic;
+    try {
+      const objects = await bucket.list({ prefix: 'img/' });
+      const items = objects.objects;
+      if (items.length === 0) {
+        return new Response('No Images Found', { status: 404 });
+      }
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      const object = await bucket.get(randomItem.key);
+      if (!object) {
+        return new Response('Image Not Found', { status: 404 });
+      }
+      const headers = new Headers();
+      headers.set('Content-Type', object.httpMetadata.contentType || 'image/jpeg');
+      return new Response(object.body, { headers });
+    } catch (error) {
+      return new Response('Internal Server Error', { status: 500 });
+    }
+  },
+};
+```
+
+第三行，<Kbd>randompic</Kbd>你可随机修改，能辨别即可，其他不动
+
+完毕后点击右上角的部署，当网页下方弹出绿色的*版本已保存*就行了
+
+打开Cloudflare仪表板→Workers和Pages→*你的存储桶*→设置（**如下图所示**）
+
+![](/image/20250315-12.png)
+
+在**绑定**一行，点击添加，选择R2存储桶
+
+变量名称填写之前代码中的<Kbd>randompic</Kbd>（若你已做改动则填写你修改过后的）
+
+存储桶名称填写之前的<Kbd>api-rps</Kbd>（这是笔者的示范，你应该填写你自己的）
+
+完成后点击**部署**即可
+
 ## 献珍宝图安天下 功成饮马笑江湖
 
+在浏览器访问 localhost:5244 或 127.0.0.1:5244 或 0.0.0.0:5244
+
+进入页面，点击右下角的三个点→第三个图标（中间有个加号的）（**如下图所示**）
+
+![](/image/20250315-13.png)
+
+新建文件夹，命名为<Kbd>img</Kbd>，然后打开该文件夹
+
+接下来，上传你的精选图片！（以下是笔者的示范用图）
+
+![](/image/20250315-14.png)
+
+打开Cloudflare仪表板→Workers和Pages→*你的存储桶*→设置（**如下图所示**）
+
+![](/image/20250315-15.png)
+
+看到域和路由，将**workers.dev**后面跟着的那一串链接（以workers.dev结尾的）复制，然后拉出去访问
+
+最终效果如下图示：
+
+![](/image/20250315-16.png)
+
+![](/image/20250315-17.png)
+
+<Kbd>当然啦，建议绑定一个托管在CF上的域名，否则有的时候拿着这个workers.dev可能会出bug。。。</Kbd>
+
 ## 后记
+
+笔者在作品页面也有说到过，目前库存110多张，后续会进行添加的
+
+但是呢，为了防止某些~~不怀好意的人~~偷偷举报上去后，笔者就得不偿失了
+
+所以这些图片都是笔者进行挑选的！
+
+如果后续你还存疑，欢迎下方评论，或联系笔者！
+

@@ -1,0 +1,222 @@
+---
+import MainCard from "@/components/MainCard.astro";
+
+export interface TurnPicsProps {
+  images: Array<{
+    src: string;
+    title?: string;
+    description?: string;
+  }>;
+  interval?: number;
+  controls?: boolean;
+}
+
+const { images, interval = 5000, controls = true } = Astro.props;
+const initialIndex = 0;
+const normalizedImages = images.map(img => ({
+  ...img,
+  width: img.width || 1200,
+  height: img.height || 675
+}));
+---
+
+<div class="carousel-container relative group">
+  <div class="carousel-track flex h-full">
+    {normalizedImages.map((img, index) => (
+      <div 
+        class="carousel-item w-full h-full flex-shrink-0 relative"
+        style={`transform: translateX(-${initialIndex * 100}%);`}
+      >
+        <MainCard
+          title={img.title || ""}
+          image={img.src}
+          description={img.description}
+          extraClasses="h-full"
+          headerClass="!absolute inset-0"
+        >
+          <div 
+            class="absolute inset-0 w-full h-full" 
+            slot="children" 
+            style="pointer-events: none;"
+          >
+            <img
+              src={img.src}
+              alt={img.title}
+              width={img.width}
+              height={img.height}
+              class="w-full h-full object-cover object-center"
+              loading="lazy"
+            />
+          </div>
+        </MainCard>
+      </div>
+    ))}
+  </div>
+
+  {controls && (
+    <div class="carousel-controls">
+      <button 
+        class="absolute left-4 top-1/2 -translate-y-1/2 btn btn-circle w-10 h-10 backdrop-blur-sm
+               opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110
+               bg-black/30 hover:bg-black/50 border-white/30 text-white shadow-lg"
+        id="prevBtn"
+        aria-label="上一张"
+      >
+        ←
+      </button>
+      <button
+        class="absolute right-4 top-1/2 -translate-y-1/2 btn btn-circle w-10 h-10 backdrop-blur-sm
+               opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110
+               bg-black/30 hover:bg-black/50 border-white/30 text-white shadow-lg"
+        id="nextBtn"
+        aria-label="下一张"
+      >
+        →
+      </button>
+    </div>
+  )}
+
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+    {images.map((_, index) => (
+      <button
+        class="indicator w-3 h-3 rounded-full bg-white/30 transition-all duration-300
+               hover:scale-125 hover:bg-white/60 [&.active]:w-6 [&.active]:bg-white/90"
+        data-index={index}
+        aria-label={`跳转到第 ${index + 1} 张`}
+      ></button>
+    ))}
+  </div>
+  <div class="carousel-container relative group" data-interval={interval}>
+
+<script>
+class Carousel {
+  constructor(container) {
+    this.container = container;
+    this.track = container.querySelector('.carousel-track');
+    this.items = [...container.querySelectorAll('.carousel-item')];
+    this.indicators = [...container.querySelectorAll('.indicator')];
+    this.currentIndex = 0;
+    this.intervalDuration = parseInt(container.dataset.interval) || 5000;
+
+    // 绑定方法上下文
+    this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
+    this.handleIndicatorClick = this.handleIndicatorClick.bind(this);
+    
+    this.init();
+  }
+
+  init() {
+    const { container } = this;
+    
+    // 按钮事件绑定
+    container.querySelector('#prevBtn')?.addEventListener('click', this.prev);
+    container.querySelector('#nextBtn')?.addEventListener('click', this.next);
+    
+    // 指示器事件绑定
+    this.indicators.forEach(indicator => {
+      indicator.addEventListener('click', this.handleIndicatorClick);
+    });
+
+    // 自动播放
+    if (this.intervalDuration > 0) {
+      this.startAutoPlay();
+      container.addEventListener('mouseenter', this.clearAutoPlay);
+      container.addEventListener('mouseleave', this.startAutoPlay);
+    }
+
+    // 初始化高亮
+    this.update();
+  }
+
+  handleIndicatorClick(e) {
+    const index = Number(e.currentTarget.dataset.index);
+    this.goto(index);
+  }
+
+  startAutoPlay() {
+    this.clearAutoPlay();
+    this.interval = setInterval(this.next, this.intervalDuration);
+  }
+
+  clearAutoPlay() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+
+  update() {
+    // 平滑过渡
+    this.track.style.transition = 'transform 0.6s cubic-bezier(0.33, 1, 0.68, 1)';
+    this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+
+    // 更新指示器
+    this.indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === this.currentIndex);
+    });
+  }
+
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.items.length;
+    this.update();
+  }
+
+  prev() {
+    this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+    this.update();
+  }
+
+  goto(index) {
+    if (index >= 0 && index < this.items.length) {
+      this.currentIndex = index;
+      this.update();
+    }
+  }
+}
+
+document.addEventListener('astro:page-load', () => {
+  document.querySelectorAll('.carousel-container').forEach(container => {
+    new Carousel(container);
+  });
+});
+</script>
+
+<style>
+.carousel-container {
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16/9;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+}
+
+:global(.carousel-item) {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+:global(.carousel-item .aspect-video) {
+  height: 100% !important;
+  padding-bottom: 0 !important;
+}
+
+:global(.carousel-item img) {
+  object-position: center center !important;
+}
+
+/* 按钮悬停动画 */
+.btn-circle {
+  transition-property: opacity, transform, background-color;
+  transition-duration: 0.3s;
+  transform-origin: center;
+}
+
+/* 指示器动画 */
+.indicator {
+  transition-property: width, background-color, transform;
+  cursor: pointer;
+}
+</style>
+</div>

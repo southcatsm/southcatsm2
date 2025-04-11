@@ -4,6 +4,24 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import LinkCard from "@/components/mdx/LinkCard.astro"
 import TypeWriting from "@/components/TypeWriting.astro";
+import TurnPics from "@/components/TurnPics.astro";
+const carouselImages = [
+  {
+    src: "/about.png",
+    title: "第一张图片",
+    description: "这是第一张轮播图的说明"
+  },
+  {
+    src: "/image/20250226.jpg",
+    title: "第二张图片",
+    description: "这是第二张轮播图的说明"
+  },
+  {
+    src: "/image/20250315.jpg",
+    title: "第三张图片",
+    description: "这是第三张轮播图的说明"
+  }
+];
 ---
 
 <BaseLayout title="主页">
@@ -18,13 +36,20 @@ import TypeWriting from "@/components/TypeWriting.astro";
 					🌟 欢迎访问southcatsm的博客！
 				</h1>
 				<p class="text-xl text-base-content/80 max-w-3xl mb-8" id="display-text"></p>
-			</div>
+			</div>		
+			<TurnPics 
+			  images={carouselImages} 
+			  interval={1000}
+			  controls={true}
+			  class="max-w-4xl mx-auto" <!-- 新增容器约束 -->
+			/>
 		</section>
 		<TypeWriting />
+
 		<section class="py-6">
 			<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
 				<Icon name="lucide:chart-network" class="w-6 h-6 text-primary" />
-				<span>浩瀚网络世界，感恩与您相遇于此。</span>
+				<span>浩瀚网络世界，感恩与您相遇于此</span>
 			</h2>
 			<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
 				<Icon name="lucide:sparkles" class="w-6 h-6 text-primary" />
