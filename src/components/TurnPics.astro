@@ -89,16 +89,38 @@ const normalizedImages = images.map(img => ({
   <div class="carousel-container relative group" data-interval={interval}>
 
 <script>
-class Carousel {
-  constructor(container) {
-    this.container = container;
-    this.track = container.querySelector('.carousel-track');
-    this.items = [...container.querySelectorAll('.carousel-item')];
-    this.indicators = [...container.querySelectorAll('.indicator')];
-    this.currentIndex = 0;
-    this.intervalDuration = parseInt(container.dataset.interval) || 5000;
+interface CarouselElement extends HTMLElement {
+  dataset: {
+    interval?: string;
+  };
+}
 
-    // 绑定方法上下文
+class Carousel {
+  // 1. 显式声明类属性类型
+  private container: CarouselElement;
+  private track: HTMLElement;
+  private items: HTMLElement[];
+  private indicators: HTMLElement[];
+  private currentIndex: number;
+  private intervalDuration: number;
+  private interval: number | null;
+
+  constructor(container: CarouselElement) {
+    // 2. 类型安全初始化
+    this.container = container;
+    this.track = container.querySelector('.carousel-track') as HTMLElement;
+    this.items = Array.from(container.querySelectorAll('.carousel-item')) as HTMLElement[];
+    this.indicators = Array.from(container.querySelectorAll('.indicator')) as HTMLElement[];
+    this.currentIndex = 0;
+    this.interval = null;
+    
+    // 3. 安全的interval处理
+    const intervalValue = container.dataset.interval;
+    this.intervalDuration = intervalValue 
+      ? Math.max(1000, parseInt(intervalValue, 10))
+      : 5000;
+
+    // 4. 绑定方法上下文
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.handleIndicatorClick = this.handleIndicatorClick.bind(this);
@@ -106,66 +128,65 @@ class Carousel {
     this.init();
   }
 
-  init() {
-    const { container } = this;
+  private init(): void {
+    // 5. 安全的事件监听器绑定
+    const prevBtn = this.container.querySelector('#prevBtn') as HTMLButtonElement | null;
+    const nextBtn = this.container.querySelector('#nextBtn') as HTMLButtonElement | null;
+
+    prevBtn?.addEventListener('click', this.prev);
+    nextBtn?.addEventListener('click', this.next);
     
-    // 按钮事件绑定
-    container.querySelector('#prevBtn')?.addEventListener('click', this.prev);
-    container.querySelector('#nextBtn')?.addEventListener('click', this.next);
-    
-    // 指示器事件绑定
     this.indicators.forEach(indicator => {
       indicator.addEventListener('click', this.handleIndicatorClick);
     });
 
-    // 自动播放
     if (this.intervalDuration > 0) {
       this.startAutoPlay();
-      container.addEventListener('mouseenter', this.clearAutoPlay);
-      container.addEventListener('mouseleave', this.startAutoPlay);
+      this.container.addEventListener('mouseenter', this.clearAutoPlay);
+      this.container.addEventListener('mouseleave', this.startAutoPlay);
     }
 
-    // 初始化高亮
     this.update();
   }
 
-  handleIndicatorClick(e) {
-    const index = Number(e.currentTarget.dataset.index);
+  private handleIndicatorClick(e: MouseEvent): void {
+    const target = e.currentTarget as HTMLElement;
+    const index = Number(target.dataset.index);
     this.goto(index);
   }
 
-  startAutoPlay() {
+  private startAutoPlay(): void {
     this.clearAutoPlay();
-    this.interval = setInterval(this.next, this.intervalDuration);
+    this.interval = window.setInterval(this.next, this.intervalDuration);
   }
 
-  clearAutoPlay() {
-    clearInterval(this.interval);
-    this.interval = null;
+  private clearAutoPlay(): void {
+    if (this.interval) {
+      window.clearInterval(this.interval);
+      this.interval = null;
+    }
   }
 
-  update() {
-    // 平滑过渡
+  private update(): void {
     this.track.style.transition = 'transform 0.6s cubic-bezier(0.33, 1, 0.68, 1)';
     this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
 
-    // 更新指示器
     this.indicators.forEach((indicator, i) => {
       indicator.classList.toggle('active', i === this.currentIndex);
     });
   }
 
-  next() {
+  private next(): void {
     this.currentIndex = (this.currentIndex + 1) % this.items.length;
     this.update();
   }
 
-  prev() {
+  private prev(): void {
     this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
     this.update();
   }
 
-  goto(index) {
+  private goto(index: number): void {
     if (index >= 0 && index < this.items.length) {
       this.currentIndex = index;
       this.update();
@@ -175,7 +196,7 @@ class Carousel {
 
 document.addEventListener('astro:page-load', () => {
   document.querySelectorAll('.carousel-container').forEach(container => {
-    new Carousel(container);
+    new Carousel(container as CarouselElement);
   });
 });
 </script>
