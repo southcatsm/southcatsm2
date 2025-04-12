@@ -37,12 +37,6 @@ const carouselImages = [
 				</h1>
 				<p class="text-xl text-base-content/80 max-w-3xl mb-8" id="display-text"></p>
 			</div>		
-			<TurnPics 
-			  images={carouselImages} 
-			  interval={1000}
-			  controls={true}
-			  class="max-w-4xl mx-auto" <!-- 新增容器约束 -->
-			/>
 		</section>
 		<TypeWriting />
 
@@ -89,6 +83,12 @@ const carouselImages = [
 				/>
 			</div>
 		</section>
+		<TurnPics
+		  images={carouselImages} 
+		  interval={6000}
+		  controls={true}
+		  class="max-w-4xl mx-auto" <!-- 新增容器约束 -->
+		/>
 		<div class="divider my-8">
 			<Icon name="lucide:house-plus" class="w-10 h-10 text-primary" />
 		</div>
