@@ -1,5 +1,12 @@
 
-//<script>
+function Color(){
+	const hexChars = '0123456789ABCDEF';
+	let color = '';
+	for (let i = 0; i < 6; i++) {
+		color += hexChars[Math.floor(Math.random() * 16)];
+	}
+	return `#${color}`;
+}
 class StarEffect {
     constructor(x, y) {
         this.stars = [];
@@ -10,7 +17,7 @@ class StarEffect {
                 left: x + 'px',
                 top: y + 'px',
                 position: 'fixed',
-                color: '#FFD700',
+                color: Color(),
                 pointerEvents: 'none',
                 fontSize: '18px',
                 opacity: 1
@@ -54,4 +61,3 @@ class StarEffect {
 document.addEventListener('click', (e) => {
     new StarEffect(e.clientX, e.clientY);
 });
-//</script>

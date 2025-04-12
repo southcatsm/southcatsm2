@@ -64,7 +64,7 @@
         setTimeout(() => this.type(), 200);
     }
 }
-	var response = await fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c').then((response) => response.json());
+	var response = await fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c&c=i&c=d').then((response) => response.json());
 	window.addEventListener('openAnimationComplete', () => {
 	    const tw = new TypeWriter('#display-text', response['hitokoto']);
 	    tw.start();

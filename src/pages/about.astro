@@ -54,7 +54,7 @@ import MainCard from "@/components/MainCard.astro";
 					<span>都会点啥</span>
 			    </h2>
 			  
-			    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+			    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
 					{
 						[
 							{ name: "JavaScript", icon: "simple-icons:javascript", color: "oklch(0.8 0.2 80)" },
@@ -63,6 +63,8 @@ import MainCard from "@/components/MainCard.astro";
 							{ name: "Java", icon: "lucide:coffee", color: "oklch(0.7 0.2 30)" },
 							{ name: "C++", icon: "simple-icons:cplusplus", color: "oklch(0.6 0.2 240)" },
 							{ name: "Python", icon: "simple-icons:python", color: "oklch(0.7 0.2 250)" },
+							{ name: "Typescript", icon: "simple-icons:typescript", color: "oklch(0.7 0.2 240)" },
+							{ name: "Unity", icon: "simple-icons:unity", color: "oklch(0.7 0.2 210)" },
 						].map((tech) => (
 							<div class="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
 								<div class="text-3xl mb-2" style={`color: ${tech.color}`}>

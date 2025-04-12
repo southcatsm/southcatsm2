@@ -22,6 +22,7 @@ const { title, image, headings = [], showTOC = false } = Astro.props;
     <Header description={SITE_DESCRIPTION} favicon={SITE_FAVICON} image={image} />
     <title>{`${title} - ${SITE_TAB}`}</title>
 	<script src="../components/ClickEffect.js"></script>
+	
     <!-- Initial theme setup on first load -->
     <script define:vars={{ SITE_THEME }} is:inline>
       (function () {
@@ -147,5 +148,6 @@ const { title, image, headings = [], showTOC = false } = Astro.props;
         }
       }
     </style>
+	<script src="../components/autoload.js"></script>
   </body>
 </html>
