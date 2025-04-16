@@ -170,8 +170,8 @@ button:hover {
 
     function seededRandom(seed) {
       return function () {
-        seed = (seed * 9301 + 49297) % 233280;
-        return seed / 233280;
+        seed = (seed * 9301 + 49297) % 114514;
+        return seed / 114514;
       };
     }
 
