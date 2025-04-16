@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>魅魔 - Southcatsm</title>
+  <link rel=’dns-prefetch’ href=’//cdn.jsdelivr.net’ />
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/img/favicon.ico"/>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0d0f1d;
+      --text-color: #fff;
+      --neon-pink: #ff00cc;
+      --neon-blue: #00ffff;
+      --neon-green: #66ff66;
+      --card-bg: #181c2bcc;
+      --input-bg: #1c1f30ee;
+      --font-main: 'ZCOOL KuaiLe', cursive;
+    }
+body.light {
+  --bg-color: #e8faff;
+  --text-color: #222;
+  --neon-pink: #d53b8a;
+  --neon-blue: #217dff;
+  --neon-green: #3bbd3b;
+  --card-bg: #ffffffdd;
+  --input-bg: #f0f0f0dd;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-main), sans-serif;
+  transition: background 0.6s, color 0.6s;
+  overflow-x: hidden;
+}
+
+header {
+  text-align: center;
+  padding: 2em 1em 1em;
+  font-size: 2em;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-blue);
+  letter-spacing: 0.1em;
+  animation: flicker 1.2s infinite alternate;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 1.5em;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+input[type="text"] {
+  width: 60%;
+  padding: 1em;
+  border: none;
+  border-radius: 12px;
+  background: var(--input-bg);
+  font-size: 1.1em;
+  color: var(--neon-blue);
+  text-shadow: 0 0 6px var(--neon-blue);
+  box-shadow: inset 0 0 5px var(--neon-blue);
+  animation: pulseInput 2s infinite;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 12px var(--neon-pink);
+}
+
+button {
+  padding: 1em 1.5em;
+  border: none;
+  border-radius: 10px;
+  background: var(--neon-pink);
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: var(--neon-blue);
+}
+
+.result-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5em;
+  border: 2px solid var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green), inset 0 0 10px var(--neon-blue);
+  animation: fadeInUp 0.8s ease;
+}
+
+.result-card p {
+  font-size: 1.2em;
+  margin: 0.6em 0;
+  line-height: 1.5;
+  text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.mode-toggle {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  background: transparent;
+  border: 2px solid var(--neon-green);
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  color: var(--neon-green);
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.mode-toggle:hover {
+  background: var(--neon-green);
+  color: black;
+}
+
+@keyframes flicker {
+  from { opacity: 0.8; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseInput {
+  0% { box-shadow: inset 0 0 5px var(--neon-blue); }
+  50% { box-shadow: inset 0 0 15px var(--neon-blue); }
+  100% { box-shadow: inset 0 0 5px var(--neon-blue); }
+  }
+      </style>
+</head>
+<body>
+  <button class="mode-toggle" onclick="toggleMode()">切换日夜</button>
+  <header>名字占卜 - Southcatsm</header>
+  <div class="container">
+    <div class="search-box">
+      <input id="nameInput" type="text" placeholder="请输入名字..." />
+      <button onclick="runDivination()">生成！</button>
+    </div>
+    <div id="result" class="result-card" style="display:none;"></div>
+  </div>
+  <script>
+    function hashStringToInt(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = (hash << 5) - hash + name.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash);
+    }
+
+    function seededRandom(seed) {
+      return function () {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      };
+    }
+
+    const genders = ['男', '女', '双性', '无性'];
+    const categories = ['宅家系', '魔王系', '性感系', '冷淡系', '神秘系', '活泼系', '可爱系', '憨憨系'];
+    const hairColors = ['酒红色', '白毛', '蓝发', '粉色', '金发', '绿色', '灰蓝色', '紫罗兰'];
+    const tags = ['口交', '足交', '乳交', '自慰', '捆绑', '肛交', 'SM'];
+    const abilities = ['接受任意尺寸插入', '随时发情', '体液可催淫', '随时释放荷尔蒙', '精神控制', '化身榨精能人'];
+    const cupSizes = 'ABCDEFGHIJKLMNOPQ'.split('');
+
+    function getCupSize(bust) {
+      const index = Math.min(Math.floor((bust - 70) / 2), cupSizes.length - 1);
+      return cupSizes[Math.max(0, index)];
+    }
+
+    function format(n, precision = 1) {
+      return Math.floor(n * Math.pow(10, precision)) / Math.pow(10, precision);
+    }
+
+    function divine(name) {
+      const baseSeed = hashStringToInt(name);
+      const rand = seededRandom(baseSeed);
+
+      const gender = genders[Math.floor(rand() * genders.length)];
+      const category = categories[Math.floor(rand() * categories.length)];
+      const hairColor = hairColors[Math.floor(rand() * hairColors.length)];
+
+      const bust = format(70 + rand() * 50);
+      const waist = format(50 + rand() * 30);
+      const hip = format(70 + rand() * 50);
+      const cup = getCupSize(bust);
+
+      const height = format(100 + rand() * 130);
+      //const weight = format(30 + rand() * 110);
+
+      const partners = Math.floor(110 + rand() * (1100 - 110));
+      const desire = Math.floor(110 + rand() * (1100 - 110));
+
+      const tag = tags[Math.floor(rand() * tags.length)];
+      const ability = abilities[Math.floor(rand() * abilities.length)];
+
+      const score = format(rand() * 10);
+      const level = score >= 9 ? 'S' : score >= 6 ? 'A' : 'C';
+
+      return {
+        姓名: name,
+        性别: gender,
+        分类: category,
+        三围: `${bust} / ${waist} / ${hip} cm（${cup}罩杯）`,
+        身高: `${height} cm`,
+        发色: hairColor,
+        经验人数: partners,
+        性欲值: desire,
+        性癖: tag,
+        特殊能力: ability,
+        评价: `${score}分（${level}级）`,
+      };
+    }
+
+    function runDivination() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) return;
+
+      const result = divine(name);
+      const resultBox = document.getElementById('result');
+      resultBox.innerHTML = Object.entries(result).map(([k, v]) => `<p><strong>${k}</strong>：${v}</p>`).join('');
+      resultBox.style.display = 'block';
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle('light');
+    }
+  </script>
+</body>
+</html>
