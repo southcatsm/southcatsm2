@@ -147,7 +147,7 @@ button:hover {
   <div class="container">
     <div class="search-box">
       <input id="nameInput" type="text" placeholder="请输入名字..." />
-      <button onclick="runDivination()">生成！</button>
+      <button id="generateBtn">生成！</button>
     </div>
     <div id="result" class="result-card" style="display:none;"></div>
   </div>
@@ -286,7 +286,7 @@ button:hover {
 	        经验人数: Math.floor(110 + rand()*991),
 	        性欲值: Math.floor(110 + rand()*991),
 	        性癖: ['口交', '足交', '乳交', '自慰', '捆绑', '肛交', 'SM'][Math.floor(rand()*7)],
-	        特殊能力: ['接受任意尺寸插入', '随时发情', '体液可催淫', '随时释放荷尔蒙', '精神控制', '化身榨精能人'][Math.floor(rand()*6)],
+	        特殊能力: ['接受任意尺寸插入', '随时发情', '体液可催淫', '随时释放荷尔蒙', '精神控制', '化身榨精能人', '记忆修改'][Math.floor(rand()*7)],
 	        评价: `${gen(0,5).toFixed(1)}分`
 	    };
 	}
@@ -301,4 +301,5 @@ button:hover {
       resultBox.innerHTML = Object.entries(result).map(([k, v]) => `<p><strong>${k}</strong>：${v}</p>`).join('');
       resultBox.style.display = 'block';
     }
+	document.getElementById('generateBtn').addEventListener('click', runDivination);
 </script>
