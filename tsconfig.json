@@ -13,7 +13,7 @@
       "@interfaces/*": ["src/interface/*"],
       "@utils/*": ["src/utils/*"]
     },
-    "strict": true, // 或 "target": "ES6"
+    "strict": false, // 或 "target": "ES6"
     "esModuleInterop": true
   }
 }
