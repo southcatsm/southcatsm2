@@ -8,8 +8,8 @@ import MainCard from "@/components/MainCard.astro";
 	<style>
 		.alert {
 		    position: fixed;
-			width: 230px;
-			height: 40px;
+						width: 230px;
+						height: 40px;
 		    top: 20px;
 		    right: -100%;
 		    background: #ff4444;
@@ -53,7 +53,7 @@ import MainCard from "@/components/MainCard.astro";
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			今日运势占卜
 		</h1>
-		<div align="center">
+		<div style="text-align: center;">
 			<input
 			  type="text"
 			  placeholder="请输入您的名称"
@@ -70,30 +70,39 @@ import MainCard from "@/components/MainCard.astro";
 			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
 			<strong>项目旨在提供娱乐，请您秉承科学精神，理性甄别！</strong>
 		</div>
-		<script>
-			import { getluck } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.44/js/fortune.js";
-			document.getElementById('staticAlert').classList.remove('show');
-			let hideTimer = null;
-			function showAlert() {
-			    const alertEl = document.getElementById('staticAlert');
-			    clearTimeout(hideTimer);
-			    alertEl.classList.add('show');
-			    hideTimer = setTimeout(() => {
-			        alertEl.classList.remove('show');
-			    }, 2000);
-			}
-			document.querySelector("#search").addEventListener("keydown", (e) => {
-				var name = document.getElementById("search").value;
-				if(e.key === 13 || e.key === "Enter"){
-					if(name.length === 0) {
-						showAlert();
-						return;
-					}
-					var nam = getluck(name);
-					document.getElementById("basicInfo").innerHTML = nam.replace(/\n/g, "<br/>");
-				}
-			});
-		</script>
+		<script type="module">
+  // @ts-ignore 忽略 TS 对 CDN 模块的类型检查
+  import { getluck } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.44/js/fortune.js";
+
+  document.getElementById('staticAlert')?.classList.remove('show');
+
+  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function showAlert() {
+    const alertEl = document.getElementById('staticAlert');
+    if (!alertEl) return;
+    clearTimeout(hideTimer!);
+    alertEl.classList.add('show');
+    hideTimer = setTimeout(() => {
+      alertEl.classList.remove('show');
+    }, 2000);
+  }
+
+  document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+    const input = document.getElementById("search") as HTMLInputElement;
+    const name = input.value;
+
+    if (e.key === "Enter") {
+      if (name.length === 0) {
+        showAlert();
+        return;
+      }
+
+      const nam = getluck(name);
+      document.getElementById("basicInfo")!.innerHTML = nam.replace(/\n/g, "<br/>");
+    }
+  });
+</script>
 	</MainCard>
 </BaseLayout>
 	
