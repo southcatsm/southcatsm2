@@ -1,0 +1,99 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+---
+
+<BaseLayout title="功能·今日运势">
+	<style>
+		.alert {
+		    position: fixed;
+			width: 230px;
+			height: 40px;
+		    top: 20px;
+		    right: -100%;
+		    background: #ff4444;
+		    color: white;
+		    padding: 12px 18px;
+		    border-radius: 6px;
+		    display: flex;
+		    align-items: center;
+		    opacity: 0;
+		    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		    font-family: Arial, sans-serif;
+		}
+		
+		.alert.show {
+		    opacity: 1;
+		    right: 20px;
+		}
+		
+		.icon::before {
+		    content: "×";
+		    display: inline-block;
+		    width: 18px;
+		    height: 18px;
+		    border-radius: 50%;
+		    background: white;
+		    color: #ff4444;
+		    text-align: center;
+		    line-height: 18px;
+		    margin-right: 12px;
+		    font-weight: 700;
+		    font-size: 14px;
+		}
+		
+	</style>
+	<MainCard>
+		<div id="staticAlert" class="alert">
+		    <span class="icon"></span>
+		    <span class="message">名字不能留空</span>
+		</div>
+		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
+			今日运势占卜
+		</h1>
+		<div align="center">
+			<input
+			  type="text"
+			  placeholder="请输入您的名称"
+			  class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 "
+			  id="search"
+			/>
+		</div>
+		<br/>
+		<MainCard>
+			<div class="text-center" id="basicInfo"></div>
+			<br/>
+		</MainCard>
+		<div class="divider my-8">
+			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
+			<strong>项目旨在提供娱乐，请您秉承科学精神，理性甄别！</strong>
+		</div>
+		<script>
+			import { getluck } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.44/js/fortune.js";
+			document.getElementById('staticAlert').classList.remove('show');
+			let hideTimer = null;
+			function showAlert() {
+			    const alertEl = document.getElementById('staticAlert');
+			    clearTimeout(hideTimer);
+			    alertEl.classList.add('show');
+			    hideTimer = setTimeout(() => {
+			        alertEl.classList.remove('show');
+			    }, 2000);
+			}
+			document.querySelector("#search").addEventListener("keydown", (e) => {
+				var name = document.getElementById("search").value;
+				if(e.key === 13 || e.key === "Enter"){
+					if(name.length === 0) {
+						showAlert();
+						return;
+					}
+					var nam = getluck(name);
+					document.getElementById("basicInfo").innerHTML = nam.replace(/\n/g, "<br/>");
+				}
+			});
+		</script>
+	</MainCard>
+</BaseLayout>
+	

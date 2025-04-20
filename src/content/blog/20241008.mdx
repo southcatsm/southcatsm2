@@ -1,9 +1,9 @@
 ---
-title: 帮助文档：魅魔生成器
-description: 查阅有关本站魅魔生成器的帮助文档。
-pubDate: 2024 11 11
+title: 帮助文档：今日运势
+description: 查阅有关本站今日运势的帮助文档。
+pubDate: 2024 10 08
 updated: 2025 04 16
-image: /image/20241111.jpg
+image: /image/20241008.jpg
 categories:
   - tech
 tags:
@@ -13,25 +13,22 @@ tags:
 import BaseCard from "@/components/BaseCard.astro";
 import Kbd from "@/components/mdx/Kbd.astro";
 
-## 前言
+试试今日手气？
 
-想要恶搞朋友吗？
-
-想看看自己的朋友到底多牛X？
-
-本站的《魅魔生成器》**也许**帮得上忙。
+来看本站的运势占卜！
 
 <BaseCard>
-<strong>本站例子可详见：<a target="_blank" href="/project/succubus">project/succubus</a></strong>
+<strong>本站例子可详见：<a target="_blank" href="/project/fortune">project/fortune</a></strong>
 </BaseCard>
 
 ## API使用指南(持续更新)
 
-以下是本站魅魔生成器的API通用接口：
+以下是本站运势占卜的API通用接口：
 
 ```html
-https://api.southcat.cc/v2-succubus?uuid={uuid}&name={name}
+https://api.southcat.cc/v2-fortune?uuid={uuid}&name={name}
 ```
+
 ### 参数解析
 
 |参数|类型|意义|是否必填|
@@ -41,33 +38,26 @@ https://api.southcat.cc/v2-succubus?uuid={uuid}&name={name}
 
 ### 实践运用·理想
 
-以下是**理论情况**下API返回的数据（笔者在此以`kate`为例，<u>**UUID、IP和敏感词汇在此打码处理，下同**</u>）：
+以下是**理论情况**下API返回的数据（笔者在此以`kate`为例，<u>**UUID、IP在此打码处理，下同**</u>）：
 ```json
 {
   "info": {
     "status": 200,
     "describe": "/",
-    "ip": "182.···.··.12",
+    "ip": "182.··.···.12",
     "country": "CN",
-    "project": "v2-succubus"
+    "project": "v2-fortune"
   },
-  "uuid": "05b5····-····-····-····-····bd7a2705",
+  "uuid": "4ff1····-····-····-····-····1c9791aa",
   "name": "kate",
-  "gender": "女",
-  "category": "活泼系٩(◕‿◕)۶",
-  "measurements": {
-    "bust": "92.9cm",
-    "waist": "66.3cm",
-    "wips": "99.7cm",
-    "cup": "F"
-  },
-  "height": "196.9cm",
-  "hair": "珊瑚粉",
-  "experience": 749,
-  "desire": 294,
-  "hobby": "··",
-  "ability": "随时··",
-  "rating": "0.5"
+  "date": "2024 10 07",
+  "cfortune": "财源广进，投资有利",
+  "wealth": "2",
+  "love": "80",
+  "career": "83",
+  "crating": "★★★☆☆",
+  "can": "签约合作、投资理财、表白求婚",
+  "avoid": "冲动消费、熬夜加班、与人争执"
 }
 ```
 
@@ -81,7 +71,7 @@ https://api.southcat.cc/v2-succubus?uuid={uuid}&name={name}
     "describe": "Please provide the name",
     "ip": "182.··.···.12",
     "country": "CN",
-	"project":"v2-succubus"
+	"project":"v2-fortune"
   }
 }
 ```
@@ -99,7 +89,7 @@ https://api.southcat.cc/v2-succubus?uuid={uuid}&name={name}
     "describe": "Please provide a correct uuid",
     "ip": "182.··.···.12",
     "country": "CN",
-	"project":"v2-succubus"
+	"project":"v2-fortune"
   }
 }
 ```
@@ -118,4 +108,3 @@ https://api-southcat.cc/v1-uuid4
 ## 算法展现
 
 略
-

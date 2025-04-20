@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -165,6 +165,183 @@
         document.onselectstart = function() {
             return false;
         };
+    </script>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全访问提示</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gov-blue: #004b87;
+            --warning-red: #cf2a2a;
+            --safe-green: #2a5c03;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', '微软雅黑', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f4ff;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: var(--gov-blue);
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .warning-box {
+            background: linear-gradient(145deg, #fff 60%, #ffe6e6);
+            border: 3px solid var(--warning-red);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .warning-icon {
+            width: 80px;
+            height: 80px;
+            background: #ff4d4f;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: var(--warning-red);
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.8em;
+        }
+
+        .highlight {
+            color: var(--warning-red);
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .info-box {
+            background: #e8f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                height: 60px;
+                margin: 5px;
+            }
+            
+            h1 {
+                font-size: 1.4em;
+            }
+            
+            .warning-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/img/miit.png" class="logo" alt="工业和信息化部">
+        <img src="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/img/ct.png" class="logo" alt="中国电信">
+		<img src="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/img/mps.png" class="logo" alt="公安部">
+    </div>
+
+    <div class="warning-box" align="center">
+        <div class="warning-icon">!️</div>
+		<h3>国家反诈中心、工信部反诈中心、中国电信提示您</h3>
+        <h1>您将要访问的网页可能存在诈骗风险！</h1>
+        <div class="info-box">
+            <p>请注意保护您的<span class="highlight">个人信息安全</span>和<span class="highlight">财产安全</span><br/>
+			不要轻易填写<span class="highlight">银行卡、身份证等敏感信息</span>，谨防上当受骗。</p>
+            <p>诈骗举报电话：<br>
+            <strong class="highlight">114-51419-19810</strong> 或 
+            <strong class="highlight">168-54188-9527</strong></p>
+            
+            <p>当前访问IP：
+            <strong id="ipAddress" class="highlight">正在获取...</strong></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>请提高警惕，谨防网络诈骗</p>
+    </div>
+
+    <script>
+        // 获取IP地址
+        fetch('https://api-gateway--inf.southcat.cc/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipAddress').textContent = data["real-ip"];
+            })
+            .catch(() => {
+                document.getElementById('ipAddress').textContent = '获取失败';
+            });
+
+        // 添加悬浮效果
+        document.querySelectorAll('.highlight').forEach(element => {
+            element.addEventListener('mouseover', () => {
+                element.style.textShadow = '0 0 8px rgba(207,42,42,0.3)';
+            });
+            element.addEventListener('mouseout', () => {
+                element.style.textShadow = 'none';
+            });
+        });
     </script>
 </body>
 </html>
