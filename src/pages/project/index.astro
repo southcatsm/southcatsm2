@@ -30,14 +30,14 @@ import FeatureCard from "@/components/mdx/FeatureCard.astro";
 			<br/>
 			<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
 				<Icon name="lucide:link-2" class="w-6 h-6 text-primary" />
-				<span>API接口（v1 v2）</span>
+				<span>API接口（v1）</span>
 			</h2>
 			<div class="card bg-base-200 p-6">
 				<ul class="space-y-6">
 					{[
 						{
 							project: "随机ACG图片",
-							description: "看看就好，别乱传哦♪(･ω･)ﾉ（当前库存110多张）",
+							description: "当前库存110多张♪(･ω･)ﾉ",
 							url: "https://api-rps.southcat.cc/",
 						},
 						{
@@ -73,15 +73,20 @@ import FeatureCard from "@/components/mdx/FeatureCard.astro";
 				<ul class="space-y-6">
 					{[
 						{
-							project: "没墨占卜",
+							project: "生成您的没墨档案",
 							description: "有点··的东西（博客内有帮助文档）",
 							url: "succubus",
 						},
 						{
-							project: "今日运势",
-							description: "测测你今天的运势如何~（博客内有帮助文档）",
+							project: "测测您的今日运势",
+							description: "测测您今天的运势如何~（博客内有帮助文档）",
 							url: "fortune",
 						},
+						{
+							project: "生成您的阶级档案",
+							description: "看看您在古代的阶级如何~（博客内有帮助文档）",
+							url: "class",
+						}
 					].map((contrib) => (
 					<li class="flex items-start gap-4">
 						<div class="flex-shrink-0 bg-base-300 p-2 rounded-full">

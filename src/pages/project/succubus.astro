@@ -4,12 +4,12 @@ import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
 ---
 
-<BaseLayout title="功能·魅魔">
+<BaseLayout title="功能·没墨">
 	<style>
 		.alert {
 		    position: fixed;
-						width: 230px;
-						height: 40px;
+			width: 230px;
+			height: 40px;
 		    top: 20px;
 		    right: -100%;
 		    background: #ff4444;
@@ -62,7 +62,7 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<br/>
 		<MainCard>
-			<div class="text-center" id="basicInfo"></div>
+			<div class="text-justify" id="basicInfo"></div>
 			<br/>
 			<div style="text-align: center;">
 				<div id="smpie"></div>
@@ -74,73 +74,74 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<script src="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/js/echarts.js" type="text/javascript"></script>
 		<script>
-  // @ts-ignore 忽略 TS 对 CDN 模块的类型检查
-  import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.45/js/sakyubasu.js";
+		  // @ts-ignore 忽略 TS 对 CDN 模块的类型检查
+		  import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.46/js/sakyubasu.js";
 
-  // 让 TS 知道 echarts 是全局变量
-  declare var echarts: any;
+		  // 让 TS 知道 echarts 是全局变量
+		  declare var echarts: any;
 
-  const crt = document.documentElement.getAttribute("data-theme");
-  document.getElementById('staticAlert')?.classList.remove('show');
+		  const crt = document.documentElement.getAttribute("data-theme");
+		  document.getElementById('staticAlert')?.classList.remove('show');
 
-  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+		  let hideTimer: ReturnType<typeof setTimeout> | null = null;
 
-  function showAlert() {
-    const alertEl = document.getElementById('staticAlert');
-    if (!alertEl) return;
-    clearTimeout(hideTimer!);
-    alertEl.classList.add('show');
-    hideTimer = setTimeout(() => {
-      alertEl.classList.remove('show');
-    }, 2000);
-  }
+		  function showAlert() {
+			const alertEl = document.getElementById('staticAlert');
+			if (!alertEl) return;
+			clearTimeout(hideTimer!);
+			alertEl.classList.add('show');
+			hideTimer = setTimeout(() => {
+			  alertEl.classList.remove('show');
+			}, 2000);
+		  }
 
-  document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
-    const input = document.getElementById("search") as HTMLInputElement;
-    const name = input.value;
-    
-    if (e.key === "Enter") {
-      if (name.length === 0) {
-        showAlert();
-        return;
-      }
+		  document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+			const input = document.getElementById("search") as HTMLInputElement;
+			const name = input.value;
+			
+			if (e.key === "Enter") {
+			  if (name.length === 0) {
+				showAlert();
+				return;
+			  }
 
-      const result = divine(name);
-      const smpie = document.getElementById("smpie");
-      if (!smpie) return;
+			  const result = divine(name.trim());
+			  const smpie = document.getElementById("smpie");
+			  if (!smpie) return;
 
-      document.getElementById("basicInfo")!.innerHTML = Object.entries(result).slice(0,14).map(([k, v]) => `<p><strong>${k}</strong>：${v}</p>`).join('');
-      smpie.style.height = "400px";
-      smpie.style.width = "400px";
-      if (crt === "dracula") smpie.style.background = "#927974";
+			  document.getElementById("basicInfo")!.innerHTML = Object.entries(result).slice(0,14).map(([k, v]) =>
+			   `<p><strong>${k}</strong>：${v}</p>`).join('');
+			  smpie.style.height = "300px";
+			  smpie.style.width = "300px";
+			  if (crt === "dracula") smpie.style.background = "#CCCCCC";
 
-      const pie = echarts.init(smpie);
-      const pieOption = {
-        title: {
-          text: `${result["姓名"]}のSM程度`,
-          subtext: "by Southcatsm",
-          left: "center"
-        },
-        tooltip: { trigger: 'item' },
-        legend: { orient: 'vertical', left: 'left' },
-        series: [{
-          name: "SM程度",
-          type: 'pie',
-          radius: '55%',
-          data: [
-            { value: result["S度"], name: 'S程度' },
-            { value: result["M度"], name: 'M程度' }
-          ],
-          itemStyle: {
-            shadowBlur: 200,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
-        }]
-      };
-      pie.setOption(pieOption);
-    }
-  });
-</script>
+			  const pie = echarts.init(smpie);
+			  const pieOption = {
+				title: {
+				  text: `${result["姓名"]}のSM程度`,
+				  subtext: "by Southcatsm",
+				  left: "center"
+				},
+				tooltip: { trigger: 'item' },
+				legend: { orient: 'vertical', left: 'left' },
+				series: [{
+				  name: "SM程度",
+				  type: 'pie',
+				  radius: '55%',
+				  data: [
+					{ value: result["S度"], name: 'S' },
+					{ value: result["M度"], name: 'M' }
+				  ],
+				  itemStyle: {
+					shadowBlur: 200,
+					shadowColor: 'rgba(0, 0, 0, 0.5)'
+				  }
+				}]
+			  };
+			  pie.setOption(pieOption);
+			}
+		  });
+		</script>
 	</MainCard>
 </BaseLayout>
 	
