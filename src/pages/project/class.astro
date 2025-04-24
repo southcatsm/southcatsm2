@@ -53,7 +53,7 @@ import MainCard from "@/components/MainCard.astro";
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			生成您的（古代）社会阶级档案
 		</h1>
-		<div align="center">
+		<div style="text-align: center;">
 			<input
 			  type="text"
 			  placeholder="请输入您的名称"
@@ -86,36 +86,41 @@ import MainCard from "@/components/MainCard.astro";
 			<strong>仅供娱乐</strong>
 		</div>
 		<script>
+			// @ts-ignore
 			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.46/js/class.js";
 			
-			document.getElementById('staticAlert').classList.remove('show');
-			let hideTimer = null;
+			document.getElementById('staticAlert')?.classList.remove('show');
+			
+			let hideTimer: ReturnType<typeof setTimeout> | null = null;
+			
 			function showAlert() {
-			    const alertEl = document.getElementById('staticAlert');
-			    clearTimeout(hideTimer);
-			    alertEl.classList.add('show');
-			    hideTimer = setTimeout(() => {
-			        alertEl.classList.remove('show');
-			    }, 2000);
+				const alertEl = document.getElementById('staticAlert');
+				if (!alertEl) return;
+				clearTimeout(hideTimer!);
+				alertEl.classList.add('show');
+				hideTimer = setTimeout(() => {
+					alertEl.classList.remove('show');
+				}, 2000);
 			}
-		
-		document.querySelector("#search").addEventListener("keydown", (e) => {
-			var name = document.getElementById("search").value;
-			if(e.key === 13 || e.key === "Enter"){
-				if(name.length === 0) {
-					showAlert();
-					return;
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+				const input = document.getElementById("search") as HTMLInputElement;
+				const name = input.value;
+			
+				if (e.key === "Enter") {
+					if (name.length === 0) {
+						showAlert();
+						return;
+					}
+					var jj = rank(name);
+					document.getElementById('result').classList.remove('hidden');
+					document.getElementById('africaTitle').textContent = jj.aName;
+					document.getElementById('africaHistory').textContent = jj.aHist;
+					document.getElementById('africaIntro').textContent = jj.aIntr;
+					document.getElementById('indiaTitle').textContent = jj.iName;
+					document.getElementById('indiaHistory').textContent = jj.iHist;
+					document.getElementById('indiaIntro').textContent = jj.iIntr;
 				}
-				var jj = rank(name);
-				document.getElementById('result').classList.remove('hidden');
-				document.getElementById('africaTitle').textContent = jj.aName;
-				document.getElementById('africaHistory').textContent = jj.aHist;
-				document.getElementById('africaIntro').textContent = jj.aIntr;
-				document.getElementById('indiaTitle').textContent = jj.iName;
-				document.getElementById('indiaHistory').textContent = jj.iHist;
-				document.getElementById('indiaIntro').textContent = jj.iIntr;
-			}
-		});
+			});
 		</script>
 	</MainCard>
 </BaseLayout>
