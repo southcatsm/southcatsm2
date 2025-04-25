@@ -50,7 +50,7 @@ import MainCard from "@/components/MainCard.astro";
 		    <span class="message">名字不能留空</span>
 		</div>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
-			没墨生成器
+			没墨档案生成
 		</h1>
 		<div style="text-align: center;">
 			<input
@@ -62,8 +62,68 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<br/>
 		<MainCard>
-			<div class="text-justify" id="basicInfo"></div>
-			<br/>
+			<div class="hidden max-w-3xl mx-auto p-6" id="texcel">
+			  <table class="w-full border-2 border-purple-300 rounded-2xl overflow-hidden shadow-lg">
+			    <thead class="bg-pink-50">
+			      <tr>
+			        <th colspan="3" class="px-6 py-4 text-2xl font-bold text-purple-600 border-b-2 border-purple-200" id="ttitle">
+						请查收您的没墨档案
+			        </th>
+			      </tr>
+			    </thead>
+			    <tbody class="bg-white font-bold">
+			      <tr class="divide-x divide-purple-100">
+			        <td class="px-4 py-3 text-pink-700">
+			          <span class="text-gray-400">姓名：</span>
+			          <span class="truncate max-w-[120px] inline-block" id="tname"></span>
+			        </td>
+			        <td class="px-4 py-3 text-purple-600">
+			          <span class="text-gray-400" >性别：</span><label id="tgender"></label>
+			        </td>
+			        <td class="px-4 py-3 text-blue-500">
+			          <span class="text-gray-400">标签：</span><label id="tcategory"></label>
+			        </td>
+			      </tr>
+			
+			      <tr class="divide-x divide-purple-100 border-t border-purple-50">
+			        <td class="px-4 py-3 text-green-600">
+			          <span class="text-gray-400">身高：</span><label id="theight"></label>
+			        </td>
+			        <td class="px-4 py-3 text-yellow-600">
+			          <span class="text-gray-400">三围：</span><label id="tmeasurements"></label>
+			        </td>
+			        <td class="px-4 py-3 text-red-500">
+			          <span class="text-gray-400">罩杯：</span><label id="tcup"></label>
+			        </td>
+			      </tr>
+			
+			      <tr class="divide-x divide-purple-100 border-t border-purple-50">
+			        <td class="px-4 py-3 text-amber-800">
+			          <span class="text-gray-400">发色：</span><label id="thair"></label>
+			        </td>
+			        <td class="px-4 py-3 text-teal-600">
+			          <span class="text-gray-400">··人数：</span><label id="texperience"></label>
+			        </td>
+			        <td class="px-4 py-3 text-fuchsia-600">
+			          <span class="text-gray-400">性欲值：</span><label id="tdesire"></label>
+			        </td>
+			      </tr>
+			
+			      <!-- 详细信息 -->
+			      <tr class="divide-x divide-purple-100 border-t border-purple-50">
+			        <td class="px-4 py-3 text-slate-700">
+			          <span class="text-gray-400">性癖：</span><label id="thobby"></label>
+			        </td>
+			        <td class="px-4 py-3 text-emerald-700 break-words max-w-[200px]">
+			          <span class="text-gray-400">特殊能力：</span><label id="tability"></label>
+			        </td>
+			        <td class="px-4 py-3 text-orange-500">
+			          <span class="text-gray-400">评分：</span><label id="trating"></label>
+			        </td>
+			      </tr>
+			    </tbody>
+			  </table>
+			</div>
 			<div style="text-align: center;">
 				<div id="smpie"></div>
 			</div>
@@ -74,73 +134,77 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<script src="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/js/echarts.js" type="text/javascript"></script>
 		<script>
-		  // @ts-ignore 忽略 TS 对 CDN 模块的类型检查
-		  import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.46/js/sakyubasu.js";
-
-		  // 让 TS 知道 echarts 是全局变量
-		  declare var echarts: any;
-
-		  const crt = document.documentElement.getAttribute("data-theme");
-		  document.getElementById('staticAlert')?.classList.remove('show');
-
-		  let hideTimer: ReturnType<typeof setTimeout> | null = null;
-
-		  function showAlert() {
-			const alertEl = document.getElementById('staticAlert');
-			if (!alertEl) return;
-			clearTimeout(hideTimer!);
-			alertEl.classList.add('show');
-			hideTimer = setTimeout(() => {
-			  alertEl.classList.remove('show');
-			}, 2000);
-		  }
-
-		  document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
-			const input = document.getElementById("search") as HTMLInputElement;
-			const name = input.value;
-			
-			if (e.key === "Enter") {
-			  if (name.length === 0) {
-				showAlert();
-				return;
-			  }
-
-			  const result = divine(name.trim());
-			  const smpie = document.getElementById("smpie");
-			  if (!smpie) return;
-
-			  document.getElementById("basicInfo")!.innerHTML = Object.entries(result).slice(0,14).map(([k, v]) =>
-			   `<p><strong>${k}</strong>：${v}</p>`).join('');
-			  smpie.style.height = "300px";
-			  smpie.style.width = "300px";
-			  if (crt === "dracula") smpie.style.background = "#CCCCCC";
-
-			  const pie = echarts.init(smpie);
-			  const pieOption = {
-				title: {
-				  text: `${result["姓名"]}のSM程度`,
-				  subtext: "by Southcatsm",
-				  left: "center"
-				},
-				tooltip: { trigger: 'item' },
-				legend: { orient: 'vertical', left: 'left' },
-				series: [{
-				  name: "SM程度",
-				  type: 'pie',
-				  radius: '55%',
-				  data: [
-					{ value: result["S度"], name: 'S' },
-					{ value: result["M度"], name: 'M' }
-				  ],
-				  itemStyle: {
-					shadowBlur: 200,
-					shadowColor: 'rgba(0, 0, 0, 0.5)'
-				  }
-				}]
-			  };
-			  pie.setOption(pieOption);
+			// @ts-ignore 
+			import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.46/js/sakyubasu.js";
+			declare var echarts: any;
+			document.getElementById('staticAlert')?.classList.remove('show');
+			let hideTimer: ReturnType<typeof setTimeout> | null = null;
+			function showAlert() {
+				const alertEl = document.getElementById('staticAlert');
+				if (!alertEl) return;
+				clearTimeout(hideTimer!);
+				alertEl.classList.add('show');
+				hideTimer = setTimeout(() => {
+				  alertEl.classList.remove('show');
+				}, 2000);
 			}
-		  });
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+				const input = document.getElementById("search") as HTMLInputElement;
+				var crt = document.documentElement.getAttribute("data-theme");
+				const name = input.value;
+				if (e.key === "Enter") {
+					if (name.length === 0) {
+						showAlert();
+						return;
+					}
+					const result = divine(name.trim());
+					document.getElementById('texcel').classList.remove('hidden');
+					document.getElementById('tname').textContent = result["姓名"];
+					document.getElementById('tgender').textContent = result["性别"];
+					document.getElementById('tcategory').textContent = result["分类"];
+					document.getElementById('theight').textContent = result["身高"];
+					document.getElementById('tmeasurements').textContent = `${result["上围"]} ${result["下围"]} ${result["屁围"]}`;
+					document.getElementById('tcup').textContent = `${result["罩杯"]} Cup`;
+					document.getElementById('thair').textContent = result["发色"];
+					document.getElementById('texperience').textContent = result["经验人数"];
+					document.getElementById('tdesire').textContent = result["性欲值"];
+					document.getElementById('thobby').textContent = result["性癖"];
+					document.getElementById('tability').textContent = result["特殊能力"];
+					document.getElementById('trating').textContent = result["评价"];
+					  
+					//Pie
+					const smpie = document.getElementById("smpie");
+					if (!smpie) return;			   
+					smpie.style.height = "300px";
+					smpie.style.width = "300px";
+					if (crt === "dracula") smpie.style.background = "#CCCCCC";
+					else smpie.style.background = "#FFFFFF";
+					const pie = echarts.init(smpie);
+					const pieOption = {
+						title: {
+							text: `${result["姓名"]}のSM程度`,
+							subtext: "by Southcatsm",
+							left: "center"
+						},
+						tooltip: { trigger: 'item' },
+						legend: { orient: 'vertical', left: 'left' },
+						series: [{
+							name: "SM程度",
+							type: 'pie',
+							radius: '55%',
+							data: [
+								{ value: result["S度"], name: 'S' },
+								{ value: result["M度"], name: 'M' }
+							],
+							itemStyle: {
+								shadowBlur: 200,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}]
+					  };
+					pie.setOption(pieOption);
+				}
+			});
 		</script>
 	</MainCard>
 </BaseLayout>

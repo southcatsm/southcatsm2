@@ -63,20 +63,30 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<br/>
 		<MainCard>
-			<div id="result" class="hidden flex flex-col md:flex-row gap-6">
-			    <div class="flex-1 bg-amber-100 p-6 rounded-lg shadow-md">
-					<p class="text-emerald-700 text-2xl mb-3">非洲庄园档案</p>
-					<br/>
+			<div id="result" class="hidden flex flex-wrap gap-4"> 
+			    <div class="w-full md:w-[calc(50%-8px)] bg-amber-100 p-6 rounded-lg shadow-md"> 
+			        <p class="text-emerald-700 text-2xl mb-3">非洲庄园档案</p>
 			        <h2 class="text-2xl font-bold mb-4 text-amber-800" id="africaTitle"></h2>
 			        <p class="text-sm mb-2 text-amber-700" id="africaHistory"></p>
 			        <p class="text-gray-600" id="africaIntro"></p>
 			    </div>
-			    <div class="flex-1 bg-blue-100 p-6 rounded-lg shadow-md">
-					<p class="text-orange-600 text-2xl mb-3">印度社会档案</p>
-					<br/>
+			    <div class="w-full md:w-[calc(50%-8px)] bg-blue-100 p-6 rounded-lg shadow-md">
+			        <p class="text-orange-600 text-2xl mb-3">印度种姓档案</p>
 			        <h2 class="text-2xl font-bold mb-4 text-blue-800" id="indiaTitle"></h2>
 			        <p class="text-sm mb-2 text-blue-700" id="indiaHistory"></p>
 			        <p class="text-gray-600" id="indiaIntro"></p>
+			    </div>
+			    <div class="w-full md:w-[calc(50%-8px)] bg-violet-100 p-6 rounded-lg shadow-md">
+			        <p class="text-orange-600 text-2xl mb-3">中国阶级档案</p>
+			        <h2 class="text-2xl font-bold mb-4 text-violet-800" id="chinaTitle"></h2>
+			        <p class="text-sm mb-2 text-violet-700" id="chinaHistory"></p>
+			        <p class="text-gray-600" id="chinaIntro"></p>
+			    </div>
+			    <div class="w-full md:w-[calc(50%-8px)] bg-lime-100 p-6 rounded-lg shadow-md">
+			        <p class="text-orange-600 text-2xl mb-3">日本层级档案</p>
+			        <h2 class="text-2xl font-bold mb-4 text-lime-800" id="japanTitle"></h2>
+			        <p class="text-sm mb-2 text-lime-700" id="japanHistory"></p>
+			        <p class="text-gray-600" id="japanIntro"></p>
 			    </div>
 			</div>
 			<br/>
@@ -87,7 +97,7 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<script>
 			// @ts-ignore
-			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.46/js/class.js";
+			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.466/js/class.js";
 			
 			document.getElementById('staticAlert')?.classList.remove('show');
 			
@@ -119,6 +129,12 @@ import MainCard from "@/components/MainCard.astro";
 					document.getElementById('indiaTitle').textContent = jj.iName;
 					document.getElementById('indiaHistory').textContent = jj.iHist;
 					document.getElementById('indiaIntro').textContent = jj.iIntr;
+					document.getElementById('chinaTitle').textContent = jj.cName;
+					document.getElementById('chinaHistory').textContent = jj.cHist;
+					document.getElementById('chinaIntro').textContent = jj.cIntr;
+					document.getElementById('japanTitle').textContent = jj.jName;
+					document.getElementById('japanHistory').textContent = jj.jHist;
+					document.getElementById('japanIntro').textContent = jj.jIntr;
 				}
 			});
 		</script>
