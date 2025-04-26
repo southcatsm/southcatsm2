@@ -42,6 +42,11 @@ site:
           href: /blog/category/life
           svg: "material-symbols:earthquake-rounded"
           target: _self
+    - id: daily
+      text: 日志
+      href: /daily
+      svg: "material-symbols:book-4-spark-outline"
+      target: _self
     - id: project
       text: 作品
       href: /project
@@ -54,7 +59,7 @@ site:
       target: _self
     - id: contact
       text: 联系
-      href: "mailto:archie26@qq.com"
+      href: "mailto:ad@southcat.cc"
       target: _blank 
       svg: "material-symbols:attach-email-outline-rounded"
 

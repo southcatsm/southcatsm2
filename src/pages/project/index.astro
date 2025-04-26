@@ -2,7 +2,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
-import Collapse from "@/components/mdx/Collapse.astro";
 import FeatureCard from "@/components/mdx/FeatureCard.astro";
 ---
 
@@ -74,18 +73,23 @@ import FeatureCard from "@/components/mdx/FeatureCard.astro";
 					{[
 						{
 							project: "生成您的没墨档案",
-							description: "有点··的东西（博客内有帮助文档）",
+							description: "有点··的东西",
 							url: "succubus",
 						},
 						{
 							project: "测测您的今日运势",
-							description: "测测您今天的运势如何~（博客内有帮助文档）",
+							description: "测测您今天的运势如何~",
 							url: "fortune",
 						},
 						{
 							project: "生成您的阶级档案",
-							description: "看看您在古代的阶级如何~（博客内有帮助文档）",
+							description: "看看您在古代的阶级如何~",
 							url: "class",
+						},
+						{
+							project: "测测您与ta的缘分",
+							description: "您和ta的缘分有多少呢~",
+							url: "match"
 						}
 					].map((contrib) => (
 					<li class="flex items-start gap-4">

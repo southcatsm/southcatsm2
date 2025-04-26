@@ -43,7 +43,6 @@ import MainCard from "@/components/MainCard.astro";
 		    font-weight: 700;
 		    font-size: 14px;
 		}
-		
 	</style>
 	<MainCard>
 		<div id="staticAlert" class="alert">
@@ -97,12 +96,9 @@ import MainCard from "@/components/MainCard.astro";
 		</div>
 		<script>
 			// @ts-ignore
-			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.466/js/class.js";
-			
+			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.471/js/class.js";
 			document.getElementById('staticAlert')?.classList.remove('show');
-			
 			let hideTimer: ReturnType<typeof setTimeout> | null = null;
-			
 			function showAlert() {
 				const alertEl = document.getElementById('staticAlert');
 				if (!alertEl) return;
@@ -115,7 +111,6 @@ import MainCard from "@/components/MainCard.astro";
 			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
 				const input = document.getElementById("search") as HTMLInputElement;
 				const name = input.value;
-			
 				if (e.key === "Enter") {
 					if (name.length === 0) {
 						showAlert();
