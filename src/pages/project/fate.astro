@@ -1,0 +1,111 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+---
+<BaseLayout title="功能·缘分评定">
+	<style>
+		@keyframes fade-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		.animate-fade-in {
+			animation: fade-in 0.5s ease-out;
+		}
+		input:focus {
+			outline: none;
+			ring: 2px solid #8B5CF6;
+		}
+	</style>
+	<MainCard>
+		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
+			测测您与Ta有没有缘分💖
+		</h1>
+		<div style="text-align: center;">
+			<input
+				type="text"
+				placeholder="请输入您的名称"
+				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 "
+				id="searcha"
+			/>
+			<label class="text-orange-200">|</label>
+			<input
+				type="text"
+				placeholder="请输入ta的名称"
+				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 "
+				id="searchb"
+			/>
+			<div class="grid justify-items-center">
+				<br/>
+				<button class="btn btn-primary btn-outline" id="searchx">
+					<label id="searcht">查询！</label>
+					<Icon name="material-symbols:database-search" class="w-5 h-5" />
+				</button>
+			</div>
+		</div>
+		<MainCard>
+			<div id="bar"></div>
+		</MainCard>
+		<div class="divider my-8">
+			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
+			<strong>仅供娱乐，请以生活实际为准</strong>
+		</div>
+		<script>
+			// @ts-ignore
+			import { fate } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/fate.js";
+			function toggle(aa,bb) {
+			    const ia = document.getElementById('searcha'),
+					  ib = document.getElementById('searchb'),  
+					  err = 'border-red-500',  
+					  nor = 'border-teal-500'; 
+			    if (aa) {
+			        ia.classList.remove(nor);
+			        ia.classList.add(err);
+			    } 
+				if (bb) {
+					ib.classList.remove(nor);
+					ib.classList.add(err);
+				}
+				if (!aa && !bb) {
+			        ia.classList.remove(err);
+			        ia.classList.add(nor);
+			        ib.classList.remove(err);
+			        ib.classList.add(nor);
+			    }
+			}
+			function executed(){
+				const ip1 = document.getElementById("searcha") as HTMLInputElement,
+					  ip2 = document.getElementById("searchb") as HTMLInputElement;
+				const na = ip1.value, nb = ip2.value;
+				if(na.length === 0 || nb.length === 0){
+					if(na.length === 0)toggle(true,false);
+					else toggle(false,false);
+					if(nb.length === 0)toggle(false,true);
+					else toggle(false,false);
+					document.getElementById("searcht").textContent = "请勿留空！";
+					document.getElementById('bar').classList.add('hidden');
+					return;
+				}
+				toggle(false,false);
+				document.getElementById("searcht").textContent = "查询！";
+				document.getElementById('bar').classList.remove('hidden');
+				const res = fate(na,nb);
+				document.getElementById('bar').innerHTML = res.map(result => `
+				    <div class="animate-fade-in">
+						<div class="flex justify-between mb-2">
+							<span class="font-semibold ${result.tcolor}">${result.name}</span>
+							<span class="font-semibold ${result.tcolor}">${result.value}%</span>
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-3">
+							<div class="${result.bcolor} h-3 rounded-full transition-all duration-1000" 
+								 style="width:${result.value}%"></div>
+						</div>
+					</div>
+				`).join('');
+			}
+			document.querySelector("#searchx")?.addEventListener("click", executed);
+			document.querySelector("#searcha")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") execute(); return; });
+			document.querySelector("#searchb")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") execute(); return; });
+		</script>
+	</MainCard>
+</BaseLayout>
