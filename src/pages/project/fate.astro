@@ -16,6 +16,9 @@ import MainCard from "@/components/MainCard.astro";
 			outline: none;
 			ring: 2px solid #8B5CF6;
 		}
+		.bar-transition {
+		  transition: width 1s ease-in-out;
+		}
 	</style>
 	<MainCard>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
@@ -88,7 +91,6 @@ import MainCard from "@/components/MainCard.astro";
 				}
 				toggle(false,false);
 				document.getElementById("searcht").textContent = "查询！";
-				document.getElementById('bar').classList.remove('hidden');
 				const res = fate(na,nb);
 				document.getElementById('bar').innerHTML = res.map(result => `
 				    <div class="animate-fade-in">
@@ -102,10 +104,11 @@ import MainCard from "@/components/MainCard.astro";
 						</div>
 					</div>
 				`).join('');
+				document.getElementById('bar').classList.remove('hidden');
 			}
 			document.querySelector("#searchx")?.addEventListener("click", executed);
-			document.querySelector("#searcha")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") execute(); return; });
-			document.querySelector("#searchb")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") execute(); return; });
+			document.querySelector("#searcha")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
+			document.querySelector("#searchb")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 		</script>
 	</MainCard>
 </BaseLayout>
