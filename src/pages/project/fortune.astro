@@ -1,69 +1,49 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
+import Plicense from "@/components/widgets/Plicense.astro";
 import MainCard from "@/components/MainCard.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
 ---
 
-<BaseLayout title="功能·今日运势">
+<BaseLayout title="功能·运势占卜">
 	<style>
-		.alert {
-		    position: fixed;
-			width: 230px;
-			height: 40px;
-		    top: 20px;
-		    right: -100%;
-		    background: #ff4444;
-		    color: white;
-		    padding: 12px 18px;
-		    border-radius: 6px;
-		    display: flex;
-		    align-items: center;
-		    opacity: 0;
-		    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-		    font-family: Arial, sans-serif;
+		@keyframes fade-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
 		}
-		
-		.alert.show {
-		    opacity: 1;
-		    right: 20px;
+		.animate-fade-in {
+			animation: fade-in 0.5s ease-out;
 		}
-		
-		.icon::before {
-		    content: "×";
-		    display: inline-block;
-		    width: 18px;
-		    height: 18px;
-		    border-radius: 50%;
-		    background: white;
-		    color: #ff4444;
-		    text-align: center;
-		    line-height: 18px;
-		    margin-right: 12px;
-		    font-weight: 700;
-		    font-size: 14px;
+		input:focus {
+			outline: none;
+			ring: 2px solid #8B5CF6;
 		}
-		
+		.basicInfo-transition {
+		  transition: width 1s ease-in-out;
+		}
 	</style>
 	<MainCard>
-		<div id="staticAlert" class="alert">
-		    <span class="icon"></span>
-		    <span class="message">名字不能留空</span>
-		</div>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			今日运势占卜
 		</h1>
-		<div style="text-align: center;">
+		<div style="text-align: center; display: flex; gap: 8px; align-items: center; justify-content: center">
 			<input
 				type="text"
 				placeholder="请输入您的名称"
-				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 "
+				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 flex-1"
 				id="search"
 			/>
+			<div>
+				<button class="btn btn-primary btn-outline" id="searchx">
+					<label id="searcht">查询！</label>
+					<Icon name="material-symbols:database-search" class="w-5 h-5" />
+				</button>
+			</div>
 		</div>
 		<br/>
 		<MainCard>
-			<div class="text-center" id="basicInfo"></div>
+			<div class="text-center" id="basic"></div>
 			<br/>
 		</MainCard>
 		<div class="divider my-8">
@@ -73,33 +53,39 @@ import MainCard from "@/components/MainCard.astro";
 		<script>
 			// @ts-ignore 
 			import { getluck } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/fortune.js";
-
-			document.getElementById('staticAlert')?.classList.remove('show');
-
-			let hideTimer: ReturnType<typeof setTimeout> | null = null;
-
-			function showAlert() {
-				const alertEl = document.getElementById('staticAlert');
-				if (!alertEl) return;
-				clearTimeout(hideTimer!);
-				alertEl.classList.add('show');
-				hideTimer = setTimeout(() => {
-					alertEl.classList.remove('show');
-				}, 2000);
+			function toggle(aa) {
+			    const ia = document.getElementById('search'),
+					  err = 'border-red-500',  
+					  nor = 'border-teal-500'; 
+			    if (aa) {
+			        ia.classList.remove(nor);
+			        ia.classList.add(err);
+			    } else {
+			        ia.classList.remove(err);
+			        ia.classList.add(nor);
+			    }
 			}
-
-			 document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+			function executed(){
 				const input = document.getElementById("search") as HTMLInputElement;
 				const name = input.value;
-				if (e.key === "Enter") {
-					if (name.length === 0) {
-						showAlert();
-						return;
-					}
-					const nam = getluck(name);
-					document.getElementById("basicInfo")!.innerHTML = nam.replace(/\n/g, "<br/>");
+				if(name.length === 0){
+					document.getElementById("searcht").textContent = "请勿留空！";
+					document.getElementById('basic').classList.add('hidden');
+					toggle(true);
+					return;
 				}
-			});
+				document.getElementById("searcht").textContent = "查询！";
+				toggle(false);
+				document.getElementById('basic').classList.remove('hidden');
+				document.getElementById("basic")!.innerHTML = getluck(name).replace(/\n/g, "<br/>");
+			}
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
+			document.querySelector("#searchx")?.addEventListener("click", executed);
 		</script>
+		<Plicense
+			title="功能·运势占卜 - Southcatsm"
+			url={urlNow}
+			productionDate="2024-10-08"
+		/>
 	</MainCard>
 </BaseLayout>

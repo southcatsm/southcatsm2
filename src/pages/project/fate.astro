@@ -2,8 +2,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
+import Plicense from "@/components/widgets/Plicense.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
 ---
-<BaseLayout title="功能·缘分评定">
+<BaseLayout title="功能·缘分测定">
 	<style>
 		@keyframes fade-in {
 			from { opacity: 0; transform: translateY(10px); }
@@ -47,7 +49,57 @@ import MainCard from "@/components/MainCard.astro";
 			</div>
 		</div>
 		<MainCard>
-			<div id="bar"></div>
+			<div id="bar" class="hidden">
+				<div class="animate-fade-in">
+					<div class="flex justify-between mb-2">
+						<span class="font-semibold text-rose-700">夫妻</span>
+						<span class="font-semibold text-rose-700" id="fq"></span>
+					</div>
+					<div class="w-full bg-gray-200 rounded-full h-3">
+						<div class="bg-rose-700 h-3 rounded-full transition-all duration-1000" id="fqp"></div>
+					</div>
+				</div>
+				
+				<div class="animate-fade-in">
+					<div class="flex justify-between mb-2">
+						<span class="font-semibold text-pink-400">闺蜜</span>
+						<span class="font-semibold text-pink-400" id="gm"></span>
+					</div>
+					<div class="w-full bg-gray-200 rounded-full h-3">
+						<div class="bg-pink-400 h-3 rounded-full transition-all duration-1000" id="gmp"></div>
+					</div>
+				</div>
+				
+				<div class="animate-fade-in">
+					<div class="flex justify-between mb-2">
+						<span class="font-semibold text-purple-400">炮友</span>
+						<span class="font-semibold text-purple-400" id="py"></span>
+					</div>
+					<div class="w-full bg-gray-200 rounded-full h-3">
+						<div class="bg-purple-400 h-3 rounded-full transition-all duration-1000" id="pyp"></div>
+					</div>
+				</div>
+				
+				<div class="animate-fade-in">
+					<div class="flex justify-between mb-2">
+						<span class="font-semibold text-orange-600">死对头</span>
+						<span class="font-semibold text-orange-600" id="sd"></span>
+					</div>
+					<div class="w-full bg-gray-200 rounded-full h-3">
+						<div class="bg-orange-600 h-3 rounded-full transition-all duration-1000" id="sdp"></div>
+					</div>
+				</div>
+				
+				<div class="animate-fade-in">
+					<div class="flex justify-between mb-2">
+						<span class="font-semibold text-gray-400">不认识</span>
+						<span class="font-semibold text-gray-400" id="br"></span>
+					</div>
+					<div class="w-full bg-gray-200 rounded-full h-3">
+						<div class="bg-gray-400 h-3 rounded-full transition-all duration-1000" id="brp"></div>
+					</div>
+				</div>
+			</div>
 		</MainCard>
 		<div class="divider my-8">
 			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
@@ -91,24 +143,21 @@ import MainCard from "@/components/MainCard.astro";
 				}
 				toggle(false,false);
 				document.getElementById("searcht").textContent = "查询！";
-				const res = fate(na,nb);
-				document.getElementById('bar').innerHTML = res.map(result => `
-				    <div class="animate-fade-in">
-						<div class="flex justify-between mb-2">
-							<span class="font-semibold ${result.tcolor}">${result.name}</span>
-							<span class="font-semibold ${result.tcolor}">${result.value}%</span>
-						</div>
-						<div class="w-full bg-gray-200 rounded-full h-3">
-							<div class="${result.bcolor} h-3 rounded-full transition-all duration-1000" 
-								 style="width:${result.value}%"></div>
-						</div>
-					</div>
-				`).join('');
+				const res = fate(na,nb), ids = ['fq', 'gm', 'py', 'sd', 'br'];
+				for (let i = 0; i < ids.length; i++) {
+				    document.getElementById(ids[i]).textContent = `${res[i].value}%`;
+				    document.getElementById(`${ids[i]}p`).style.width = `${res[i].value}%`;
+				}
 				document.getElementById('bar').classList.remove('hidden');
 			}
 			document.querySelector("#searchx")?.addEventListener("click", executed);
 			document.querySelector("#searcha")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 			document.querySelector("#searchb")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 		</script>
+		<Plicense
+			title="功能·缘分测定 - Southcatsm"
+			url={urlNow}
+			productionDate="2024-09-30"
+		/>
 	</MainCard>
 </BaseLayout>

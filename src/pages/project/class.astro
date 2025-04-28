@@ -2,63 +2,41 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
+import Plicense from "@/components/widgets/Plicense.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
 ---
 
 <BaseLayout title="功能·阶级">
 	<style>
-		.alert {
-		    position: fixed;
-			width: 230px;
-			height: 40px;
-		    top: 20px;
-		    right: -100%;
-		    background: #ff4444;
-		    color: white;
-		    padding: 12px 18px;
-		    border-radius: 6px;
-		    display: flex;
-		    align-items: center;
-		    opacity: 0;
-		    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-		    font-family: Arial, sans-serif;
+		@keyframes fade-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
 		}
-		
-		.alert.show {
-		    opacity: 1;
-		    right: 20px;
+		.animate-fade-in {
+			animation: fade-in 0.5s ease-out;
 		}
-		
-		.icon::before {
-		    content: "×";
-		    display: inline-block;
-		    width: 18px;
-		    height: 18px;
-		    border-radius: 50%;
-		    background: white;
-		    color: #ff4444;
-		    text-align: center;
-		    line-height: 18px;
-		    margin-right: 12px;
-		    font-weight: 700;
-		    font-size: 14px;
+		input:focus {
+			outline: none;
+			ring: 2px solid #8B5CF6;
 		}
 	</style>
 	<MainCard>
-		<div id="staticAlert" class="alert">
-		    <span class="icon"></span>
-		    <span class="message">名字不能留空</span>
-		</div>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			生成您的（古代）社会阶级档案
 		</h1>
-		<div style="text-align: center;">
+		<div style="text-align: center; display: flex; gap: 8px; align-items: center; justify-content: center">
 			<input
 				type="text"
 				placeholder="请输入您的名称"
-				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 "
+				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 flex-1"
 				id="search"
 			/>
+			<div>
+				<button class="btn btn-primary btn-outline" id="searchx">
+					<label id="searcht">查询！</label>
+					<Icon name="material-symbols:database-search" class="w-5 h-5" />
+				</button>
+			</div>
 		</div>
 		<br/>
 		<MainCard>
@@ -97,42 +75,57 @@ import MainCard from "@/components/MainCard.astro";
 		<script>
 			// @ts-ignore
 			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/class.js";
-			document.getElementById('staticAlert')?.classList.remove('show');
-			let hideTimer: ReturnType<typeof setTimeout> | null = null;
-			function showAlert() {
-				const alertEl = document.getElementById('staticAlert');
-				if (!alertEl) return;
-				clearTimeout(hideTimer!);
-				alertEl.classList.add('show');
-				hideTimer = setTimeout(() => {
-					alertEl.classList.remove('show');
-				}, 2000);
+			function toggle(aa) {
+			    const ia = document.getElementById('search'),
+					  err = 'border-red-500',  
+					  nor = 'border-teal-500'; 
+			    if (aa) {
+			        ia.classList.remove(nor);
+			        ia.classList.add(err);
+			    } else {
+			        ia.classList.remove(err);
+			        ia.classList.add(nor);
+			    }
 			}
-			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+			function executed(){
 				const input = document.getElementById("search") as HTMLInputElement;
 				const name = input.value;
-				if (e.key === "Enter") {
-					if (name.length === 0) {
-						showAlert();
-						return;
-					}
-					var jj = rank(name);
-					document.getElementById('result').classList.remove('hidden');
-					document.getElementById('africaTitle').textContent = jj.aName;
-					document.getElementById('africaHistory').textContent = jj.aHist;
-					document.getElementById('africaIntro').textContent = jj.aIntr;
-					document.getElementById('indiaTitle').textContent = jj.iName;
-					document.getElementById('indiaHistory').textContent = jj.iHist;
-					document.getElementById('indiaIntro').textContent = jj.iIntr;
-					document.getElementById('chinaTitle').textContent = jj.cName;
-					document.getElementById('chinaHistory').textContent = jj.cHist;
-					document.getElementById('chinaIntro').textContent = jj.cIntr;
-					document.getElementById('japanTitle').textContent = jj.jName;
-					document.getElementById('japanHistory').textContent = jj.jHist;
-					document.getElementById('japanIntro').textContent = jj.jIntr;
+				if(name.length === 0){
+					document.getElementById("searcht").textContent = "请勿留空！";
+					document.getElementById('result').classList.add('hidden');
+					toggle(true);
+					return;
 				}
-			});
+				document.getElementById("searcht").textContent = "查询！";
+				toggle(false);
+				var jj = rank(name);
+				document.getElementById('result').classList.remove('hidden');
+				const regions = [
+					{ prefix: 'a', idPart: 'africa' },
+					{ prefix: 'i', idPart: 'india' },
+					{ prefix: 'c', idPart: 'china' },
+					{ prefix: 'j', idPart: 'japan' }
+				], fields = [
+					{ elSuffix: 'Title', prop: 'Name' },
+					{ elSuffix: 'History', prop: 'Hist' },
+					{ elSuffix: 'Intro', prop: 'Intr' }
+				];
+				regions.forEach(({ prefix, idPart }) => {
+					fields.forEach(({ elSuffix, prop }) => {
+						const elementId = `${idPart}${elSuffix}`;
+						const propName = `${prefix}${prop}`;
+						document.getElementById(elementId).textContent = jj[propName];
+					});
+				});
+			}
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
+			document.querySelector("#searchx")?.addEventListener("click", executed);
 		</script>
+		<Plicense
+			title="功能·阶级生成 - Southcatsm"
+			url={urlNow}
+			productionDate="2025-04-17"
+		/>
 	</MainCard>
 </BaseLayout>
 	

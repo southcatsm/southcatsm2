@@ -2,63 +2,41 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
+import Plicense from "@/components/widgets/Plicense.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
 ---
 
 <BaseLayout title="功能·没墨">
 	<style>
-		.alert {
-		    position: fixed;
-			width: 230px;
-			height: 40px;
-		    top: 20px;
-		    right: -100%;
-		    background: #ff4444;
-		    color: white;
-		    padding: 12px 18px;
-		    border-radius: 6px;
-		    display: flex;
-		    align-items: center;
-		    opacity: 0;
-		    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-		    font-family: Arial, sans-serif;
+		@keyframes fade-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
 		}
-		
-		.alert.show {
-		    opacity: 1;
-		    right: 20px;
+		.animate-fade-in {
+			animation: fade-in 0.5s ease-out;
 		}
-		
-		.icon::before {
-		    content: "×";
-		    display: inline-block;
-		    width: 18px;
-		    height: 18px;
-		    border-radius: 50%;
-		    background: white;
-		    color: #ff4444;
-		    text-align: center;
-		    line-height: 18px;
-		    margin-right: 12px;
-		    font-weight: 700;
-		    font-size: 14px;
+		input:focus {
+			outline: none;
+			ring: 2px solid #8B5CF6;
 		}
 	</style>
 	<MainCard>
-		<div id="staticAlert" class="alert">
-		    <span class="icon"></span>
-		    <span class="message">名字不能留空</span>
-		</div>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			没墨档案生成
 		</h1>
-		<div style="text-align: center;">
+		<div style="text-align: center; display: flex; gap: 8px; align-items: center; justify-content: center">
 			<input
 				type="text"
 				placeholder="请输入您的名称"
-				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 "
+				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 flex-1"
 				id="search"
 			/>
+			<div>
+				<button class="btn btn-primary btn-outline" id="searchx">
+					<label id="searcht">查询！</label>
+					<Icon name="material-symbols:database-search" class="w-5 h-5" />
+				</button>
+			</div>
 		</div>
 		<br/>
 		<MainCard>
@@ -120,7 +98,7 @@ import MainCard from "@/components/MainCard.astro";
 					</tbody>
 				</table>
 			</div>
-			<div class="flex">
+			<div class="flex" id="echart">
 				<div id="smpie" class="m-auto"></div>
 				<br/>
 				<div id="eline" class="m-auto"></div>
@@ -135,153 +113,182 @@ import MainCard from "@/components/MainCard.astro";
 			// @ts-ignore 
 			import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/sakyubasu.js";
 			declare var echarts: any;
-			document.getElementById('staticAlert')?.classList.remove('show');
-			let hideTimer: ReturnType<typeof setTimeout> | null = null;
-			function showAlert() {
-				const alertEl = document.getElementById('staticAlert');
-				if (!alertEl) return;
-				clearTimeout(hideTimer!);
-				alertEl.classList.add('show');
-				hideTimer = setTimeout(() => {
-				  alertEl.classList.remove('show');
-				}, 2000);
+			function toggle(aa) {
+			    const ia = document.getElementById('search'),
+					  err = 'border-red-500',  
+					  nor = 'border-teal-500'; 
+			    if (aa) {
+			        ia.classList.remove(nor);
+			        ia.classList.add(err);
+			    } else {
+			        ia.classList.remove(err);
+			        ia.classList.add(nor);
+			    }
 			}
-			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+			function executed(){
 				const input = document.getElementById("search") as HTMLInputElement;
-				var crt = document.documentElement.getAttribute("data-theme");
 				const name = input.value;
-				if (e.key === "Enter") {
-					if (name.length === 0) {
-						showAlert();
-						return;
-					}
-					const result = divine(name.trim());
-					document.getElementById('texcel').classList.remove('hidden');
-					document.getElementById('tname').textContent = result["姓名"];
-					document.getElementById('tgender').textContent = result["性别"];
-					document.getElementById('tcategory').textContent = result["分类"];
-					document.getElementById('theight').textContent = result["身高"];
-					document.getElementById('tmeasurements').textContent = `${result["上围"]} ${result["下围"]} ${result["屁围"]}`;
-					document.getElementById('tcup').textContent = `${result["罩杯"]} Cup`;
-					document.getElementById('thair').textContent = result["发色"];
-					document.getElementById('texperience').textContent = result["经验人数"];
-					document.getElementById('tdesire').textContent = result["性欲值"];
-					document.getElementById('thobby').textContent = result["性癖"];
-					document.getElementById('tability').textContent = result["特殊能力"];
-					document.getElementById('trating').textContent = result["评价"];
-					
-					//Pie
-					const smpie = document.getElementById("smpie");
-					if (!smpie) return;			   
-					smpie.style.height = "300px";
-					smpie.style.width = "300px";
-					const pie = echarts.init(smpie, 'dark');
-					const pieOption = {
-						title: {
-							text: `${result["姓名"]}のSM程度`,
-							subtext: "by Southcatsm",
-							left: "center"
-						},
-						tooltip: { trigger: 'item' },
-						legend: { orient: 'vertical', left: 'left' },
-						series: [{
-							name: "SM程度",
-							type: 'pie',
-							radius: '50%',
-							toolbox: {
-								show: true
-							},
-							data: [
-								{ value: result["S度"], name: 'S' },
-								{ value: result["M度"], name: 'M' }
-							],
-							itemStyle: {
-								shadowBlur: 200,
-								shadowColor: 'rgba(0, 0, 0, 0.5)'
-							}
-						}]
-					};
-					pie.setOption(pieOption);
-					
-					//Line
-					const eline = document.getElementById("eline");
-					if (!eline) return;			   
-					eline.style.height = "300px";
-					eline.style.width = "800px";
-					const line = echarts.init(eline, 'dark');
-					const lineOption = {
-						title: {
-							text: `${result["姓名"]}の近七日星行为统计`,
-							subtext: "by Southcatsm",
-							left: "center"
-						},
-						tooltip: {
-						    trigger: 'axis',
-						    formatter: '{b}<br/>本日计次: {c}次'
-						},
-						xAxis: {
-							type: 'category',
-							data: [
-								result["近7日行为"][0]["日期"],
-								result["近7日行为"][1]["日期"],
-								result["近7日行为"][2]["日期"],
-								result["近7日行为"][3]["日期"],
-								result["近7日行为"][4]["日期"],
-								result["近7日行为"][5]["日期"],
-								result["近7日行为"][6]["日期"],
-							],
-							axisLabel: {
-								color: '#aaa'
-							},
-							boundaryGap: true
-						},
-						yAxis: {
-						    type: 'value',
-						    axisLabel: {
-						        color: '#aaa',
-						        formatter: '{value}'
-						    }
-						},
-						series: [{
-						    data: [
-								result["近7日行为"][0]["人数"],
-								result["近7日行为"][1]["人数"],
-								result["近7日行为"][2]["人数"],
-								result["近7日行为"][3]["人数"],
-								result["近7日行为"][4]["人数"],
-								result["近7日行为"][5]["人数"],
-								result["近7日行为"][6]["人数"]
-							],
-						    type: 'line',
-						    smooth: true,
-						    lineStyle: {
-						        width: 3,
-						        color: '#5470C6'
-						    },
-						    itemStyle: {
-						        color: '#FFD700'
-						    },
-						    areaStyle: {
-						        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-									{ offset: 0, color: 'rgba(84, 112, 198, 0.5)' },
-									{ offset: 1, color: 'rgba(84, 112, 198, 0.1)' }
-						        ])
-						    },
-							label: {
-								show: true
-							}
-						}],
-						grid: {
-						    containLabel: true,
-						    left: '3%',
-						    right: '4%',
-							bottom: '3%'
-						}
-					};
-					line.setOption(lineOption);
+				if(name.length === 0){
+					document.getElementById("searcht").textContent = "请勿留空！";
+					document.getElementById('texcel').classList.add('hidden');
+					document.getElementById('echart').classList.add('hidden');
+					toggle(true);
+					return;
 				}
-			});
+				document.getElementById("searcht").textContent = "查询！";
+				toggle(false);
+				const result = divine(name.trim());
+				document.getElementById('echart').classList.remove('hidden');
+				document.getElementById('texcel').classList.remove('hidden');
+				const mappings = [
+					{ id: 'tname', prop: '姓名' },
+					{ id: 'tgender', prop: '性别' },
+					{ id: 'tcategory', prop: '分类' },
+					{ id: 'theight', prop: '身高' },
+					{ 
+						id: 'tmeasurements',
+						props: ['上围', '下围', '屁围'],
+						formatter: values => values.join(' ')
+					},
+					{
+						id: 'tcup',
+						prop: '罩杯',
+						formatter: value => `${value} Cup`
+					},
+					{ id: 'thair', prop: '发色' },
+					{ id: 'texperience', prop: '经验人数' },
+					{ id: 'tdesire', prop: '性欲值' },
+					{ id: 'thobby', prop: '性癖' },
+					{ id: 'tability', prop: '特殊能力' },
+					{ id: 'trating', prop: '评价' }
+				];
+				for (const { id, prop, props, formatter } of mappings) {
+					const element = document.getElementById(id);
+					let value;
+					if (props) value = props.map(p => result[p]);
+					else value = result[prop];
+					if (formatter) value = formatter(value);
+					element.textContent = value;
+				}
+				
+				//Pie
+				const smpie = document.getElementById("smpie");
+				if (!smpie) return;			   
+				smpie.style.height = "300px";
+				smpie.style.width = "300px";
+				const pie = echarts.init(smpie, 'dark');
+				const pieOption = {
+					title: {
+						text: `${result["姓名"]}のSM程度`,
+						subtext: "by Southcatsm",
+						left: "center"
+					},
+					tooltip: { trigger: 'item' },
+					legend: { orient: 'vertical', left: 'left' },
+					series: [{
+						name: "SM程度",
+						type: 'pie',
+						radius: '50%',
+						toolbox: {
+							show: true
+						},
+						data: [
+							{ value: result["S度"], name: 'S' },
+							{ value: result["M度"], name: 'M' }
+						],
+						itemStyle: {
+							shadowBlur: 200,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}]
+				};
+				pie.setOption(pieOption);
+				
+				//Line
+				const eline = document.getElementById("eline");
+				if (!eline) return;			   
+				eline.style.height = "300px";
+				eline.style.width = "800px";
+				const line = echarts.init(eline, 'dark');
+				const lineOption = {
+					title: {
+						text: `${result["姓名"]}の近七日星行为统计`,
+						subtext: "by Southcatsm",
+						left: "center"
+					},
+					tooltip: {
+						trigger: 'axis',
+						formatter: '{b}<br/>本日计次: {c}次'
+					},
+					xAxis: {
+						type: 'category',
+						data: [
+							result["近7日行为"][0]["日期"],
+							result["近7日行为"][1]["日期"],
+							result["近7日行为"][2]["日期"],
+							result["近7日行为"][3]["日期"],
+							result["近7日行为"][4]["日期"],
+							result["近7日行为"][5]["日期"],
+							result["近7日行为"][6]["日期"],
+						],
+						axisLabel: {
+							color: '#aaa'
+						},
+						boundaryGap: true
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#aaa',
+							formatter: '{value}'
+						}
+					},
+					series: [{
+						data: [
+							result["近7日行为"][0]["人数"],
+							result["近7日行为"][1]["人数"],
+							result["近7日行为"][2]["人数"],
+							result["近7日行为"][3]["人数"],
+							result["近7日行为"][4]["人数"],
+							result["近7日行为"][5]["人数"],
+							result["近7日行为"][6]["人数"]
+						],
+						type: 'line',
+						smooth: true,
+						lineStyle: {
+							width: 3,
+							color: '#5470C6'
+						},
+						itemStyle: {
+							color: '#FFD700'
+						},
+						areaStyle: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+								{ offset: 0, color: 'rgba(84, 112, 198, 0.5)' },
+								{ offset: 1, color: 'rgba(84, 112, 198, 0.1)' }
+							])
+						},
+						label: {
+							show: true
+						}
+					}],
+					grid: {
+						containLabel: true,
+						left: '3%',
+						right: '4%',
+						bottom: '3%'
+					}
+				};
+				line.setOption(lineOption);
+			}
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
+			document.querySelector("#searchx")?.addEventListener("click", executed);
 		</script>
+		<Plicense
+			title="功能·没墨生成 - Southcatsm"
+			url={urlNow}
+			productionDate="2024-11-11"
+		/>
 	</MainCard>
 </BaseLayout>
 	
