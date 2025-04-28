@@ -17,9 +17,6 @@ const {
 } = Astro.props;
 
 const displayDate = dayjs(productionDate).format("YYYY-MM-DD");
-const starRating = Math.min(5, Math.max(0, Math.round(rating)));
-
-
 const socialLinks = [
   {
     name: "X (Twitter)",
