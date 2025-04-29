@@ -10,8 +10,7 @@ export interface Props {
 const { 
 	title, 
 	url, 
-	productionDate, 
-	userName = "Southcatsm" 
+	productionDate
 } = Astro.props;
 const displayDate = dayjs(productionDate).format("YYYY-MM-DD");
 const socialLinks = [
@@ -69,7 +68,7 @@ const socialLinks = [
 				<div class="mt-4">
 					<hr class="my-4" />
 					<p class="text-sm opacity-75">
-						© {userName} |
+						© Southcatsm |
 						<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed"
 						class="hover:text-primary transition-colors">
 							CC BY-NC-SA 4.0
