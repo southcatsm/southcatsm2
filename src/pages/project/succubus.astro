@@ -24,15 +24,15 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			没墨档案生成
 		</h1>
-		<div style="text-align: center; display: flex; gap: 8px; align-items: center; justify-content: center">
+		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4">
 			<input
 				type="text"
 				placeholder="请输入您的名称"
-				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 flex-1"
+				class="input input-bordered w-full md:flex-1 pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400"
 				id="search"
 			/>
-			<div>
-				<button class="btn btn-primary btn-outline" id="searchx">
+			<div class="w-full md:w-auto">
+				<button class="btn btn-primary btn-outline w-full" id="searchx">
 					<label id="searcht">查询！</label>
 					<Icon name="material-symbols:database-search" class="w-5 h-5" />
 				</button>
@@ -78,15 +78,26 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 								<span class="text-gray-400">发色：</span><label id="thair"></label>
 							</td>
 							<td class="px-4 py-3 text-teal-600">
-								<span class="text-gray-400">··人数：</span><label id="texperience"></label>
+								<span class="text-gray-400">教网人数：</span><label id="texperience"></label>
 							</td>
 							<td class="px-4 py-3 text-fuchsia-600">
-								<span class="text-gray-400">性欲值：</span><label id="tdesire"></label>
+								<span class="text-gray-400">星欲值：</span><label id="tdesire"></label>
+							</td>
+						</tr>
+						<tr class="divide-x divide-purple-100 border-t border-purple-50">
+							<td class="px-4 py-3 text-amber-800">
+								<span class="text-gray-400">敏感点：</span><label id="tsensitive"></label>
+							</td>
+							<td class="px-4 py-3 text-teal-600">
+								<span class="text-gray-400">银纹：</span><label id="tline"></label>
+							</td>
+							<td class="px-4 py-3 text-fuchsia-600">
+								<span class="text-gray-400">··率：</span><label id="tclimax"></label>
 							</td>
 						</tr>
 						<tr class="divide-x divide-purple-100 border-t border-purple-50">
 							<td class="px-4 py-3 text-slate-700">
-								<span class="text-gray-400">性癖：</span><label id="thobby"></label>
+								<span class="text-gray-400">星癖：</span><label id="thobby"></label>
 							</td>
 							<td class="px-4 py-3 text-emerald-700 break-words max-w-[200px]">
 								<span class="text-gray-400">特殊能力：</span><label id="tability"></label>
@@ -111,7 +122,8 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 		<script src="https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/js/echarts.js" type="text/javascript"></script>
 		<script>
 			// @ts-ignore 
-			import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/sakyubasu.js";
+			import { divine } from "./f4.js";
+			//import { divine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/sakyubasu.js";
 			declare var echarts: any;
 			function toggle(aa) {
 			    const ia = document.getElementById('search'),
@@ -160,7 +172,10 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 					{ id: 'tdesire', prop: '性欲值' },
 					{ id: 'thobby', prop: '性癖' },
 					{ id: 'tability', prop: '特殊能力' },
-					{ id: 'trating', prop: '评价' }
+					{ id: 'trating', prop: '评价' },
+					{ id: 'tsensitive', prop: '敏感点' },
+					{ id: 'tline', prop: '淫纹' },
+					{ id: 'tclimax', prop: '高潮率' },
 				];
 				for (const { id, prop, props, formatter } of mappings) {
 					const element = document.getElementById(id);
@@ -285,7 +300,7 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 			document.querySelector("#searchx")?.addEventListener("click", executed);
 		</script>
 		<Plicense
-			title="功能·没墨生成 - Southcatsm"
+			title="功能·没墨生成"
 			url={urlNow}
 			productionDate="2024-11-11"
 		/>

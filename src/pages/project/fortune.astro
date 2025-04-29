@@ -19,23 +19,20 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 			outline: none;
 			ring: 2px solid #8B5CF6;
 		}
-		.basicInfo-transition {
-		  transition: width 1s ease-in-out;
-		}
 	</style>
 	<MainCard>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
 			今日运势占卜
 		</h1>
-		<div style="text-align: center; display: flex; gap: 8px; align-items: center; justify-content: center">
+		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4">
 			<input
 				type="text"
 				placeholder="请输入您的名称"
-				class="input input-bordered pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400 flex-1"
+				class="input input-bordered w-full md:flex-1 pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400"
 				id="search"
 			/>
-			<div>
-				<button class="btn btn-primary btn-outline" id="searchx">
+			<div class="w-full md:w-auto">
+				<button class="btn btn-primary btn-outline w-full" id="searchx">
 					<label id="searcht">查询！</label>
 					<Icon name="material-symbols:database-search" class="w-5 h-5" />
 				</button>
@@ -83,7 +80,7 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 			document.querySelector("#searchx")?.addEventListener("click", executed);
 		</script>
 		<Plicense
-			title="功能·运势占卜 - Southcatsm"
+			title="功能·运势占卜"
 			url={urlNow}
 			productionDate="2024-10-08"
 		/>

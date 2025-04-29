@@ -3,127 +3,121 @@ import dayjs from "dayjs";
 import { Icon } from "astro-icon/components";
 
 export interface Props {
-  title: string;
-  url: string;
-  productionDate: string;
-  userName?: string; 
+	title: string;
+	url: string;
+	productionDate: string;
 }
-
 const { 
-  title, 
-  url, 
-  productionDate, 
-  userName = "Southcatsm" 
+	title, 
+	url, 
+	productionDate, 
+	userName = "Southcatsm" 
 } = Astro.props;
-
 const displayDate = dayjs(productionDate).format("YYYY-MM-DD");
 const socialLinks = [
-  {
-    name: "X (Twitter)",
-    icon: "ri:twitter-x-line",
-    class: "bg-black hover:bg-gray-800",
-    url: `https://twitter.com/intent/tweet/?text=${title}&url=${url}`,
-  },
-  {
-    name: "Telegram",
-    icon: "ri:telegram-line",
-    class: "bg-[#26a5e4] hover:bg-[#1e96d1]",
-    url: `https://telegram.me/share/url?text=${title}&url=${url}`,
-  },
-  {
-    name: "Reddit",
-    icon: "ri:reddit-line",
-    class: "bg-[#ff4500] hover:bg-[#e63e00]",
-    url: `https://reddit.com/submit/?url=${url}&title=${title}`,
-  },
-  {
-    name: "Facebook",
-    icon: "ri:facebook-circle-line",
-    class: "bg-[#0866ff] hover:bg-[#0755d6]",
-    url: `https://facebook.com/sharer/sharer.php?u=${url}`,
-  },
-  {
-    name: "Email",
-    icon: "ri:mail-line",
-    class: "bg-gray-600 hover:bg-gray-700",
-    url: `mailto:?subject=${title}&body=${url}`,
-  },
+	{
+		name: "X (Twitter)",
+		icon: "ri:twitter-x-line",
+		class: "bg-black hover:bg-gray-800",
+		url: `https://twitter.com/intent/tweet/?text=${title}&url=${url}`,
+	},
+	{
+		name: "Telegram",
+		icon: "ri:telegram-line",
+		class: "bg-[#26a5e4] hover:bg-[#1e96d1]",
+		url: `https://telegram.me/share/url?text=${title}&url=${url}`,
+	},
+	{
+		name: "QQ",
+		icon: "ri:qq-line",
+		class: "bg-[#0866ff] hover:bg-[#0755d6]",
+		url: `https://connect.qq.com/widget/shareqq/index.html?url=${url}&title=${title}`,
+	},
+	{
+		name: "Facebook",
+		icon: "ri:facebook-circle-line",
+		class: "bg-[#0866ff] hover:bg-[#0755d6]",
+		url: `https://facebook.com/sharer/sharer.php?u=${url}`,
+	},
+	{
+		name: "Email",
+		icon: "ri:mail-line",
+		class: "bg-gray-600 hover:bg-gray-700",
+		url: `mailto:?subject=${title}&body=${url}`,
+	},
 ];
 ---
-
+<br/>
 <div class="container p-0">
-  <div class="card bg-base-200 overflow-visible">
-    <div class="card-body relative p-4 sm:p-6 lg:p-8">
-      <!-- 授权图标 -->
-      <div class="absolute -top-8 left-8">
-        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-lg">
-          <Icon name="ri:creative-commons-line" class="w-10 h-10 text-primary-content" />
-        </div>
-      </div>
+	<div class="card bg-base-200 overflow-visible">
+		<div class="card-body relative p-4 sm:p-6 lg:p-8">
+			<div class="absolute -top-8 left-8">
+				<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-lg">
+					<Icon name="mdi:file-document-plus" class="w-10 h-10 text-primary-content" />
+				</div>
+			</div>
+			<div class="space-y-4">
+				<br/>
+				<h3 class="text-lg sm:text-xl lg:text-2xl font-bold">{title}</h3>
+				<div class="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm opacity-75">
+					<span class="flex items-center gap-1">
+						<Icon name="lucide:calendar" class="h-4 w-4" />
+						制作日期：{displayDate}
+					</span>
+				</div>
+		
+				<div class="mt-4">
+					<hr class="my-4" />
+					<p class="text-sm opacity-75">
+						© {userName} |
+						<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed"
+						class="hover:text-primary transition-colors">
+							CC BY-NC-SA 4.0
+						</a>
+					</p>
+				</div>
+			</div>
 
-      <div class="space-y-4">
-		<br/>
-        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold">{title}</h3>
+			<div class="flex justify-end mt-4">
+				<button class="btn btn-primary btn-outline" onclick="share_modal.showModal()">
+					分享
+					<Icon name="ri:share-line" class="w-5 h-5" />
+				</button>
+			</div>
+		</div>
+	</div>
 
-        <div class="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm opacity-75">
-          <span class="flex items-center gap-1">
-            <Icon name="lucide:calendar" class="h-4 w-4" />
-            制作日期：{displayDate}
-          </span>
-        </div>
-
-        <div class="mt-4">
-          <hr class="my-4" />
-          <p class="text-sm opacity-75">
-            © {userName} |
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed"
-               class="hover:text-primary transition-colors">
-              CC BY-NC-SA 4.0
-            </a>
-          </p>
-        </div>
-      </div>
-
-      <div class="flex justify-end mt-4">
-        <button class="btn btn-primary btn-outline" onclick="share_modal.showModal()">
-          分享
-          <Icon name="ri:share-line" class="w-5 h-5" />
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <dialog id="share_modal" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box max-w-2xl rounded-none sm:rounded-xl">
-      <h3 class="font-bold text-lg sm:text-xl mb-6 text-center">
-        分享到社交平台
-      </h3>
-      <div class="flex flex-wrap gap-4 justify-center">
-        {
-          socialLinks.map(({ name, icon, class: bgClass, url }) => (
-            <a
-              href={url}
-              class={`btn btn-circle btn-lg transition-transform hover:scale-110 ${bgClass}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={name}
-            >
-              <span class="sr-only">{name}</span>
-              <Icon name={icon} class="w-6 h-6 text-white" />
-            </a>
-          ))
-        }
-      </div>
-      <div class="modal-action">
-        <form method="dialog">
-          <button class="btn btn-ghost hover:scale-105 transition-transform">
-            关闭
-          </button>
-        </form>
-      </div>
-    </div>
-    <form method="dialog" class="modal-backdrop">
-      <button>关闭</button>
-    </form>
-  </dialog>
+	<dialog id="share_modal" class="modal modal-bottom sm:modal-middle">
+		<div class="modal-box max-w-2xl rounded-none sm:rounded-xl">
+			<h3 class="font-bold text-lg sm:text-xl mb-6 text-center">
+				分享到社交平台
+			</h3>
+			<div class="flex flex-wrap gap-4 justify-center">
+				{
+					socialLinks.map(({ name, icon, class: bgClass, url }) => (
+						<a
+						  href={url}
+						  class={`btn btn-circle btn-lg transition-transform hover:scale-110 ${bgClass}`}
+						  target="_blank"
+						  rel="noopener noreferrer"
+						  title={name}
+						>
+							<span class="sr-only">{name}</span>
+							<Icon name={icon} class="w-6 h-6 text-white" />
+						</a>
+					))
+				}
+			</div>
+			<div class="modal-action">
+				<form method="dialog">
+					<button class="btn btn-ghost hover:scale-105 transition-transform">
+						关闭
+					</button>
+				</form>
+			</div>
+		</div>
+		<form method="dialog" class="modal-backdrop">
+			<button>关闭</button>
+		</form>
+	</dialog>
 </div>
