@@ -4,6 +4,12 @@ import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
 import Plicense from "@/components/widgets/Plicense.astro";
 const urlNow = new URL(Astro.url, Astro.site).href;
+const pgTags = [
+	{name: "搞笑", color: "blue"},
+	{name: "历史", color: "orange"},
+	{name: "随机", color: "purple"},
+	{name: "古代", color: "gray"}
+];
 ---
 
 <BaseLayout title="功能·阶级">
@@ -22,7 +28,7 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 	</style>
 	<MainCard>
 		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
-			生成您的（古代）社会阶级档案
+			生成您的社会阶级档案
 		</h1>
 		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4">
 			<input
@@ -40,31 +46,54 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 		</div>
 		<br/>
 		<MainCard>
-			<div id="result" class="hidden flex flex-wrap gap-4"> 
-			    <div class="w-full md:w-[calc(50%-8px)] bg-amber-100 p-6 rounded-lg shadow-md"> 
-			        <p class="text-emerald-700 text-2xl mb-3">非洲庄园档案</p>
-			        <h2 class="text-2xl font-bold mb-4 text-amber-800" id="africaTitle"></h2>
-			        <p class="text-sm mb-2 text-amber-700" id="africaHistory"></p>
-			        <p class="text-gray-600" id="africaIntro"></p>
-			    </div>
-			    <div class="w-full md:w-[calc(50%-8px)] bg-blue-100 p-6 rounded-lg shadow-md">
-			        <p class="text-orange-600 text-2xl mb-3">印度种姓档案</p>
-			        <h2 class="text-2xl font-bold mb-4 text-blue-800" id="indiaTitle"></h2>
-			        <p class="text-sm mb-2 text-blue-700" id="indiaHistory"></p>
-			        <p class="text-gray-600" id="indiaIntro"></p>
-			    </div>
-			    <div class="w-full md:w-[calc(50%-8px)] bg-violet-100 p-6 rounded-lg shadow-md">
-			        <p class="text-orange-600 text-2xl mb-3">中国阶级档案</p>
-			        <h2 class="text-2xl font-bold mb-4 text-violet-800" id="chinaTitle"></h2>
-			        <p class="text-sm mb-2 text-violet-700" id="chinaHistory"></p>
-			        <p class="text-gray-600" id="chinaIntro"></p>
-			    </div>
-			    <div class="w-full md:w-[calc(50%-8px)] bg-lime-100 p-6 rounded-lg shadow-md">
-			        <p class="text-orange-600 text-2xl mb-3">日本层级档案</p>
-			        <h2 class="text-2xl font-bold mb-4 text-lime-800" id="japanTitle"></h2>
-			        <p class="text-sm mb-2 text-lime-700" id="japanHistory"></p>
-			        <p class="text-gray-600" id="japanIntro"></p>
-			    </div>
+			<div id="result" class="hidden flex flex-wrap gap-4">
+				<div class="w-full md:w-[calc(50%-8px)] bg-red-300 p-6 rounded-lg shadow-md border-2 border-red-400 
+				            transition-all duration-300 hover:border-red-600 hover:shadow-lg hover:-translate-y-1">
+				    <p class="text-yellow-600 text-2xl mb-3 font-bold hover:text-yellow-700 transition-colors">中国阶级档案</p>
+				    <h2 class="text-2xl font-bold mb-4 text-red-800 group-hover:text-red-900" id="chinaTitle"></h2>
+				    <p class="text-sm mb-2 text-red-700 group-hover:text-red-800" id="chinaHistory"></p>
+				    <p class="text-gray-700 group-hover:text-gray-800" id="chinaIntro"></p>
+				</div>
+
+				<div class="w-full md:w-[calc(50%-8px)] bg-amber-300 p-6 rounded-lg shadow-md border-2 border-amber-400
+				            transition-all duration-300 hover:border-amber-600 hover:shadow-lg hover:-translate-y-1">
+				    <p class="text-orange-700 text-2xl mb-3 font-bold hover:text-orange-800 transition-colors">非洲庄园档案</p>
+				    <h2 class="text-2xl font-bold mb-4 text-amber-900 group-hover:text-amber-950" id="africaTitle"></h2>
+				    <p class="text-sm mb-2 text-amber-800 group-hover:text-amber-900" id="africaHistory"></p>
+				    <p class="text-gray-700 group-hover:text-gray-800" id="africaIntro"></p>
+				</div>
+				
+				<div class="w-full md:w-[calc(50%-8px)] bg-orange-300 p-6 rounded-lg shadow-md border-2 border-orange-400
+				            transition-all duration-300 hover:border-orange-600 hover:shadow-lg hover:-translate-y-1">
+				    <p class="text-red-600 text-2xl mb-3 font-bold hover:text-red-700 transition-colors">印度种姓档案</p>
+				    <h2 class="text-2xl font-bold mb-4 text-orange-800 group-hover:text-orange-900" id="indiaTitle"></h2>
+				    <p class="text-sm mb-2 text-orange-700 group-hover:text-orange-800" id="indiaHistory"></p>
+				    <p class="text-gray-700 group-hover:text-gray-800" id="indiaIntro"></p>
+				</div>
+				
+				<div class="w-full md:w-[calc(50%-8px)] bg-blue-300 p-6 rounded-lg shadow-md border-2 border-blue-400
+				            transition-all duration-300 hover:border-blue-600 hover:shadow-lg hover:-translate-y-1">
+				    <p class="text-yellow-600 text-2xl mb-3 font-bold hover:text-yellow-700 transition-colors">埃及太阳档案</p>
+				    <h2 class="text-2xl font-bold mb-4 text-blue-800 group-hover:text-blue-900" id="egyptTitle"></h2>
+				    <p class="text-sm mb-2 text-blue-700 group-hover:text-blue-800" id="egyptHistory"></p>
+				    <p class="text-gray-700 group-hover:text-gray-800" id="egyptIntro"></p>
+				</div>
+				
+				<div class="w-full md:w-[calc(50%-8px)] bg-cyan-300 p-6 rounded-lg shadow-md border-2 border-cyan-400
+				            transition-all duration-300 hover:border-cyan-600 hover:shadow-lg hover:-translate-y-1">
+				    <p class="text-emerald-700 text-2xl mb-3 font-bold hover:text-emerald-800 transition-colors">希腊人种档案</p>
+				    <h2 class="text-2xl font-bold mb-4 text-cyan-800 group-hover:text-cyan-900" id="spartaTitle"></h2>
+				    <p class="text-sm mb-2 text-cyan-700 group-hover:text-cyan-800" id="spartaHistory"></p>
+				    <p class="text-gray-700 group-hover:text-gray-800" id="spartaIntro"></p>
+				</div>
+				
+				<div class="w-full md:w-[calc(50%-8px)] bg-pink-300 p-6 rounded-lg shadow-md border-2 border-pink-400
+				            transition-all duration-300 hover:border-pink-600 hover:shadow-lg hover:-translate-y-1">
+				    <p class="text-indigo-600 text-2xl mb-3 font-bold hover:text-indigo-700 transition-colors">日本层级档案</p>
+				    <h2 class="text-2xl font-bold mb-4 text-pink-800 group-hover:text-pink-900" id="japanTitle"></h2>
+				    <p class="text-sm mb-2 text-pink-700 group-hover:text-pink-800" id="japanHistory"></p>
+				    <p class="text-gray-700 group-hover:text-gray-800" id="japanIntro"></p>
+				</div>
 			</div>
 			<br/>
 		</MainCard>
@@ -74,7 +103,7 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 		</div>
 		<script>
 			// @ts-ignore
-			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/class.js";
+			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.494/js/class.js";
 			function toggle(aa) {
 			    const ia = document.getElementById('search'),
 					  err = 'border-red-500',  
@@ -104,7 +133,9 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 					{ prefix: 'a', idPart: 'africa' },
 					{ prefix: 'i', idPart: 'india' },
 					{ prefix: 'c', idPart: 'china' },
-					{ prefix: 'j', idPart: 'japan' }
+					{ prefix: 'j', idPart: 'japan' },
+					{ prefix: 's', idPart: 'sparta' },
+					{ prefix: 'e', idPart: 'egypt' },
 				], fields = [
 					{ elSuffix: 'Title', prop: 'Name' },
 					{ elSuffix: 'History', prop: 'Hist' },
@@ -121,10 +152,12 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 			document.querySelector("#searchx")?.addEventListener("click", executed);
 		</script>
+		<br />
 		<Plicense
 			title="功能·阶级生成"
 			url={urlNow}
 			productionDate="2025-04-17"
+			tags={pgTags}
 		/>
 	</MainCard>
 </BaseLayout>

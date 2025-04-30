@@ -6,12 +6,22 @@ export interface Props {
 	title: string;
 	url: string;
 	productionDate: string;
+	ags?: Array<{ name: string; color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' }>;
 }
 const { 
 	title, 
 	url, 
-	productionDate
+	productionDate, 
+	tags = []
 } = Astro.props;
+const tagColors = {
+	red: 'bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white',
+	blue: 'bg-blue-500/10 hover:bg-blue-500 text-blue-500 hover:text-white',
+	green: 'bg-green-500/10 hover:bg-green-500 text-green-500 hover:text-white',
+	purple: 'bg-purple-500/10 hover:bg-purple-500 text-purple-500 hover:text-white',
+	orange: 'bg-orange-500/10 hover:bg-orange-500 text-orange-500 hover:text-white',
+	gray: 'bg-gray-500/10 hover:bg-gray-500 text-gray-500 hover:text-white',
+};
 const displayDate = dayjs(productionDate).format("YYYY-MM-DD");
 const socialLinks = [
 	{
@@ -52,7 +62,7 @@ const socialLinks = [
 		<div class="card-body relative p-4 sm:p-6 lg:p-8">
 			<div class="absolute -top-8 left-8">
 				<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-lg">
-					<Icon name="mdi:file-document-plus" class="w-10 h-10 text-primary-content" />
+					<Icon name="mdi:toolbox-outline" class="w-10 h-10 text-primary-content" />
 				</div>
 			</div>
 			<div class="space-y-4">
@@ -64,7 +74,18 @@ const socialLinks = [
 						制作日期：{displayDate}
 					</span>
 				</div>
-		
+				{tags.length > 0 && (
+					<div class="flex flex-wrap gap-2 mt-2">
+					    {tags.map((tag) => (
+							<span 
+					        class={`btn btn-xs !rounded-full transition-all duration-200 hover:scale-105 
+					                border-none cursor-pointer px-3 py-1 shadow-sm 
+					                ${tagColors[tag.color]}`}>
+								{tag.name}
+							</span>
+					    ))}
+					</div>
+				)}
 				<div class="mt-4">
 					<hr class="my-4" />
 					<p class="text-sm opacity-75">

@@ -4,6 +4,12 @@ import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
 import Plicense from "@/components/widgets/Plicense.astro";
 const urlNow = new URL(Astro.url, Astro.site).href;
+const pgTags = [
+	{name: "玄学", color: "green" },
+	{name: "搞笑", color: "blue"},
+	{name: "随机", color: "purple"},
+	{name: "缘分", color: "red"}
+];
 ---
 <BaseLayout title="功能·缘分测定">
 	<style>
@@ -154,10 +160,12 @@ const urlNow = new URL(Astro.url, Astro.site).href;
 			document.querySelector("#searcha")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 			document.querySelector("#searchb")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 		</script>
+		<br />
 		<Plicense
 			title="功能·缘分测定"
 			url={urlNow}
 			productionDate="2024-09-30"
+			tags={pgTags}
 		/>
 	</MainCard>
 </BaseLayout>
