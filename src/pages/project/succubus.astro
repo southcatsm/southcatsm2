@@ -351,7 +351,7 @@ const pgTags = [
 			title="功能·没墨生成"
 			url={urlNow}
 			productionDate="2024-11-11"
-			tags={pgTags}
+			tags={pgTags as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray'}>}
 		/>
 	</MainCard>
 </BaseLayout>

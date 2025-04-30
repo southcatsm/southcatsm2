@@ -88,7 +88,7 @@ const pgTags = [
 			title="功能·运势占卜"
 			url={urlNow}
 			productionDate="2024-10-08"
-			tags={pgTags}
+			tags={pgTags as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray'}>}
 		/>
 	</MainCard>
 </BaseLayout>
