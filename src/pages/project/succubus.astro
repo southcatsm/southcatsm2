@@ -197,12 +197,12 @@ const pgTags = [
 					{ 
 						id: 'tmeasurements',
 						props: ['上围', '下围', '屁围'],
-						formatter: values => values.join(' ')
+						formatter: (values : any) => values.join(' ')
 					},
 					{
 						id: 'tcup',
 						prop: '罩杯',
-						formatter: value => `${value} Cup`
+						formatter: (value : any) => `${value} Cup`
 					},
 					{ id: 'thair', prop: '发色' },
 					{ id: 'texperience', prop: '经验人数' },
