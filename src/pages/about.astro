@@ -14,12 +14,8 @@ import MainCard from "@/components/MainCard.astro";
 			font-style:italic;
 		}
 	</style>
-	<MainCard title="了解笔者">
+	<MainCard>
 		<div class="space-y-10 mb-8">
-			<h3 class="text-2xl font-bold mb-6 flex items-center gap-2" id="heading-1">
-				<Icon name="lucide:file" class="w-6 h-6 text-primary" />
-				<span>生平事迹</span>
-			</h3>
 		    <section class="flex flex-col md:flex-row gap-8 items-center md:items-start">
 		        <div class="flex-1 text-center md:text-left">
 					<h1 class="text-3xl md:text-4xl font-bold mb-2">南猫咸莫 / Southcatsm</h1>
@@ -63,7 +59,7 @@ import MainCard from "@/components/MainCard.astro";
 							{ name: "Java", icon: "lucide:coffee", color: "oklch(0.7 0.2 30)" },
 							{ name: "C++", icon: "simple-icons:cplusplus", color: "oklch(0.6 0.2 240)" },
 							{ name: "Python", icon: "simple-icons:python", color: "oklch(0.7 0.2 250)" },
-							{ name: "Typescript", icon: "simple-icons:typescript", color: "oklch(0.7 0.2 240)" },
+							{ name: "TypeScript", icon: "simple-icons:typescript", color: "oklch(0.7 0.2 240)" },
 							{ name: "Unity", icon: "simple-icons:unity", color: "oklch(0.7 0.2 210)" },
 						].map((tech) => (
 							<div class="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
@@ -76,11 +72,84 @@ import MainCard from "@/components/MainCard.astro";
 					}
 			    </div>
 			</section>
+			
+			<section>
+			    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+			        <Icon name="lucide:sparkles" class="w-6 h-6 text-primary" />
+			        <span>二次元成分</span>
+			    </h2>
+			    <div class="bg-base-200 rounded-xl p-6">
+			        <div class="flex flex-col md:flex-row gap-6 items-center">
+			            <div class="flex-1">
+			                <h3 class="text-lg font-bold mb-4">ACGN 偏好分析</h3>
+			                <div class="space-y-4">
+			                    {[
+			                        { name: "动画", level: 60, color: "oklch(0.4 0.2 10)" },
+			                        { name: "漫画", level: 95, color: "oklch(0.7 0.2 180)" },
+			                        { name: "游戏", level: 95, color: "oklch(0.7 0.2 270)" },
+			                        { name: "轻小说", level: 40, color: "oklch(0.7 0.2 350)" }
+			                    ].map(item => (
+			                        <div>
+			                            <div class="flex justify-between mb-1">
+			                                <span>{item.name}</span>
+			                                <span>{item.level}%</span>
+			                            </div>
+			                            <progress 
+			                                class="progress w-full h-2" 
+			                                value={item.level} 
+			                                max="100"
+			                                style={`--progress-color: ${item.color}`}
+			                            ></progress>
+			                        </div>
+			                    ))}
+			                </div>
+			            </div>
+			            <div class="text-center">
+			                <div class="radial-progress text-primary" style="--value:72.5;--size:12rem;">
+			                    <span class="text-xl font-bold">浓度<br/>72.5%</span>
+			                </div>
+			                <p class="mt-4 text-sm">鉴定为：<br/>"会自己买谷子的阿宅"</p>
+						</div>
+			        </div>
+			    </div>
+			</section>
+			
+			<section>
+				<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+					<Icon name="simple-icons:steam" class="w-6 h-6 text-primary" />
+					<span>Steam</span>
+				</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div class="stats bg-base-200 shadow">
+						<div class="stat">
+							<div class="stat-figure text-primary">
+								<Icon name="lucide:clock" class="w-8 h-8" />
+							</div>
+							<div class="stat-title">总游戏时长</div><br/>
+							<div class="stat-value text-primary">137h</div>
+						</div>
+					</div>
+					<div class="stats bg-base-200 shadow">
+						<div class="stat">
+							<div class="stat-figure text-secondary">
+								<div class="avatar">
+									<div class="w-12 rounded-full bg-base-300 p-2">
+										<Icon name="lucide:gamepad-2" class="w-full h-full" />
+									</div>
+								</div>
+							</div>
+							<div class="stat-title">最近在玩</div>
+							<br/>
+							<div class="stat-value text-primary">MiSide</div>
+						</div>
+					</div>
+				</div>
+			</section>
 			  
 		    <section>
 		        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
 					<Icon name="lucide:github" class="w-6 h-6 text-primary" />
-					<span>Github当前状态</span>
+					<span>Github</span>
 		        </h2>
 		        <GitHubStats username="southcatsm" showLanguages={false} showCommitGraph={true} />
 		    </section>

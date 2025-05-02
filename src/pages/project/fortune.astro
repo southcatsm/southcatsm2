@@ -4,10 +4,12 @@ import { Icon } from "astro-icon/components";
 import Plicense from "@/components/widgets/Plicense.astro";
 import MainCard from "@/components/MainCard.astro";
 const urlNow = new URL(Astro.url, Astro.site).href;
+const latestDt = "2024-10-08";
 const pgTags = [
 	{name: "玄学", color: "green" },
-	{name: "随机", color: "purple" }
-];
+	{name: "随机", color: "purple" },
+	{name: "创意", color: "pink"},
+] as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
 ---
 
 <BaseLayout title="功能·运势占卜">
@@ -54,7 +56,7 @@ const pgTags = [
 		<script>
 			// @ts-ignore 
 			import { getluck } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/fortune.js";
-			function toggle(aa) {
+			function toggle(aa : boolean) {
 			    const ia = document.getElementById('search'),
 					  err = 'border-red-500',  
 					  nor = 'border-teal-500'; 
@@ -87,8 +89,8 @@ const pgTags = [
 		<Plicense
 			title="功能·运势占卜"
 			url={urlNow}
-			productionDate="2024-10-08"
-			tags={pgTags as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray'}>}
+			productionDate={latestDt}
+			tags={pgTags}
 		/>
 	</MainCard>
 </BaseLayout>

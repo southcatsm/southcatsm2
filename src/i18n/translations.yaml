@@ -36,7 +36,7 @@ en:
     searchPlaceholder: Type to search...
     tableOfContents: Table of Contents
     noContents: No headings available
-    404title: Page Not Found
+    404title: Page Not Found Unfortunately
     404description: "Looks like you've ventured into the unknown. The page you're looking for doesn't exist or has been moved to another dimension."
     404backHome: Back to Home
     404goBack: Go Back
@@ -44,6 +44,8 @@ en:
     404exploreBlog: Explore our blog
     404browseArchives: Browse archives
     404searchContent: Search content
+	fVirtualCookie: Click to claim virtual cookies
+	fEnjoy: Enjoy
 zh:
   label:
     noTag: 未分配标签
@@ -82,7 +84,7 @@ zh:
     searchPlaceholder: 输入关键词搜索...
     tableOfContents: 目录
     noContents: 无可用标题
-    404title: 页面未找到
+    404title: 页面被小怪兽吞惹
     404description: 看起来您已经进入了未知领域。您查找的页面不存在或已被转移到另一个维度。
     404backHome: 返回首页
     404goBack: 返回上页
@@ -90,3 +92,5 @@ zh:
     404exploreBlog: 浏览我们的博客
     404browseArchives: 浏览归档
     404searchContent: 搜索内容
+	fVirtualCookie: 点击领取虚拟曲奇
+	fEnjoy: 好好享用

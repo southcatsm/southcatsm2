@@ -5,13 +5,75 @@ import MainCard from "@/components/MainCard.astro";
 ---
 
 <BaseLayout title="赞助">
-	<MainCard title="感谢各位义父!">
-		<div class="grid grid-cols-2 gap-2">
-			<img src="/wechat.jpg"/>
-			<img src="/alipay.jpg" width="828px" height="1128px"/>
-		</div>
+	<MainCard>
+	    <div class="text-center mb-8">
+	        <p class="text-lg opacity-80 mb-4">您的支持是我熬夜写代码的动力源泉</p>
+	        <div class="animate-bounce inline-block">
+	            <Icon name="lucide:heart-handshake" class="w-10 h-10 text-primary" />
+	        </div>
+	    </div>
+	    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+	        <div class="card bg-gradient-to-br from-green-50 to-base-100 border border-green-200">
+	            <div class="card-body">
+	                <h2 class="card-title justify-center text-green-700">
+	                    <Icon name="ri:wechat-fill" class="w-6 h-6" />
+	                    微信赞赏
+	                </h2>
+	                <div class="relative group">
+	                    <img 
+	                        src="/wechat3.jpg" 
+	                        class="w-full rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105" 
+	                        alt="微信"
+	                    />
+	                    <div class="absolute inset-0 bg-green-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+	                </div>
+	                <p class="text-center text-sm mt-2 text-green-600/80">扫码支持一杯咖啡</p>
+	            </div>
+	        </div>
+	
+	        <div class="card bg-gradient-to-br from-blue-50 to-base-100 border border-blue-200">
+	            <div class="card-body">
+	                <h2 class="card-title justify-center text-blue-600">
+	                    <Icon name="ri:alipay-fill" class="w-6 h-6" />
+	                    支付宝
+	                </h2>
+	                <div class="relative group">
+	                    <img 
+	                        src="/alipay3.jpg" 
+	                        class="w-full rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105" 
+	                        alt="支付宝"
+	                    />
+	                    <div class="absolute inset-0 bg-blue-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+	                </div>
+	                <p class="text-center text-sm mt-2 text-blue-300/80">扫码支持一杯咖啡</p>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <div class="mt-8">
+	        <div class="flex justify-between mb-2">
+	            <span class="text-m">本月咖啡目标</span>
+	            <span class="text-m">2/10杯</span>
+	        </div>
+	        <progress 
+	            class="progress progress-primary w-full h-4" 
+	            value="20" 
+	            max="100"
+	        ></progress>
+	        <p class="text-right text-sm font-bold mt-1 text-primary/80">感谢已经支持的若干位小伙伴！</p>
+	    </div>
+		
+	    <div class="alert alert-info mt-8 shadow-lg">
+	        <Icon name="lucide:lightbulb" class="w-6 h-6" />
+	        <span>
+	            没用的小知识：捐赠超过10元可以解锁<b class="mx-1">隐藏感谢彩蛋</b>
+	            <span class="animate-pulse">✨</span>
+	        </span>
+	    </div>
 		<div class="divider my-8">
-			<Icon name="lucide:dollar-sign" class="w-10 h-10 text-primary" />
-		</div>
+	        <Icon name="lucide:dollar-sign" class="w-10 h-10 text-primary" />
+	        <span class="mx-2 font-bold"> 感谢您对笔者的支持 </span>
+	        <Icon name="lucide:dollar-sign" class="w-10 h-10 text-primary" />
+	    </div>
 	</MainCard>
 </BaseLayout>

@@ -38,6 +38,7 @@ class StarEffect {
         const animateFrame = () => {
             const timePassed = Date.now() - start;
             this.stars.forEach((s, i) => {
+				i=i; //:)
                 const progress = timePassed / 800;
                 const distance = progress * 80;
                 s.element.style.transform = 

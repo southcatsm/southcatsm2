@@ -4,12 +4,14 @@ import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
 import Plicense from "@/components/widgets/Plicense.astro";
 const urlNow = new URL(Astro.url, Astro.site).href;
+const latestDt = "2024-09-30";
 const pgTags = [
 	{name: "玄学", color: "green" },
 	{name: "搞笑", color: "blue"},
 	{name: "随机", color: "purple"},
-	{name: "缘分", color: "red"}
-];
+	{name: "缘分", color: "red"},
+	{name: "创意", color: "pink"},
+] as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
 ---
 <BaseLayout title="功能·缘分测定">
 	<style>
@@ -114,7 +116,7 @@ const pgTags = [
 		<script>
 			// @ts-ignore
 			import { fate } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.48/js/fate.js";
-			function toggle(aa,bb) {
+			function toggle(aa : boolean, bb : boolean) {
 			    const ia = document.getElementById('searcha'),
 					  ib = document.getElementById('searchb'),  
 					  err = 'border-red-500',  
@@ -164,8 +166,8 @@ const pgTags = [
 		<Plicense
 			title="功能·缘分测定"
 			url={urlNow}
-			productionDate="2024-09-30"
-			tags={pgTags  as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray'}>}
+			productionDate={latestDt}
+			tags={pgTags}
 		/>
 	</MainCard>
 </BaseLayout>

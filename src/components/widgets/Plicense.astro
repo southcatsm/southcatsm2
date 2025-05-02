@@ -6,7 +6,7 @@ export interface Props {
 	title: string;
 	url: string;
 	productionDate: string;
-	tags?: Array<{ name: string; color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' }>;
+	tags?: Array<{ name: string; color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
 }
 const { 
 	title, 
@@ -21,37 +21,38 @@ const tagColors = {
 	purple: 'bg-purple-500/10 hover:bg-purple-500 text-purple-500 hover:text-white',
 	orange: 'bg-orange-500/10 hover:bg-orange-500 text-orange-500 hover:text-white',
 	gray: 'bg-gray-500/10 hover:bg-gray-500 text-gray-500 hover:text-white',
+	pink: 'bg-pink-500/10 hover:bg-pink-500 text-pink-500 hover:text-white',
 };
 const displayDate = dayjs(productionDate).format("YYYY-MM-DD");
 const socialLinks = [
 	{
 		name: "X (Twitter)",
 		icon: "ri:twitter-x-line",
-		class: "bg-black hover:bg-gray-800",
+		class: "bg-[#000000] hover:bg-[#14171A]",
 		url: `https://twitter.com/intent/tweet/?text=${title}&url=${url}`,
 	},
 	{
 		name: "Telegram",
 		icon: "ri:telegram-line",
-		class: "bg-[#26a5e4] hover:bg-[#1e96d1]",
+		class: "bg-[#0088CC] hover:bg-[#0077B5]",
 		url: `https://telegram.me/share/url?text=${title}&url=${url}`,
 	},
 	{
 		name: "QQ",
 		icon: "ri:qq-line",
-		class: "bg-[#0866ff] hover:bg-[#0755d6]",
+		class: "bg-[#12B7F5] hover:bg-[#0EA5E0]",
 		url: `https://connect.qq.com/widget/shareqq/index.html?url=${url}&title=${title}`,
 	},
 	{
 		name: "Facebook",
 		icon: "ri:facebook-circle-line",
-		class: "bg-[#0866ff] hover:bg-[#0755d6]",
+		class: "bg-[#1877F2] hover:bg-[#166FE5]",
 		url: `https://facebook.com/sharer/sharer.php?u=${url}`,
 	},
 	{
 		name: "Email",
 		icon: "ri:mail-line",
-		class: "bg-gray-600 hover:bg-gray-700",
+		class: "bg-[#EA4335] hover:bg-[#D33426]",
 		url: `mailto:?subject=${title}&body=${url}`,
 	},
 ];
@@ -69,10 +70,10 @@ const socialLinks = [
 				<br/>
 				<h3 class="text-lg sm:text-xl lg:text-2xl font-bold">{title}</h3>
 				<div class="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm opacity-75">
-					<span class="flex items-center gap-1">
-						<Icon name="lucide:calendar" class="h-4 w-4" />
-						制作日期：{displayDate}
-					</span>
+				    <span class="flex items-center gap-1">
+				        <Icon name="lucide:refresh-cw" class="h-4 w-4" />
+				        上一次更新：{displayDate}
+				    </span>
 				</div>
 				{tags.length > 0 && (
 					<div class="flex flex-wrap gap-2 mt-2">

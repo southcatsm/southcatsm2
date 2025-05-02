@@ -4,33 +4,46 @@ import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
 import Plicense from "@/components/widgets/Plicense.astro";
 const urlNow = new URL(Astro.url, Astro.site).href;
+const latestDt = "2025-04-17";
 const pgTags = [
 	{name: "搞笑", color: "blue"},
 	{name: "历史", color: "orange"},
-	{name: "随机", color: "purple"},
-	{name: "古代", color: "gray"}
-];
+	{name: "创意", color: "pink"},
+	{name: "随机", color: "purple"}
+] as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
 ---
-
 <BaseLayout title="功能·阶级">
 	<style>
 		@keyframes fade-in {
 			from { opacity: 0; transform: translateY(10px); }
 			to { opacity: 1; transform: translateY(0); }
 		}
+		@keyframes card-pop {
+			0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+			100% { opacity: 1; transform: scale(1) translateY(0); }
+		}
 		.animate-fade-in {
 			animation: fade-in 0.5s ease-out;
+		}
+		.animate-card-pop {
+			animation: card-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 		}
 		input:focus {
 			outline: none;
 			ring: 2px solid #8B5CF6;
 		}
+		.card-animation-delay-0 { animation-delay: 0ms !important; }
+		.card-animation-delay-1 { animation-delay: 100ms !important; }
+		.card-animation-delay-2 { animation-delay: 200ms !important; }
+		.card-animation-delay-3 { animation-delay: 300ms !important; }
+		.card-animation-delay-4 { animation-delay: 400ms !important; }
+		.card-animation-delay-5 { animation-delay: 500ms !important; }
 	</style>
 	<MainCard>
-		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
+		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400 animate-fade-in">
 			生成您的社会阶级档案
 		</h1>
-		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4">
+		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4 animate-fade-in">
 			<input
 				type="text"
 				placeholder="请输入您的名称"
@@ -47,7 +60,7 @@ const pgTags = [
 		<br/>
 		<MainCard>
 			<div id="result" class="hidden flex flex-wrap gap-4">
-				<div class="w-full md:w-[calc(50%-8px)] bg-red-300 p-6 rounded-lg shadow-md border-2 border-red-400 
+				<div class="card-animation-delay-0 w-full md:w-[calc(50%-8px)] bg-red-300 p-6 rounded-lg shadow-md border-2 border-red-400 
 				            transition-all duration-300 hover:border-red-600 hover:shadow-lg hover:-translate-y-1">
 				    <p class="text-yellow-600 text-2xl mb-3 font-bold hover:text-yellow-700 transition-colors">中国阶级档案</p>
 				    <h2 class="text-2xl font-bold mb-4 text-red-800 group-hover:text-red-900" id="chinaTitle"></h2>
@@ -55,7 +68,7 @@ const pgTags = [
 				    <p class="text-gray-700 group-hover:text-gray-800" id="chinaIntro"></p>
 				</div>
 
-				<div class="w-full md:w-[calc(50%-8px)] bg-amber-300 p-6 rounded-lg shadow-md border-2 border-amber-400
+				<div class="card-animation-delay-1 w-full md:w-[calc(50%-8px)] bg-amber-300 p-6 rounded-lg shadow-md border-2 border-amber-400
 				            transition-all duration-300 hover:border-amber-600 hover:shadow-lg hover:-translate-y-1">
 				    <p class="text-orange-700 text-2xl mb-3 font-bold hover:text-orange-800 transition-colors">非洲庄园档案</p>
 				    <h2 class="text-2xl font-bold mb-4 text-amber-900 group-hover:text-amber-950" id="africaTitle"></h2>
@@ -63,7 +76,7 @@ const pgTags = [
 				    <p class="text-gray-700 group-hover:text-gray-800" id="africaIntro"></p>
 				</div>
 				
-				<div class="w-full md:w-[calc(50%-8px)] bg-orange-300 p-6 rounded-lg shadow-md border-2 border-orange-400
+				<div class="card-animation-delay-2 w-full md:w-[calc(50%-8px)] bg-orange-300 p-6 rounded-lg shadow-md border-2 border-orange-400
 				            transition-all duration-300 hover:border-orange-600 hover:shadow-lg hover:-translate-y-1">
 				    <p class="text-red-600 text-2xl mb-3 font-bold hover:text-red-700 transition-colors">印度种姓档案</p>
 				    <h2 class="text-2xl font-bold mb-4 text-orange-800 group-hover:text-orange-900" id="indiaTitle"></h2>
@@ -71,7 +84,7 @@ const pgTags = [
 				    <p class="text-gray-700 group-hover:text-gray-800" id="indiaIntro"></p>
 				</div>
 				
-				<div class="w-full md:w-[calc(50%-8px)] bg-blue-300 p-6 rounded-lg shadow-md border-2 border-blue-400
+				<div class="card-animation-delay-3 w-full md:w-[calc(50%-8px)] bg-blue-300 p-6 rounded-lg shadow-md border-2 border-blue-400
 				            transition-all duration-300 hover:border-blue-600 hover:shadow-lg hover:-translate-y-1">
 				    <p class="text-yellow-600 text-2xl mb-3 font-bold hover:text-yellow-700 transition-colors">埃及太阳档案</p>
 				    <h2 class="text-2xl font-bold mb-4 text-blue-800 group-hover:text-blue-900" id="egyptTitle"></h2>
@@ -79,7 +92,7 @@ const pgTags = [
 				    <p class="text-gray-700 group-hover:text-gray-800" id="egyptIntro"></p>
 				</div>
 				
-				<div class="w-full md:w-[calc(50%-8px)] bg-cyan-300 p-6 rounded-lg shadow-md border-2 border-cyan-400
+				<div class="card-animation-delay-4 w-full md:w-[calc(50%-8px)] bg-cyan-300 p-6 rounded-lg shadow-md border-2 border-cyan-400
 				            transition-all duration-300 hover:border-cyan-600 hover:shadow-lg hover:-translate-y-1">
 				    <p class="text-emerald-700 text-2xl mb-3 font-bold hover:text-emerald-800 transition-colors">希腊人种档案</p>
 				    <h2 class="text-2xl font-bold mb-4 text-cyan-800 group-hover:text-cyan-900" id="spartaTitle"></h2>
@@ -87,9 +100,9 @@ const pgTags = [
 				    <p class="text-gray-700 group-hover:text-gray-800" id="spartaIntro"></p>
 				</div>
 				
-				<div class="w-full md:w-[calc(50%-8px)] bg-pink-300 p-6 rounded-lg shadow-md border-2 border-pink-400
+				<div class="card-animation-delay-5 w-full md:w-[calc(50%-8px)] bg-pink-300 p-6 rounded-lg shadow-md border-2 border-pink-400
 				            transition-all duration-300 hover:border-pink-600 hover:shadow-lg hover:-translate-y-1">
-				    <p class="text-indigo-600 text-2xl mb-3 font-bold hover:text-indigo-700 transition-colors">日本层级档案</p>
+				    <p class="text-indigo-600 text-2xl mb-3 font-bold hover:text-indigo-700 transition-colors">日本武士档案</p>
 				    <h2 class="text-2xl font-bold mb-4 text-pink-800 group-hover:text-pink-900" id="japanTitle"></h2>
 				    <p class="text-sm mb-2 text-pink-700 group-hover:text-pink-800" id="japanHistory"></p>
 				    <p class="text-gray-700 group-hover:text-gray-800" id="japanIntro"></p>
@@ -99,12 +112,13 @@ const pgTags = [
 		</MainCard>
 		<div class="divider my-8">
 			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
-			<strong>仅供娱乐</strong>
+			<strong>请以现实为准</strong>
 		</div>
 		<script>
 			// @ts-ignore
 			import { rank } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2@1.494/js/class.js";
-			function toggle(aa) {
+			
+			function toggle(aa : boolean) {
 			    const ia = document.getElementById('search'),
 					  err = 'border-red-500',  
 					  nor = 'border-teal-500'; 
@@ -116,6 +130,18 @@ const pgTags = [
 			        ia.classList.add(nor);
 			    }
 			}
+			
+			function animateCards() {
+				const cards = document.querySelectorAll('#result > div');
+				cards.forEach((card, index) => {
+					card.style.opacity = '0';
+					card.style.transform = 'scale(0.8) translateY(20px)';
+					setTimeout(() => {
+						card.classList.add('animate-card-pop');
+					}, index * 5); // anime interval
+				});
+			}
+			
 			function executed(){
 				const input = document.getElementById("search") as HTMLInputElement;
 				const name = input.value;
@@ -128,7 +154,16 @@ const pgTags = [
 				document.getElementById("searcht").textContent = "查询！";
 				toggle(false);
 				var jj = rank(name);
-				document.getElementById('result').classList.remove('hidden');
+				const resultDiv = document.getElementById('result');
+				resultDiv.classList.remove('hidden');
+				
+				const cards = resultDiv.querySelectorAll('div');
+				cards.forEach(card => {
+					card.style.opacity = '0';
+					card.style.transform = 'scale(0.8) translateY(20px)';
+					card.classList.remove('animate-card-pop');
+				});
+				
 				const regions = [
 					{ prefix: 'a', idPart: 'africa' },
 					{ prefix: 'i', idPart: 'india' },
@@ -148,6 +183,7 @@ const pgTags = [
 						document.getElementById(elementId).textContent = jj[propName];
 					});
 				});
+				setTimeout(animateCards, 50);
 			}
 			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
 			document.querySelector("#searchx")?.addEventListener("click", executed);
@@ -156,9 +192,8 @@ const pgTags = [
 		<Plicense
 			title="功能·阶级生成"
 			url={urlNow}
-			productionDate="2025-04-17"
-			tags={pgTags as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray'}>}
+			productionDate={latestDt}
+			tags={pgTags}
 		/>
 	</MainCard>
 </BaseLayout>
-	

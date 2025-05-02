@@ -1,9 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
-import BaseCard from '@/components/BaseCard.astro';
 import FriendCard from "@/components/mdx/FriendCard.astro";
-import Collapse from "@/components/mdx/Collapse.astro";
 ---
 
 <BaseLayout title="朋友">
@@ -43,17 +41,17 @@ import Collapse from "@/components/mdx/Collapse.astro";
 			</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 				<FriendCard
-					name="我要骑玛玛"
-					avatar="http://q.qlogo.cn/headimg_dl?dst_uin=535531507&spec=640&img_type=jpg"
-					description="请输入你的个人简介"
-					url="/intercept"
+					name="Энх баян"
+					avatar="/cgyccs.jpg"
+					description="面朝大海 春暖花开"
+					url="https://space.bilibili.com/1658622019"
 					type="contributor"
 				/>
 				<FriendCard
 					name="山田凉"
-					avatar="https://p2-pro.a.yximgs.com/uhead/AB/2025/02/23/15/BMjAyNTAyMjMxNTM4MTJfMzU2NDQ3Nzk0OV8yX2hkOTY5XzU5Mg==_s.jpg"
+					avatar="/stl.jpg"
 					description="橘子不去想苹果的问题"
-					url="https://www.kuaishou.com/profile/3xd3ra98qks7e3u"
+					url="https://live.kuaishou.com/profile/3xd3ra98qks7e3u"
 					type="contributor"
 				/>
 				<FriendCard
@@ -64,14 +62,67 @@ import Collapse from "@/components/mdx/Collapse.astro";
 					type="contributor"
 				/>
 				<FriendCard
-					name="Энх баян"
-					avatar="/cgyccs.jpg"
-					description="面朝大海 春暖花开"
-					url="https://space.bilibili.com/1658622019"
+					name="蒜容不是蒜蓉啊"
+					avatar="/rh.jpg"
+					description="这一刀你可要看好了 因为这一刀很帅"
+					url="https://live.kuaishou.com/profile/3xztzc8ap4j6adg"
+					type="contributor"
+				/>
+				<FriendCard
+					name="我要骑玛玛"
+					avatar="http://q.qlogo.cn/headimg_dl?dst_uin=535531507&spec=640&img_type=jpg"
+					description="请输入你的个人简介"
+					url="/intercept"
 					type="contributor"
 				/>
 			</div>
 		</section>
+		<div class="space-y-10"> 
+			<section> 
+				<h2 class="text-2xl font-bold mb-6 flex items-center gap-2"> 
+					<Icon name="lucide:cookie" class="w-6 h-6 text-primary" />
+					<span>Cookie Jar / 曲奇罐子</span>
+				</h2>
+				<div class="alert alert-info"> 
+					<Icon name="lucide:message-circle-heart" /> 
+					<span>这里原本应该有个感谢名单，但好像被谁偷吃掉了<span class="font-mono text-primary">qwq</span></span>
+				</div> 
+				<button class="btn btn-outline mt-4" onclick="cmodal.showModal()"> 
+					<Icon name="lucide:hand-heart" class="mr-2"/> 
+					点击领取虚拟曲奇 
+				</button> 
+				<dialog id="cmodal" class="modal">
+				    <div class="modal-box">
+						<form method="dialog">
+							<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+						</form>
+						<div class="text-center py-6">
+							<Icon name="lucide:cookie" class="w-12 h-12 mx-auto text-yellow-500 mb-4 animate-bounce"/>
+							<h3 class="font-bold text-lg">🍪 虚拟曲奇已送达!</h3>
+							<p class="py-4">恭喜!</p>
+							<div class="mockup-code mt-4 bg-base-200">
+								<code>
+									营养成分: 
+									<br/>
+										• 爱心值 +100% <br/>
+										• 快乐因子 ∞ <br/>
+										• 咖啡因 0mg<br/>
+								</code>
+							</div>
+							<p class="mt-4 text-sm opacity-75">(此曲奇会不会增加真实卡路里呢？)</p>
+						</div>
+						<div class="modal-action">
+							<form method="dialog">
+								<button class="btn btn-primary">好好享用!</button>
+							</form>
+						</div>
+					</div>
+					<form method="dialog" class="modal-backdrop">
+						<button>close</button>
+					</form>
+				</dialog>
+			</section> 
+		</div>
 		<div class="divider my-8">
 			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
 		</div>

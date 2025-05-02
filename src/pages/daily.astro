@@ -1,9 +1,87 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
-import FeatureCard from "@/components/mdx/FeatureCard.astro";
+import MainCard from "@/components/MainCard.astro";
 ---
 <BaseLayout title="生活日志">
-	<h1 class="text-4xl font-bold text-center">Constructing</h1>
-	
+	<MainCard>
+		<style>
+			.typing .caret {
+				animation: blink 1s step-end infinite;
+				opacity: 1;
+			}
+			@keyframes blink {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0; }
+			}
+			.mockup-code pre {
+				padding: 0.5rem 1rem;
+				margin: 0;
+				line-height: 1.5;
+			}
+			.mockup-code code {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+				font-size: 0.875rem;
+			}
+		</style>
+		<div class="flex flex-col items-center justify-center min-h-[60vh] py-12">
+			<h1 class="text-4xl font-bold text-center mb-2">
+				<span>该模块正在等待下一期规划</span>
+			</h1>
+			<p class="text-lg opacity-80 max-w-md text-center mb-6">
+				<span>规划过程中，请保持星际链路通畅</span>
+			</p>
+			<div class="mockup-code mb-8 bg-base-200 w-full max-w-full overflow-x-auto">
+				<pre> ><code><span class="text-primary" id="typewriter-command"> </span></code></pre>
+				<pre><code><span class="text-info opacity-0" id="line-1"> [INFO] Executing user command</span></code></pre>
+				<pre><code><span class="text-info opacity-0" id="line-2"> [INFO] Generated 2.03s</span></code></pre>
+				<pre><code><span class="text-info opacity-0" id="line-3"> [INFO] Synced content</span></code></pre>
+				<pre><code><span class="text-error opacity-0 whitespace-pre-wrap break-words" id="line-4"> [ERROR] The current content has not been fully planned. Deployment is Forbidden.</span></code></pre>
+				<pre><code><span class="text-error opacity-0 whitespace-pre-wrap break-words" id="line-5"> [ERROR] Failed: deploy command exited with returning code: 1</span></code></pre>
+			</div>
+		</div>
+		<script>
+			function typeWriter(element : any, text : any, speed : any, callback : any) {
+				if(!element) return;
+				let i = 0;
+				element.classList.add('typing');
+				function typing() {
+					if (i < text.length) {
+						element.innerHTML = text.substring(0, i+1) + '<span class="caret">|</span>';
+						i++;
+						setTimeout(typing, speed);
+					} else {
+						element.innerHTML = text;
+						element.classList.remove('typing');
+						if (callback) callback();
+					}
+				}
+				typing();
+			}
+			document.addEventListener('astro:page-load', () => {
+				setTimeout(() => {
+					typeWriter(document.getElementById('typewriter-command'), " $ interstellar deploy daily --planet=scsm --force", 40, () => {
+						setTimeout(() => {
+							document.getElementById('line-1').classList.remove('opacity-0');
+							setTimeout(() => {
+								document.getElementById('line-2').classList.remove('opacity-0');
+								setTimeout(() => {
+									document.getElementById('line-3').classList.remove('opacity-0');
+									setTimeout(() => {
+										document.getElementById('line-4').classList.remove('opacity-0');
+										setTimeout(() => {
+											document.getElementById('line-5').classList.remove('opacity-0');
+										}, 100);// Line 5
+									}, 1800);// Line 4
+								}, 1800);// Line 3
+							}, 2000);// Line 2
+						}, 1000); // Line 1
+					});
+				}, 100);
+			});
+		</script>
+		<div class="divider my-8">
+			<Icon name="mdi:diary" class="w-10 h-10 text-primary" />
+		</div>
+	</MainCard>
 </BaseLayout>
