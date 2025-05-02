@@ -216,7 +216,7 @@ const pgTags = [
 				];
 				for (const { id, prop, props, formatter } of mappings) {
 					const element = document.getElementById(id);
-					let value;
+					let value : any;
 					if (props) value = props.map(p => result[p]);
 					else value = result[prop];
 					if (formatter) value = formatter(value);

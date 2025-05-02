@@ -6,14 +6,6 @@ import MainCard from "@/components/MainCard.astro";
 <BaseLayout title="生活日志">
 	<MainCard>
 		<style>
-			.typing .caret {
-				animation: blink 1s step-end infinite;
-				opacity: 1;
-			}
-			@keyframes blink {
-				0%, 100% { opacity: 1; }
-				50% { opacity: 0; }
-			}
 			.mockup-code pre {
 				padding: 0.5rem 1rem;
 				margin: 0;
@@ -29,57 +21,24 @@ import MainCard from "@/components/MainCard.astro";
 				<span>该模块正在等待下一期规划</span>
 			</h1>
 			<p class="text-lg opacity-80 max-w-md text-center mb-6">
-				<span>规划过程中，请保持星际链路通畅</span>
+				<span>等呀等，等到黄花菜都凉惹ε(┬┬﹏┬┬)3</span>
 			</p>
-			<div class="mockup-code mb-8 bg-base-200 w-full max-w-full overflow-x-auto">
-				<pre> ><code><span class="text-primary" id="typewriter-command"> </span></code></pre>
-				<pre><code><span class="text-info opacity-0" id="line-1"> [INFO] Executing user command</span></code></pre>
-				<pre><code><span class="text-info opacity-0" id="line-2"> [INFO] Generated 2.03s</span></code></pre>
-				<pre><code><span class="text-info opacity-0" id="line-3"> [INFO] Synced content</span></code></pre>
-				<pre><code><span class="text-error opacity-0 whitespace-pre-wrap break-words" id="line-4"> [ERROR] The current content has not been fully planned. Deployment is Forbidden.</span></code></pre>
-				<pre><code><span class="text-error opacity-0 whitespace-pre-wrap break-words" id="line-5"> [ERROR] Failed: deploy command exited with returning code: 1</span></code></pre>
+			<div class="mockup-code mb-8 bg-base-200 w-full max-w-full overflow-x-auto font-bold">
+				<pre><code><span class="text-secondary" > Interstellar Console #05(Administrator) [Version 1.03.118]</span></code></pre>
+				<pre> ><code><span class="text-primary"> $ interstellar deploy daily --planet=scsm --strict</span></code></pre>
+				<pre><code><span class="text-muted" > [INFO] Executing command</span></code></pre>
+				<pre><code><span class="text-warning" > [WARNING] Detected '--force', strict mode has been enabled</span></code></pre>
+				<pre><code><span class="text-dark" > [INFO] Generated 2.03s</span></code></pre>
+				<pre><code><span class="text-dark" > [INFO] Syncing content</span></code></pre>
+				<pre><code><span class="text-dark" > [INFO] Synced content</span></code></pre>
+				<pre><code><span class="text-dark" > [INFO] Successfully obtained authentication token</span></code></pre>
+				<pre><code><span class="text-dark" > [INFO] Connecting to the server</span></code></pre>
+				<pre><code><span class="text-error whitespace-pre-wrap break-words" > [ERROR] Command has been rejected by the server</span></code></pre>
+				<pre><code><span class="text-error whitespace-pre-wrap break-words" > [ERROR] The module named 'daily' is currently not included in this planning phase</span></code></pre>
+				<pre><code><span class="text-error whitespace-pre-wrap break-words" > [ERROR] Failed: Error while executing user command. Exited with error code: 1</span></code></pre>
+				<pre><code><span class="text-error whitespace-pre-wrap break-words" > [ERROR] Failed: deploy command exited with code: 1</span></code></pre>
 			</div>
 		</div>
-		<script>
-			function typeWriter(element : any, text : any, speed : any, callback : any) {
-				if(!element) return;
-				let i = 0;
-				element.classList.add('typing');
-				function typing() {
-					if (i < text.length) {
-						element.innerHTML = text.substring(0, i+1) + '<span class="caret">|</span>';
-						i++;
-						setTimeout(typing, speed);
-					} else {
-						element.innerHTML = text;
-						element.classList.remove('typing');
-						if (callback) callback();
-					}
-				}
-				typing();
-			}
-			document.addEventListener('astro:page-load', () => {
-				setTimeout(() => {
-					typeWriter(document.getElementById('typewriter-command'), " $ interstellar deploy daily --planet=scsm --force", 40, () => {
-						setTimeout(() => {
-							document.getElementById('line-1').classList.remove('opacity-0');
-							setTimeout(() => {
-								document.getElementById('line-2').classList.remove('opacity-0');
-								setTimeout(() => {
-									document.getElementById('line-3').classList.remove('opacity-0');
-									setTimeout(() => {
-										document.getElementById('line-4').classList.remove('opacity-0');
-										setTimeout(() => {
-											document.getElementById('line-5').classList.remove('opacity-0');
-										}, 100);// Line 5
-									}, 1800);// Line 4
-								}, 1800);// Line 3
-							}, 2000);// Line 2
-						}, 1000); // Line 1
-					});
-				}, 100);
-			});
-		</script>
 		<div class="divider my-8">
 			<Icon name="mdi:diary" class="w-10 h-10 text-primary" />
 		</div>

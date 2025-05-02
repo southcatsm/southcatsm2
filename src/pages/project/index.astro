@@ -142,7 +142,7 @@ import FeatureCard from "@/components/mdx/FeatureCard.astro";
 								description: "精品原创短篇，精彩源源不断！",
 								url: "https://docs.qq.com/doc/DZWJVdGpSVW9Md0V4",
 								icon: "lucide:book-open",
-								tag: "已完结"
+								tag: "待重做"
 							},
 							{
 								project: "菠萝风暴：顶级idol的逆袭之路！",
@@ -188,6 +188,7 @@ import FeatureCard from "@/components/mdx/FeatureCard.astro";
 											${item.tag === '待规划' ? 'bg-blue-500/90 text-white' : 
 											item.tag === '更新中' ? 'bg-red-500/90 text-white' : 
 											item.tag === '已完结' ? 'bg-green-500/90 text-white' :
+											item.tag === '待重做' ? 'bg-purple-500/90 text-white' :
 											'bg-yellow-500/90 text-base-100'}`}>
 											{item.tag}
 										</span>

@@ -1,71 +1,205 @@
 ---
-//import OpenAnime from "@/components/OpenAnime.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
-import LinkCard from "@/components/mdx/LinkCard.astro"
-import TypeWriting from "@/components/TypeWriting.astro";
+import LinkCard from "@/components/mdx/LinkCard.astro";
+import FeatureCard from "@/components/mdx/FeatureCard.astro";
+import TimeLine from "@/components/mdx/TimeLine.astro";
+import MainCard from "@/components/MainCard.astro";
 ---
-
 <BaseLayout title="主页">
-	<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet" />
-    <div class="space-y-8">
-		<section class="py-6">
-			<div class="flex flex-col items-center text-center">
-				<h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-					🌟 欢迎访问southcatsm的博客！
-				</h1>
-				<p class="text-xl text-base-content/80 max-w-3xl mb-8" id="display-text"></p>
-			</div>		
-		</section>
-		<TypeWriting />
+	<style>
+	    @keyframes fade-in {
+	        from { opacity: 0; transform: translateY(20px); }
+	        to { opacity: 1; transform: translateY(0); }
+	    }
+	    .animate-fade-in {
+	        animation: fade-in 1s ease-out forwards;
+	    }
+	    .hover-scale {
+	        transition: transform 0.3s ease, box-shadow 0.3s ease;
+	    }
+	    .hover-scale:hover {
+	        transform: translateY(-5px);
+	        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+	    }
+	    .gradient-text {
+	        background-clip: text;
+	        -webkit-background-clip: text;
+	        color: transparent;
+	    }
+	</style>
+    <section class="hero min-h-[60vh] bg-gradient-to-br from-base-200 to-base-300 rounded-3xl mb-12">
+        <div class="hero-content text-center">
+            <div class="max-w-4xl animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    🌌 欢迎来到southcatsm的博客！
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-base-content/80" id="typewriter-text"></p>
+                <div class="flex flex-wrap justify-center gap-4">
+					<a href="blog" target="_blank">
+						<button class="btn btn-primary gap-2">
+							开始探索
+							<Icon name="lucide:compass" class="w-5 h-5" />
+						</button>
+					</a>
+                    <a href="about" target="_blank">
+						<button class="btn btn-outline btn-secondary gap-2">
+							关于笔者
+							<Icon name="lucide:user" class="w-5 h-5" />
+						</button>
+					</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-		<section class="py-6">
-			<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-				<Icon name="lucide:chart-network" class="w-6 h-6 text-primary" />
-				<span>浩瀚网络世界，感恩与您相遇于此</span>
-			</h2>
-			<br/>
-			<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-				<Icon name="lucide:sparkles" class="w-6 h-6 text-primary" />
-				<span>快捷导航</span>
-			</h2>
-			<div class="grid grid-cols-2 gap-4">
-				<LinkCard
-					title="博客"
-					desc="点滴琐碎皆浪漫"
-					url="/blog"
-					img="/about.png"
-					target="_self"
-				/>
-			 
-				<LinkCard
-					title="关于"
-					desc="了解Southcatsm"
-					url="/about"
-					img="/acco.png"
-					target="_self"
-				/>
-				
-				<LinkCard
-					title="作品"
-					desc="千奇百怪的东西"
-					url="/project"
-					img="/code.png"
-					target="_self"
-				/>
-			  
-				<LinkCard
-					title="联系"
-					desc="欢迎五湖四海的朋友"
-					url="/friend"
-					img="/linkc.png"
-					target="_self"
-				/>
-			</div>
-		</section>
-		<div class="divider my-8">
-			<Icon name="lucide:house-plus" class="w-10 h-10 text-primary" />
-		</div>
+    <MainCard title="📊 博客数据" class="mb-12">
+        <div class="stats stats-vertical md:stats-horizontal shadow w-full bg-base-200">
+            <div class="stat">
+                <div class="stat-figure text-primary">
+                    <Icon name="lucide:file-text" class="w-8 h-8" />
+                </div>
+                <div class="stat-title">文章总数</div>
+                <div class="stat-value text-primary">5</div>
+                <div class="stat-desc">篇精彩内容</div>
+            </div>
+            
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <Icon name="lucide:letter-text" class="w-8 h-8" />
+                </div>
+                <div class="stat-title">文章总字数</div>
+                <div class="stat-value text-secondary">4.6k</div>
+                <div class="stat-desc">个文字</div>
+            </div>
+            
+            <div class="stat">
+                <div class="stat-figure text-accent">
+                    <Icon name="lucide:heart" class="w-8 h-8" />
+                </div>
+                <div class="stat-title">统计获得</div>
+                <div class="stat-value text-accent">≥97%</div>
+                <div class="stat-desc">的好评率</div>
+            </div>
+        </div>
+    </MainCard>
+    <MainCard title="✨综合特色" class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FeatureCard
+                title="创意无限"
+                description="千奇百怪无所不有"
+                icon="lucide:creative-commons"
+                color="oklch(0.7 0.2 150)"
+                hoverEffect="shadow-lg"
+            />
+            <FeatureCard
+                title="国际化"
+                description="支持中英网页（正在研发其他语言）"
+                icon="lucide:earth"
+                color="oklch(0.7 0.2 250)"
+                hoverEffect="shadow-lg"
+            />
+            <FeatureCard
+                title="主题切换"
+                description="黑夜/白日风格可选"
+                icon="lucide:palette"
+                color="oklch(0.7 0.2 350)"
+                hoverEffect="shadow-lg"
+            />
+        </div>
+    </MainCard>
+
+    <MainCard title="🚀 快捷导航" class="mb-12">
+        <div class="grid grid-cols-2 gap-4">
+            <LinkCard
+                title="博客"
+                desc="点滴琐碎皆烂漫"
+                url="/blog"
+                img="/about.png"
+                badge="持续更新"
+                target="_self"
+            />
+            <LinkCard
+                title="作品"
+                desc="奇怪的创意与实践"
+                url="/project"
+                img="/code.png"
+                badge="千奇百怪"
+                target="_self"
+            />
+            <LinkCard
+                title="关于"
+                desc="了解笔者"
+                url="/about"
+                img="/acco.png"
+                badge="即刻了解"
+                target="_self"
+            />
+            <LinkCard
+                title="友链"
+                desc="志同道合的朋友们"
+                url="/friend"
+                img="/linkc.png"
+                badge="最佳伙伴"
+                target="_self"
+            />
+        </div>
+    </MainCard>
+
+    <MainCard title="📅 近期动态" class="mb-12">
+        <TimeLine items={[
+            {
+                year: "2025-02",
+                event: "开始全线重组",
+            },
+			{
+			    year: "2024-06",
+			    event: "更多功能!",
+			},
+            {
+                year: "2024-04",
+                event: "全站基本建成",
+            },
+            {
+                year: "2023-09",
+                event: "正式建站",
+            },
+			{
+			    year: "2021-09",
+			    event: "在Github建站",
+			}
+        ]} />
+    </MainCard>
+    <div class="divider my-12">
+        <Icon name="lucide:flower" class="w-10 h-10 text-primary" />
+        <span class="mx-4 text-lg font-medium">感谢到访</span>
+        <Icon name="lucide:flower" class="w-10 h-10 text-primary" />
     </div>
+    <script>
+		async function executed() {
+		    try {
+		        const response = await fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c&c=i&c=d');
+		        const data = await response.json();
+		        typeWrit(data.hitokoto);
+		    } catch (error) {
+		        typeWrit("代码是用来让人读的，只是顺便让机器执行而已");
+				console.log("......");
+		    }
+		}
+		function typeWrit(text, speed = 150) {
+		    const element = document.getElementById('typewriter-text');
+		    if (!element) return;
+		    element.innerHTML = '<span class="caret">|</span>';
+		    let i = 0;
+		    function typing() {
+		        if (i < text.length) {
+		            element.innerHTML = text.substring(0, i+1) + '<span class="caret">|</span>';
+		            i++;
+		            setTimeout(typing, speed);
+		        } else element.innerHTML = text;
+		    }
+		    typing(); 
+		}
+		document.addEventListener('astro:page-load', executed);
+    </script>
 </BaseLayout>
-	
