@@ -44,8 +44,8 @@ en:
     404exploreBlog: Explore our blog
     404browseArchives: Browse archives
     404searchContent: Search content
-	fVirtualCookie: Click to claim virtual cookies
-	fEnjoy: Enjoy
+    fVirtualCookie: Click to claim virtual cookies
+    fEnjoy: Enjoy
 zh:
   label:
     noTag: 未分配标签
@@ -92,5 +92,5 @@ zh:
     404exploreBlog: 浏览我们的博客
     404browseArchives: 浏览归档
     404searchContent: 搜索内容
-	fVirtualCookie: 点击领取虚拟曲奇
-	fEnjoy: 好好享用
+    fVirtualCookie: 点击领取虚拟曲奇
+    fEnjoy: 好好享用
