@@ -13,8 +13,9 @@
 			return mobileFlag;
 		}
 		const crt = document.documentElement.getAttribute("data-theme");
-		const overlay = document.querySelector('.overlay');
-		const text = document.querySelector('.halo-text');
+		const overlay = document.getElementById('overlay') as HTMLElement | null;
+		const text = document.getElementById('text') as HTMLElement | null;
+		if (!overlay || !text) return;
 		//true-pe false-pc
 		if(isMobile()){
 			text.style.fontSize="2em";

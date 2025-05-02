@@ -132,7 +132,7 @@ const pgTags = [
 			}
 			
 			function animateCards() {
-				const cards = document.querySelectorAll('#result > div');
+				const cards = document.querySelectorAll<HTMLElement>('#result > div');
 				cards.forEach((card, index) => {
 					card.style.opacity = '0';
 					card.style.transform = 'scale(0.8) translateY(20px)';
