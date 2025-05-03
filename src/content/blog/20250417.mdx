@@ -1,0 +1,230 @@
+---
+title: 帮助文档：阶级生成
+description: 查阅有关本站阶级生成的帮助文档。
+pubDate: 2025 04 17
+image: /image/20250417.jpg
+categories:
+  - tech
+tags:
+  - 帮助文档
+  - API
+---
+import BaseCard from "@/components/BaseCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+
+想知道你的好朋友的名字会对应哪个文明金字塔的哪层阶梯吗？
+
+来这里，
+
+看看你的朋友在过去能混个什么吧！
+
+金字塔脚下的采石工？还是种植园里面的棉花工？
+
+<BaseCard>
+**Q: 这个真的准吗？**
+
+*A: 本测试仅供娱乐，再说这都过去多久了...*
+
+**Q: 为什么选择这六个文明体系？**
+
+*A: 因为它们有典型奴隶制特征且文献较为的文明样本*（~~实际上就是其他的体系雷同太多了没啥意义~~）
+
+**Q: 如果我测出了诸如黑奴等低下的身份怎么办？**
+
+*A: 笔者推荐阅读：《如何逃脱种植园的一百零八条指南》《最美好的愿望：下辈子投胎成石头》《想回家？还得给长城贴完瓷砖先呢！》*
+
+<br/>
+<strong>本站例子可详见：<a target="_blank" href="/project/class">project/class</a></strong>
+</BaseCard>
+
+## API使用指南(持续更新)
+
+以下是本站阶级生成的API通用接口：
+
+```html
+https://api.southcat.cc/v2-class?uuid={uuid}&name={name}
+```
+### 参数解析
+
+|参数|类型|意义|是否必填|
+|:--:|:--:|:--:|:--:|
+|<Kbd>uuid</Kbd>|UUID v4|服务端身份验证|是|
+|<Kbd>name</Kbd>|string|你提供的名字|是|
+
+### 实践运用·理想
+
+以下是**理论情况**下API返回的数据（笔者在此以`kate`为例，<u>**UUID、IP在此打码处理，下同**</u>）：
+```json
+{
+  "info": {
+    "status": 200,
+    "describe": "/",
+    "ip": "182.···.··.12",
+    "country": "CN",
+    "project": "v2-class"
+  },
+  "uuid": "05b5····-····-····-····-····bd7a2705",
+  "name": "kate",
+  "china": {
+    "class": "贱籍",
+    "mean": "世代无法改变身份的特殊户籍",
+    "intro": "刑徒的健身日常：搬砖马拉松"
+  },
+  "africa": {
+    "class": "奴隶",
+    "mean": "无人身自由，被迫从事体力劳动",
+    "intro": "最大的愿望是：吃顿正经的饭"
+  },
+  "india": {
+    "class": "首陀罗",
+    "mean": "服务阶层，专为高级种姓服役",
+    "intro": "下辈子投胎当个陶罐，至少能装恒河水"
+  },
+  "egypt": {
+    "class": "农民",
+    "mean": "承担赋税与劳役的自由民",
+    "intro": "今年第108次被征调去修金字塔"
+  },
+  "japan": {
+    "class": "商",
+    "mean": "表面地位最低却掌握经济命脉",
+    "intro": "钱箱里的银判正在玩分裂游戏"
+  },
+  "sparta": {
+    "class": "希洛人",
+    "mean": "国有奴隶，可被随意屠杀",
+    "intro": "在粪堆里找到半块面包算加餐"
+  }
+}
+```
+
+### 实践运用·解读
+
+#### 古代中国
+
+中国历史参考了三国两晋南北朝时期（著名谚语：**王与马，共天下**），分为了三个阶级：
+
+<pre>
+<code class="text-primary">【I】门阀士族</code>
+<code class="text-secondary"> 【II】编户齐民</code>
+<code class="text-error"> 【III】贱籍</code>
+</pre>
+
+#### 古埃及
+
+古代埃及历史的社会结构，分为了五个阶级：
+
+<pre>
+<code class="text-primary">【I】法老</code>
+<code class="text-secondary"> 【II】贵族</code>
+<code class="text-secondary"> 【III】书吏/官员</code>
+<code class="text-dark"> 【IV】农民</code>
+<code class="text-error"> 【V】奴隶</code>
+</pre>
+
+#### 古印度
+
+古印度的社会结构参考了古印度吠陀时代的种姓制度，分为了4+1个阶级：
+
+<pre>
+<code class="text-primary">【I】婆罗门</code>
+<code class="text-secondary"> 【II】刹帝利</code>
+<code class="text-dark"> 【III】吠舍</code>
+<code class="text-dark"> 【IV】首陀罗</code>
+<code class="text-error"> 【V】达利特</code>
+</pre>
+
+> Q: 为什么是4+1而不是5呢？
+
+> A: 传统上，达利特被认为是肮脏的，并且这种肮脏还可以借由接触传染给别人，所以有些文献记载的种姓制度甚至没有达利特......
+> （好歹首陀罗还能服务往上三个阶级呢）
+
+#### 古日本
+
+古代日本的社会结构参考了日本江户时代，分为了五个阶级：
+
+<pre>
+<code class="text-primary">【I】士</code>
+<code class="text-dark"> 【II】农</code>
+<code class="text-dark"> 【III】工</code>
+<code class="text-dark"> 【IV】商</code>
+<code class="text-error"> 【V】秽多非人</code>
+</pre>
+
+> Q: 为什么没有天皇和将军？
+
+> A: 你上网搜搜就懂了，江户时代的天皇和将军加起来都没多少......
+
+#### 古希腊·斯巴达
+
+斯巴达（城邦）的社会阶级，分为了三个阶级：
+
+<pre>
+<code class="text-primary">【I】斯巴达人</code>
+<code class="text-secondary"> 【II】边民</code>
+<code class="text-error"> 【III】希洛人</code>
+</pre>
+
+#### 非洲·殖民时代
+
+殖民时代的非洲，文献参考不一，所以笔者分为了五个阶级：
+
+<pre>
+<code class="text-primary">【I】农场主</code>
+<code class="text-secondary"> 【II】监工</code>
+<code class="text-dark"> 【III】佃户</code>
+<code class="text-dark"> 【IV】奴隶</code>
+<code class="text-error"> 【V】黑奴</code>
+</pre>
+
+> Q: 奴隶和黑奴有什么区别？
+
+> A: 前者泛指被剥夺人身自由、强制劳动的群体；后者是因种族身份被系统性奴役的非洲人，地位不同
+
+### 实践运用·404
+
+当API返回以下数据：
+```json
+{
+  "info": {
+    "status": 404,
+    "describe": "Please provide the name",
+    "ip": "182.··.···.12",
+    "country": "CN",
+	"project":"v2-class"
+  }
+}
+```
+意思就是，你并没有向API提供<Kbd>name</Kbd>属性
+
+> 温馨提示：如果是`name=`的话同样也会返回404，因为提供一个空值同样计为未提供属性
+
+### 实践运用·401
+
+当API返回以下数据：
+```json
+{
+  "info": {
+    "status": 401,
+    "describe": "Please provide a correct uuid",
+    "ip": "182.··.···.12",
+    "country": "CN",
+	"project":"v2-class"
+  }
+}
+```
+意思就是，你提供了一个不合法的UUID（提供空值或不提供该属性也算）
+
+你同样可以使用本站的API获取UUID:
+
+```html
+https://api-southcat.cc/v1-uuid4
+```
+
+自己动手，丰衣足食。你也可以自己弄一个，详情去网上搜索一下吧
+
+<strong><font color="red">请注意：服务端只接受UUID v4</font></strong>
+
+## 算法展现
+
+略

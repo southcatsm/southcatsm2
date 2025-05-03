@@ -1,0 +1,130 @@
+---
+title: 帮助文档：缘分测定
+description: 查阅有关本站缘分测定的帮助文档。
+pubDate: 2024 09 30
+image: /image/20240930.jpg
+categories:
+  - tech
+tags:
+  - 帮助文档
+  - API
+---
+import BaseCard from "@/components/BaseCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+import Warning from "@/components/mdx/Warning.astro"
+
+
+想不想看看和ta有什么缘分？
+
+来这里看看吧！
+
+<BaseCard>
+**Q: 这个真的准吗？**
+
+*A: 本测试仅供娱乐，也许会准也说不定？*
+
+**Q: 能测和idol的缘分吗？**
+
+*A: 可以。但现实中的TA可能并不认识你...*
+
+**Q: 结果不满意能重测吗？**
+
+*A: 可以。但缘分不能强求~*
+
+<strong>本站例子可详见：<a target="_blank" href="/project/fate">project/fate</a></strong>
+</BaseCard>
+
+## API使用指南(持续更新)
+
+以下是本站缘分测定的API通用接口：
+
+```html
+https://api.southcat.cc/v2-fate?uuid={uuid}&namea={namea}&nameb={nameb}
+```
+
+### 参数解析
+
+|参数|类型|意义|是否必填|
+|:--:|:--:|:--:|:--:|
+|<Kbd>uuid</Kbd>|UUID v4|服务端身份验证|是|
+|<Kbd>namea</Kbd>|string|你提供的名字|是|
+|<Kbd>nameb</Kbd>|string|Ta的名字|是|
+
+### 实践运用·理想
+
+以下是**理论情况**下API返回的数据（笔者在此以`kate`和`rowling`为例，<u>**UUID、IP在此打码处理，下同**</u>）：
+```json
+{
+  "info": {
+    "status": 200,
+    "describe": "/",
+    "ip": "182.···.··.12",
+    "country": "CN",
+    "project": "v2-fate"
+  },
+  "uuid": "05b5····-····-····-····-····bd7a2705",
+  "namea": "kate",
+  "nameb": "rowling",
+  "Couple": 100,
+  "couple": 80,
+  "fwb": 32,
+  "enemy": 81,
+  "stranger": 77
+}
+```
+
+<Warning>
+**Couple**：夫妻
+
+**couple**：情侣
+
+**fwb**：刨友（*Friends with benefit*）
+</Warning>
+
+### 实践运用·404
+
+当API返回以下数据：
+```json
+{
+  "info": {
+    "status": 404,
+    "describe": "Please provide the name",
+    "ip": "182.··.···.12",
+    "country": "CN",
+	"project":"v2-fate"
+  }
+}
+```
+意思就是，你并没有向API提供<Kbd>namea</Kbd>或<Kbd>nameb</Kbd>属性
+
+> 温馨提示：如果是`namea=` `nameb=`的话同样也会返回404，因为提供一个空值同样计为未提供属性
+
+### 实践运用·401
+
+当API返回以下数据：
+```json
+{
+  "info": {
+    "status": 401,
+    "describe": "Please provide a correct uuid",
+    "ip": "182.··.···.12",
+    "country": "CN",
+	"project":"v2-fate"
+  }
+}
+```
+意思就是，你提供了一个不合法的UUID（提供空值或不提供该属性也算）
+
+你同样可以使用本站的API获取UUID:
+
+```html
+https://api-southcat.cc/v1-uuid4
+```
+
+自己动手，丰衣足食。你也可以自己弄一个，详情去网上搜索一下吧
+
+<strong><font color="red">请注意：服务端只接受UUID v4</font></strong>
+
+## 算法展现
+
+略

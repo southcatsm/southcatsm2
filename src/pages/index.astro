@@ -4,7 +4,12 @@ import { Icon } from "astro-icon/components";
 import LinkCard from "@/components/mdx/LinkCard.astro";
 import FeatureCard from "@/components/mdx/FeatureCard.astro";
 import TimeLine from "@/components/mdx/TimeLine.astro";
+import { getCollection } from "astro:content";
 import MainCard from "@/components/MainCard.astro";
+
+const abp = await getCollection("blog");
+const ap = import.meta.env.PROD ? abp.filter((post) => !post.data.draft) : abp;
+const posts = ap.length;
 ---
 <BaseLayout title="主页">
 	<style>
@@ -60,7 +65,7 @@ import MainCard from "@/components/MainCard.astro";
                     <Icon name="lucide:file-text" class="w-8 h-8" />
                 </div>
                 <div class="stat-title">文章总数</div>
-                <div class="stat-value text-primary">5</div>
+                <div class="stat-value text-primary">{posts-1}</div>
                 <div class="stat-desc">篇精彩内容</div>
             </div>
             
@@ -69,7 +74,7 @@ import MainCard from "@/components/MainCard.astro";
                     <Icon name="lucide:letter-text" class="w-8 h-8" />
                 </div>
                 <div class="stat-title">文章总字数</div>
-                <div class="stat-value text-secondary">4.6k</div>
+                <div class="stat-value text-secondary">≥6.4k</div>
                 <div class="stat-desc">个文字</div>
             </div>
             
