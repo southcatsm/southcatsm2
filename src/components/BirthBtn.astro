@@ -68,7 +68,9 @@ import { Icon } from "astro-icon/components";
 			document.getElementById('bbtn')!.classList.remove('animate-pulse')
 		, 300);
 		if (cnt >= 3) {
-			document.getElementById('bmodal')!.showModal();
+			const md = document.getElementById('bmodal') as HTMLDialogElement | null;
+			if(!md)return;
+			md.showModal();
 			cnt = 0;
 		}
 		document.getElementById('cong')!.innerHTML = `
