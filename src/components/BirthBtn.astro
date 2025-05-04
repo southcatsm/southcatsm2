@@ -1,0 +1,83 @@
+---
+import { Icon } from "astro-icon/components";
+---
+<style>
+	.bwidget {
+		background: linear-gradient(100deg, #007BFF, #E83E8C);
+		padding: 2rem;
+		border-radius: 1rem;
+		border: 2px dashed #ec407a;
+	}
+	#bbtn {
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
+	}
+	#bbtn::after {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 70%);
+		transform: scale(0);
+		opacity: 0;
+		transition: transform 0.5s, opacity 1s;
+	}
+
+	#bbtn:active::after {
+		transform: scale(1);
+		opacity: 1;
+		transition: transform 0s, opacity 0s;
+	}
+</style>
+<div class="bwidget text-center my-8">
+	<h3 class="text-xl font-bold mb-4">🎉 点击下方按钮送上你的祝福吧~</h3>
+	<button id="bbtn" class="btn btn-primary gap-2">
+		<label id="cong"><span id="blessing">0</span>/3 送上祝福</label>
+		<Icon name="lucide:heart" class="w-5 h-5" />
+	</button>
+</div>
+
+<dialog id="bmodal" class="modal">
+	<div class="modal-box">
+		<form method="dialog">
+		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+		</form>
+		<div class="text-center py-6">
+			<Icon name="lucide:party-popper" class="w-12 h-12 mx-auto text-yellow-500 mb-4" />
+			<h3 class="font-bold text-lg">🎂 感谢！</h3>
+			<p class="py-4">笔者已收到您真挚的祝福啦~<br>愿这份善意也能为你带来好运。</p>
+			<div class="mt-4 text-sm text-gray-500">
+				五四精神，永垂不朽。
+			</div>
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>
+
+<script>
+	let cnt = 0;
+	document.getElementById('bbtn')!.addEventListener('click', () => {
+		cnt++;
+		document.getElementById('bbtn')!.classList.add('animate-pulse');
+		setTimeout(() => 
+			document.getElementById('bbtn')!.classList.remove('animate-pulse')
+		, 300);
+		if (cnt >= 3) {
+			document.getElementById('bmodal')!.showModal();
+			cnt = 0;
+		}
+		document.getElementById('cong')!.innerHTML = `
+			${cnt}/3 祝福中...
+		`;
+		setTimeout(() => {
+	    document.getElementById('cong')!.innerHTML = `
+			${cnt}/3 送上祝福
+	    `;
+		}, 250);
+	});
+</script>

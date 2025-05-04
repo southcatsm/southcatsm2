@@ -1,0 +1,111 @@
+---
+title: 保姆级部署hCaptcha！
+description: 部署hCaptcha？来这里！
+pubDate: 2024 12 20
+image: /image/20241220.jpg
+categories:
+  - tech
+tags:
+  - Captcha
+  - API
+---
+
+import BaseCard from "@/components/BaseCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+import Success from "@/components/mdx/Success.astro";
+
+垃圾流量困扰严重？访问体验急剧下降？
+
+部署hCaptcha或许是个不错的主意！
+
+<Success>
+
+hCaptcha的**好处**：大部分地方不需要科学上网.....
+
+</Success>
+
+## 获取一个hCaptcha账户
+
+<BaseCard>
+<strong>前往：<a target="_blank" href="https://dashboard.hcaptcha.com/signup">注册hCaptcha页面</a></strong>
+</BaseCard>
+
+进入页面后，填写你的邮箱，然后：
+
+<font color="red" size="4">
+其一：国家/地区最好选择日本、美国、港澳台地区（笔者试过选择中国，不行）
+
+其二：126、163、Gmail、icloud邮箱均可（笔者试了hotmail和qq好像都不行）
+</font>
+
+~~当然你选择Google或者Github注册也可~~
+
+注册完毕后你应该会看见这个界面：
+
+![](/image/20241220-01.png)
+
+查看你填写的邮箱收件箱，点击**确认电子邮件地址**或下方的url前去设置密码
+
+完成之后，hCaptcha也会发邮件恭喜你注册成功（会有中英文两封，如下图）
+
+![](/image/20241220-02.png)
+
+<BaseCard>
+<strong>前往：<a target="_blank" href="https://dashboard.hcaptcha.com/login">登录hCaptcha页面</a></strong>
+</BaseCard>
+
+此时，前往登录即可
+
+## 设置站点
+
+登录成功后，你会进入如下页面：
+
+![](/image/20241220-03.png)
+
+点击**添加站点**，进入添加页面
+
+首先，姓名（网站名称）随意填写，你看得懂就好
+
+域名输入你的网站即可（按回车没有用滴）
+
+hCaptcha行为，看你的实际情况选择
+
+<BaseCard>
+
+**Q:如果我想先在本地试试水，可以填写localhost吗？**
+
+*A: 下图是hCaptcha的帮助文档，参考一下哦*
+
+![](/image/20241220-04.png)
+
+注：如何增加hosts条目，你可以上网搜搜
+
+</BaseCard>
+
+笔者需要在本地调试，所以最终填写的示范如下（你的不一定要跟笔者一样哦）
+
+![](/image/20241220-05.png)
+
+完成填写后，点击**节省（英文：Save，在此处应译为保存）**
+
+接下来，你会进入这个页面（如下图示意）
+
+![](/image/20241220-06.png)
+
+首先，先复制站点密钥（站点名称下面那一长串，点击可以保存），
+
+然后，点击右上角头像→设置，下滑找到**账户级密钥**，然后点击**生成新秘密**
+
+（如果弹出了*当前账户级密钥将立即失效。是否继续？*的窗口，点击产生即可，不用理它）
+
+<font color="red" size="4">
+千万注意，这个密钥（ES开头）只会显示一次！推荐复制下来粘贴到记事本上，避免丢失！
+</font>
+
+## 开始部署
+
+<BaseCard>
+<strong>更详细的：<a target="_blank" href="https://docs.hcaptcha.com/">hCaptcha帮助文档</a></strong>
+</BaseCard>
+
+打开你的本地项目

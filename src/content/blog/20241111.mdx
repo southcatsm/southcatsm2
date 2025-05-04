@@ -1,0 +1,174 @@
+---
+title: 帮助文档：没墨生成器
+description: 查阅有关本站没墨生成器的帮助文档。
+pubDate: 2024 11 11
+image: /image/20241111.jpg
+categories:
+  - tech
+tags:
+  - 帮助文档
+  - API
+---
+import BaseCard from "@/components/BaseCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+
+## 前言
+
+想要恶搞朋友吗？
+
+想给好朋友发送一封专属的《恶魔雇佣合同》吗？
+
+没墨生成**也许**帮得上忙。
+
+<BaseCard>
+**Q: 这个真的准吗？**
+
+*A: 本测试仅供娱乐，再说了...*
+
+**Q: 会不会生成奇怪的内容？**
+
+*A: 也许呢？*
+
+**Q: 我需要注意些什么呢？**
+
+*A: 禁止用生成的数据应聘正经工作，否则后果自负*
+
+<strong>本站例子可详见：<a target="_blank" href="/project/succubus">project/succubus</a></strong>
+</BaseCard>
+
+## API使用指南(持续更新)
+
+以下是本站没墨生成器的API通用接口：
+
+```html
+https://api.southcat.cc/v2-succubus?uuid={uuid}&name={name}
+```
+### 参数解析
+
+|参数|类型|意义|是否必填|
+|:--:|:--:|:--:|:--:|
+|<Kbd>uuid</Kbd>|UUID v4|服务端身份验证|是|
+|<Kbd>name</Kbd>|string|你提供的名字|是|
+
+### 实践运用·理想
+
+以下是**理论情况**下API返回的数据（笔者在此以`kate`为例，<u>**UUID、IP和敏感词汇在此打码处理，下同**</u>）：
+```json
+{
+  "info": {
+    "status": 200,
+    "describe": "/",
+    "ip": "182.···.··.12",
+    "country": "CN",
+    "project": "v2-succubus"
+  },
+  "uuid": "05b5····-····-····-····-····bd7a2705",
+  "name": "kate",
+  "gender": "女",
+  "category": "活泼系٩(◕‿◕)۶",
+  "measurements": {
+    "bust": "92.9cm",
+    "waist": "66.3cm",
+    "wips": "99.7cm",
+    "cup": "F"
+  },
+  "height": "196.9cm",
+  "hair": "珊瑚粉",
+  "experience": 749,
+  "desire": 294,
+  "hobby": "··",
+  "ability": "随时··",
+  "rating": "0.5",
+  "SM": {
+      "S": "30.20",
+      "M": "69.80",
+      "format": "percent"
+    },
+  "exp7days": [
+      {
+        "日期": "2025 04 27",
+        "人数": 983
+      },
+      {
+        "日期": "2025 04 28",
+        "人数": 831
+      },
+      {
+        "日期": "2025 04 29",
+        "人数": 823
+      },
+      {
+        "日期": "2025 04 30",
+        "人数": 961
+      },
+      {
+        "日期": "2025 05 01",
+        "人数": 1340
+      },
+      {
+        "日期": "2025 05 02",
+        "人数": 1280
+      },
+      {
+        "日期": "2025 05 03",
+        "人数": 401
+      }
+    ],
+  "pos": "足部",
+  "line": "茶壶",
+  "climax": "920%"
+}
+```
+
+### 实践运用·解读
+
+**<font color="red">本内容由于违反了《中华人民共和国宪法》的部分条款，故不予显示，望周知。</font>**
+
+### 实践运用·404
+
+当API返回以下数据：
+```json
+{
+  "info": {
+    "status": 404,
+    "describe": "Please provide the name",
+    "ip": "182.··.···.12",
+    "country": "CN",
+	"project":"v2-succubus"
+  }
+}
+```
+意思就是，你并没有向API提供<Kbd>name</Kbd>属性
+
+> 温馨提示：如果是`name=`的话同样也会返回404，因为提供一个空值同样计为未提供属性
+
+### 实践运用·401
+
+当API返回以下数据：
+```json
+{
+  "info": {
+    "status": 401,
+    "describe": "Please provide a correct uuid",
+    "ip": "182.··.···.12",
+    "country": "CN",
+	"project":"v2-succubus"
+  }
+}
+```
+意思就是，你提供了一个不合法的UUID（提供空值或不提供该属性也算）
+
+你同样可以使用本站的API获取UUID:
+
+```html
+https://api.southcat.cc/v1-uuid4
+```
+
+自己动手，丰衣足食。你也可以自己弄一个，详情去网上搜索一下吧
+
+<strong><font color="red">请注意：服务端只接受UUID v4</font></strong>
+
+## 算法展现
+
+略
+
