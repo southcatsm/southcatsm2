@@ -1,0 +1,126 @@
+---
+title: 手把手教你自己做网站访问计数器!
+description: Cloudflare Worker+KV 制作网站访问计数器，自己动手丰衣足食!
+pubDate: 2025 05 15
+image: /image/20250515.jpg
+categories:
+  - tech
+tags:
+  - Cloudflare
+  - API
+---
+
+import BaseCard from "@/components/BaseCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+
+看见别人的“本站/本文章访问总数”，你是否心动？
+
+网上的教程要么太难，要么不稳定，要么你懒......
+
+笔者今天给大家一个新的方案：Cloudflare KV+Worker制作
+
+工欲善其事，必先利其器。你只需要准备**一个Cloudflare账户**和**一个脑子**就好啦！
+
+## 赴数据库寻径，创名域立基
+
+打开Cloudflare仪表板→存储和数据库→创建
+
+命名空间的名称随便写，只要你看得懂就好啦，
+笔者在这里以demo为例
+
+完成创建后，会进入如下页面：
+
+![](/image/20250515-01.png)
+
+## 布阵排兵施法，代码落定局
+
+打开Cloudflare仪表板→计算（Workers）→创建，
+
+进入页面只管点击**从Hello world！开始 右边的“开始使用”**，然后你应该进入这个页面：：
+
+![](/image/20250515-02.png)
+
+> 名称你可随意填写，能辨别即可，笔者在此以api-counter为例
+
+下滑，点击部署，然后部署成功页面点击“地球”右上的**编辑代码**按钮
+
+进入页面后，删光原有代码，然后粘贴以下代码：
+
+```javascript
+export default {
+	async fetch(request, env, ctx) {
+		const pos = (new URL(request.url)).pathname.split("/")[1];
+		let current = await env.bkv.get(pos);
+		let count = current ? parseInt(current, 10) + 1 : 1;
+		await env.bkv.put(pos, count.toString());
+		return new Response(JSON.stringify({
+			"status":200,
+			"path":pos,
+			"counter":count.toString()
+		}),{headers:{
+			"content-type": "application/json;charset=UTF-8"}
+		});
+	},
+	//如果不存在则新创建一个，并且赋值为1，否则在原值的基础上+1
+};
+```
+
+完毕后点击右上角的部署，当网页下方弹出绿色的*版本已保存* 就行了
+
+文中出现的<Kbd>bkv</Kbd>是变量名称，下文讲到
+
+## 试炼终章显威，果效现真章
+
+打开Cloudflare仪表板→计算（Workers），找到你的Workers，点击**添加绑定**
+
+然后进入新的页面，在**绑定**中，点击添加，下滑选中**KV命名空间**
+
+KV命名空间选择你刚才创建的（笔者在这里的示例为demo）
+
+变量名称填写<Kbd>bkv</Kbd>（你可以起一个新的名字，但是在Worker内需要同步更改）
+
+最终如下图示
+
+![](/image/20250515-03.png)
+
+完毕后点击部署即可
+
+这个时候你就可以去试一下API了，如下图所示：
+
+![](/image/20250515-04.png)
+
+同时，在KV命名空间处可见操作，如下图所示：
+
+![](/image/20250515-05.png)
+
+这个时候就有人要问了：*如果我只想读取，不想写入，怎么办？*
+
+没关系的，有办法的！
+
+```javascript
+let current = await env.bkv.get(pos);
+```
+
+这句话是读取，你可以通过设置api参数等方式来决定是读取还是写入，笔者就不再讲述了
+
+## 回首征程感慨，寄语读者思
+
+这个方法比较适用流量小的博客，因为Cloudflare对于免费计划的KV是有读取和写入限制的：
+
++ 每天最多 **100,000** 次读取操作
+
++ 每天最多 **1,000** 次写入、删除和列出操作
+
+当然你可以去花点小钱买个Workers付费计划：
+
++ US$0.50/每 **1 GB**额外存储
+
++ US$0.50/每 **1 百万**个额外读取操作
+
++ US$5.00/每 **1 百万**个额外写入、删除和列出操作
+
+付费计划的基础扣款是US$5.00，差不多35块钱这种，也就相当于3杯奶茶这种
+
+不过，有得用都不错了！
+
+当然，你也可以去网上Fork一下Github的计数器项目~
