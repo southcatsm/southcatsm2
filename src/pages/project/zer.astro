@@ -1,0 +1,244 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+import Plicense from "@/components/widgets/Plicense.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
+const latestDt = "2025-03-06";
+const pgTags = [
+	{name: "搞笑", color: "blue"},
+	{name: "中二", color: "green"},
+	{name: "创意", color: "pink"},
+] as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
+---
+
+<BaseLayout title="功能·中二测定">
+	<style>
+		@keyframes fade-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		.animate-fade-in {
+			animation: fade-in 0.5s ease-out;
+		}
+		input:focus {
+			outline: none;
+			ring: 2px solid #8B5CF6;
+		}
+		.font-gothic {
+			font-family: 'Times New Roman', serif;
+			text-shadow: 0 0 8px rgba(192, 132, 252, 0.4);
+		}
+	</style>
+    <MainCard>
+		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
+			查询你的中二程度
+		</h1>
+		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4">
+			<input
+				type="text"
+				placeholder="请输入您的名称"
+				class="input input-bordered w-full md:flex-1 pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400"
+				id="search"
+			/>
+			<div class="w-full md:w-auto">
+				<button class="btn btn-primary btn-outline w-full" id="searchx">
+					<label id="searcht">查询！</label>
+					<Icon name="material-symbols:database-search" class="w-5 h-5" />
+				</button>
+			</div>
+		</div>
+		<br/>
+		<div id="bsi" class="hidden animate-fade-in space-y-6">
+		    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+		    	<div class="space-y-12 p-6 bg-gradient-to-br from-gray-900 to-black rounded-xl border-2 border-purple-500">
+		    		<div class="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 rounded-lg border-2 border-purple-400 border-dashed p-4">
+		    			<div class="flex items-center gap-2 mb-2">
+		    				<Icon name="mdi:card-account-details-star" class="text-purple-400 w-6 h-6"/>
+		    				<h3 class="text-lg font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">暗黑代号</h3>
+		    			</div>
+		    			<p id="codeName" class="text-xl font-bold text-purple-200 text-center"></p>
+		    		</div>
+		    		<div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-600 p-4">
+		    			<div class="flex items-center gap-2 mb-2">
+		    				<Icon name="lucide:swords" class="text-red-400 w-6 h-6"/>
+		    				<h3 class="text-lg font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">诅咒兵器</h3>
+		    			</div>
+		    			<p id="weapon" class="text-lg font-bold text-orange-300 italic text-center"></p>
+		    		</div>
+		    	</div>
+		    	<div class="p-6 bg-gradient-to-br from-gray-900 to-black rounded-xl border-2 border-purple-500 space-y-4">
+		    		<div class="grid grid-cols-2 gap-4">
+		    			<div class="flex items-center justify-center">
+		    				<div class="w-24 h-24 bg-gradient-to-br from-purple-700 to-blue-600 rounded-full flex flex-col items-center justify-center shadow-md">
+		    					<div class="text-sm text-purple-200">本源属性</div>
+		    					<div id="elementValue" class="text-xl font-bold text-white"></div>
+		    				</div>
+		    			</div>
+		    			<div class="flex flex-col justify-center space-y-2">
+		    				<div>
+		    					<div class="text-xs text-gray-400">职业称号</div>
+		    					<div id="roleTitle" class="text-sm text-green-300 font-semibold"></div>
+		    				</div>
+		    				<div>
+		    					<div class="text-xs text-gray-400">定位</div>
+		    					<div id="roleType" class="text-sm text-purple-300"></div>
+		    				</div>
+		    			</div>
+		    		</div>
+		    		<div>
+		    			<div class="text-xs text-gray-400 mb-1">战斗特性</div>
+		    			<div id="roleTraits" class="text-sm text-purple-300 leading-relaxed"></div>
+		    		</div>
+		    		<div>
+		    			<div class="text-xs text-gray-400 mb-1">元素弱点</div>
+		    			<div id="weaknessList" class="text-sm text-red-300"></div>
+		    		</div>
+		    		<div>
+		    			<div class="text-xs text-gray-400 mb-1">被动技能</div>
+		    			<div id="passiveSkill" class="text-sm text-amber-300"></div>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="p-6 bg-[#0c0a14] border-2 border-purple-900/50 rounded-xl relative overflow-hidden">
+		        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggMEwxNiA4IDggMTYgMCA4IDggMHoiIGZpbGw9InJnYmEoMTI1LDExMiwyMTMsMC4xKSIvPjwvc3ZnPg==')] opacity-20"></div>
+		        <div class="flex items-center gap-2 mb-4">
+		            <Icon name="mdi:chart-box" class="text-purple-400 w-6 h-6"/>
+		            <h3 class="text-lg font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">战斗数值</h3>
+		        </div>
+		    
+		        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+					<div class="p-3 bg-gradient-to-br from-purple-900/40 to-blue-900/40 rounded-lg">
+					    <div class="text-sm text-cyan-300 mb-1 font-bold">HP</div>
+					    <div id="statsHP" class="text-2xl font-mono font-bold text-purple-400"></div> 
+					</div>
+		            <div class="p-3 bg-gradient-to-br from-red-900/40 to-orange-900/40 rounded-lg">
+		                <div class="text-sm text-orange-300 mb-1 font-bold">ATK</div>
+		                <div id="statsATK" class="text-2xl font-mono font-bold text-red-400"></div> 
+		            </div>
+		            <div class="p-3 bg-gradient-to-br from-gray-900/40 to-emerald-900/40 rounded-lg">
+		                <div class="text-sm text-emerald-300 mb-1 font-bold">DEF</div>
+		                <div id="statsDEF" class="text-2xl font-mono font-bold text-gray-300"></div> 
+		            </div>
+		            <div class="p-3 bg-gradient-to-br from-indigo-900/40 to-blue-900/40 rounded-lg">
+		                <div class="text-sm text-indigo-300 mb-1 font-bold">MP</div>
+		                <div id="statsMP" class="text-2xl font-mono font-bold text-blue-400"></div> 
+		            </div>
+		        </div>
+		    </div>
+		
+		    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+		        <div class="space-y-4">
+		            <div class="p-6 bg-black/40 rounded-lg border-2 border-red-500/50">
+		                <div class="flex items-center gap-2 mb-2">
+		                    <Icon name="mdi:skull-crossbones" class="text-red-500 w-6 h-6"/>
+		                    <h3 class="text-lg font-bold bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">命运宿敌</h3>
+		                </div>
+		                <p id="enemy" class="text-xl text-red-200 italic"></p>
+		            </div>
+		
+		            <div class="p-6 bg-[#1a1625] rounded-lg border border-purple-900/30">
+		                <div class="flex items-center gap-2 mb-2">
+		                    <Icon name="mdi:castle" class="text-red-400"/>
+		                    <h3 class="text-purple-300">所属阵营</h3>
+		                </div>
+		                <p id="faction" class="text-gray-300 italic"></p>
+		            </div>
+		        </div>
+		
+		        <div class="space-y-4">
+		            <div class="p-6 bg-gradient-to-tr from-blue-900/40 to-cyan-900/40 rounded-lg border-2 border-cyan-300/30">
+		                <div class="flex items-center gap-2 mb-2">
+		                    <Icon name="mdi:comment-quote" class="text-cyan-300 w-6 h-6"/>
+		                    <h3 class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">觉醒宣言</h3>
+		                </div>
+		                <p id="quote" class="text-xl italic text-cyan-200 text-center font-serif"></p>
+		            </div>
+		
+		            <div class="p-6 bg-[#1a1625] rounded-lg border border-purple-900/30">
+		                <div class="flex items-center gap-2 mb-2">
+		                    <Icon name="mdi:door-forbidden" class="text-blue-400"/>
+		                    <h3 class="text-purple-300">禁忌秘密</h3>
+		                </div>
+		                <p id="loreSecret" class="text-gray-300 italic"></p>
+		            </div>
+		        </div>
+		    </div>
+		
+		    <div class="p-6 bg-gradient-to-br from-gray-900 to-black rounded-xl border-l-4 border-purple-500 relative group">
+		        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-pink-900/20 opacity-30 group-hover:opacity-50 transition-opacity"></div>
+		        <div class="relative">
+		            <div class="flex items-center gap-2 mb-2">
+		                <Icon name="mdi:sword-cross" class="text-purple-300 w-6 h-6 animate-pulse"/>
+		                <h3 class="text-lg font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">终焉之战</h3>
+		            </div>
+		            <p id="monologue" class="text-gray-200 leading-relaxed tracking-wide font-medium italic hover:text-purple-100 transition-colors duration-300"></p>
+		        </div>
+		    </div>
+		</div>
+		<script>
+			// @ts-ignore
+			import { zer } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/js/chuunibyou.js";
+			function toggle(aa : boolean) {
+			    const ia = document.getElementById('search'),
+					  err = 'border-red-500',  
+					  nor = 'border-teal-500'; 
+			    if (aa) {
+			        ia.classList.remove(nor);
+			        ia.classList.add(err);
+			    } else {
+			        ia.classList.remove(err);
+			        ia.classList.add(nor);
+			    }
+			}
+			function executed(){
+				const input = document.getElementById("search") as HTMLInputElement;
+				const name = input.value;
+				if(name.length === 0){
+					document.getElementById("searcht").textContent = "请勿留空！";
+					document.getElementById('bsi').classList.add('hidden');
+					toggle(true);
+					return;
+				}
+				document.getElementById("searcht").textContent = "查询！";
+				toggle(false);
+				document.getElementById('bsi').classList.remove('hidden');
+				var ze = zer(name);
+				const elements = {
+					codeName: ze.codeName,
+					weapon: ze.weapon,
+					enemy: ze.enemy,
+					quote: `“${ze.quote}”`,
+					monologue: ze.monologue,
+					statsATK: ze.stats.ATK.toLocaleString(),
+					statsHP: ze.stats.HP.toLocaleString(),
+					statsDEF: ze.stats.DEF.toLocaleString(),
+					statsMP: ze.stats.MP ? ze.stats.MP.toLocaleString() : "∞",
+					statsCD: `CD ${ze.stats.CD}`,
+					roleType: `${ze.roleInfo.role.icon} ${ze.roleInfo.role.type}`,
+					elementValue: ze.roleInfo.element,
+					passiveSkill: ze.roleInfo.passive,
+					faction: ze.roleInfo.faction,
+					loreSecret: ze.lore.secret,
+					weaknessList: ze.roleInfo.weakness.join(' / '),
+					roleTitle: ze.roleInfo.title,
+					roleTraits: ze.roleInfo.role.traits.join(" / "),
+				};
+				Object.entries(elements).forEach(([id, value]) => {
+					const el = document.getElementById(id);
+					if (el) el.textContent = value;
+				});
+				console.log(ze);
+			}
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
+			document.querySelector("#searchx")?.addEventListener("click", executed);
+		</script>
+		<br />
+		<Plicense
+			title="功能·中二测定"
+			url={urlNow}
+			productionDate={latestDt}
+			tags={pgTags}
+		/>
+    </MainCard>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+interface Props {
+	serverURL: string;
+	lang?: string;
+	dark?: string;
+	emoji?: string[];
+	meta?: string[];
+	requiredMeta?: string[];
+	reaction?: boolean;
+	pageview?: boolean;
+}
+
+const {
+	serverURL,
+	lang = "zh",
+	dark,
+	emoji,
+	meta = ["nick", "mail", "link"],
+	requiredMeta = [],
+	reaction = false,
+	pageview = false,
+} = Astro.props;
+---
+
+<div id="waline-container"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+<script src="https://www.recaptcha.net/recaptcha/api.js?render=explicit" async defer></script>
+<script
+	type="module"
+	define:vars={{
+		serverURL,
+		lang,
+		dark,
+		emoji,
+		meta,
+		requiredMeta,
+		reaction,
+		pageview,
+	}}
+>
+	import { init } from "https://unpkg.com/@waline/client@v3/dist/waline.js";
+	let walineInstance;
+	async function mountWaline() {
+		if (walineInstance) await walineInstance.destroy();
+		walineInstance = init({
+			el: "#waline-container",
+			serverURL,
+			path: location.pathname,
+			lang,
+			dark,
+			emoji: [
+				"https://unpkg.com/@waline/emojis@1.2.0/bilibili",
+				"https://unpkg.com/@waline/emojis@1.2.0/soul-emoji",
+				"https://unpkg.com/@waline/emojis@1.2.0/qq"
+			],
+			meta,
+			requiredMeta,
+			reaction,
+			pageview,
+		});
+	}	
+	document.addEventListener("astro:after-swap", () => {mountWaline();});
+	document.addEventListener("DOMContentLoaded", () => {mountWaline();});
+</script>
+
+<style>
+	#waline-container {
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
+</style>

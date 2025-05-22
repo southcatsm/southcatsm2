@@ -1,0 +1,127 @@
+---
+title: 如何诈骗你的好朋友！
+description: 以一首网络热曲“诈骗”你的好伙伴！
+pubDate: 2024 03 30
+image: /image/20240330.jpg
+categories:
+  - tech
+tags:
+  - 玩梗
+---
+
+import BaseCard from "@/components/BaseCard.astro";
+import Kbd from "@/components/mdx/Kbd.astro";
+import Info from "@/components/mdx/Info.astro";
+
+<Info>
+
+本篇博客改编于旧版博客系统的20230314，更新日志详见<a target="_blank" href="/daily#8cb7f457">Log #8CB7F457</a>
+
+</Info>
+
+## 前言
+
+想给好朋友一个惊喜，但不知道从何下手？
+
+有时候，最好的惊喜就是那些出其不意的瞬间
+
+既然如此，就对你的好朋友使用——
+
+那首经典神曲《**Never Gonna Give You Up**》吧！
+
+## 目标
+
+|序号|内容|
+|:--:|:--:|
+|1|突然出现，出其不意|
+|2|自动出现并且自动播放|
+|3|网页全屏显示|
+
+## HTML
+
+首先，我们需要搭建一个html的基础框架：（笔者在这里使用了Bootstrap的框架）
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>❤️❤️在线免费❤️❤️学习资料❤️❤️高清无码❤️❤️</title>
+        <link rel="stylesheet" href="https://cdn-auxiliaries.southcat.cc/libfiles/bootstrap.css"/>
+    <body>
+		<script type="text/javascript" src="https://cdn-auxiliaries.southcat.cc/libfiles/bootstrap.js" charset="UTF-8"></script>
+        <div id="already">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="waralert">
+                注意！本页面可能不适宜未成年人观看。若您未满18周岁，请勿访问本页面。
+                <br/>
+                若您已知晓，
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#2FC">
+                    点击进行下一步
+                </button>
+            </div>
+            <div class="modal fade" id="2FC" tabindex="-1" aria-labelledby="2FC-content" aria-hidden="true" role="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="2FC-content">2FC警告！</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>由于接下来的内容可能不适宜未成年人观看，网站响应<strong style="color: red;">《中华人民共和国未成年人保护法》</strong>，对未满18周岁的未成年人进行统一拦截</p>
+                            <p>Due to the following may not be suitable for minors to watch.We respond to the <a style="color: red;">Law of the P.R.C on the Protection of Minors</a> by uniformly intercepting people who are under the age of 18.</p>
+                            <p>请您务必保证：您已满18周岁，具有自主辨别意识，健康生活积极向上，与赌毒淫不共戴天</p>
+                            <p>Please ensure that <br/>a.You are at least 18 years old;<br/>b.Have a sense of self-discipline;<br/>c.Live a healthy and positive life;<br/>d.Do not tolerate gambling,drug abuse,or sexual activity.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel">取消</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">已阅，我未满18周岁</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="accept">已阅，我已满18周岁</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>
+```
+
+此时，你的页面应当如下：
+
+![](/image/20240330-01.png)
+
+## JS
+
+在HTML中插入以下语句：
+
+```html
+	<!-- snip -->
+		</div>
+		<video id="rick" src="https://vdse.bdstatic.com/192d9a98d782d9c74c96f09db9378d93.mp4" loop hidden width="100%" height="100%"></video>
+		<script type="text/javascript">
+			var accepted=document.getElementById("accept"),
+				video=document.getElementById("rick"),
+				waralert=document.getElementById("waralert");
+			function readyaccept(){
+				video.removeAttribute("hidden");
+				waralert.hidden=true;
+				video.play();
+				const{documentElement}=document;
+				if(documentElement.requestFullscreen)documentElement.requestFullscreen();
+				else if(documentElement.mozRequestFullScreen)documentElement.mozRequestFullScreen();
+				else if(documentElement.webkitRequestFullscreen)documentElement.webkitRequestFullscreen();
+				else if(documentElement.msRequestFullscreen)documentElement.msRequestFullscreen();
+			}
+			accepted.addEventListener("click",readyaccept);
+		</script>
+	</body>
+</html>
+```
+
+## 成果
+
+![](/image/20240330-02.gif)
+
+## 后记
+
+这个视频是百度来的，当然你也可以把它换为你喜欢的链接
+
+其他的就没有了，只要不是违法犯罪的就行

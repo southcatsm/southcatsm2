@@ -1,0 +1,164 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import Plicense from "@/components/widgets/Plicense.astro";
+import MainCard from "@/components/MainCard.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
+const latestDt = "2024-12-04";
+const pgTags = [
+	{name: "随机", color: "purple" },
+	{name: "创意", color: "pink"},
+	{name: "厨艺", color: "blue"}
+] as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
+---
+
+<BaseLayout title="功能·黑暗料理">
+	<style>
+		@keyframes fade-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		.animate-fade-in {
+			animation: fade-in 0.5s ease-out;
+		}
+		input:focus {
+			outline: none;
+			ring: 2px solid #8B5CF6;
+		}
+		.dish-badge {
+			@apply flex items-center gap-3 px-4 py-3 rounded-xl;
+			background: rgba(168, 85, 247, 0.1);
+			border: 1px solid rgba(168, 85, 247, 0.2);
+			transition: all 0.3s ease;
+		}
+		.dish-badge:hover {
+			@apply bg-purple-500/20 shadow-md;
+			transform: translateY(-2px);
+		}
+		.truncate {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.percent-glow {
+			text-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+		}
+	</style>
+	<MainCard>
+		<h1 class="font-bold text-center mb-4 text-3xl text-purple-400">
+			查询你在黑暗料理界的造诣
+		</h1>
+		<div class="flex flex-col md:flex-row md:items-center md:justify-center gap-2 md:gap-4">
+			<input
+				type="text"
+				placeholder="请输入您的名称"
+				class="input input-bordered w-full md:flex-1 pl-10 pr-16 py-2 border-dashed border-teal-500 hover:border-slate-400"
+				id="search"
+			/>
+			<div class="w-full md:w-auto">
+				<button class="btn btn-primary btn-outline w-full" id="searchx">
+					<label id="searcht">查询！</label>
+					<Icon name="material-symbols:database-search" class="w-5 h-5" />
+				</button>
+			</div>
+		</div>
+		<br/>
+		<MainCard>
+			<div id="bs" class="space-y-6 hidden animate-fade-in">
+				<div class="text-center">
+					<div class="text-6xl font-black percent-glow bg-gradient-to-r from-purple-600 to-pink-600 
+								bg-clip-text text-transparent mb-2">
+						<span id="percent">0</span>%
+					</div>
+					<div class="text-xl font-medium text-gray-600 dark:text-gray-300" id="comment"></div>
+				</div>
+				<div class="border-t border-dashed border-purple-100 dark:border-purple-900 pt-6">
+					<h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-purple-500">
+						<Icon name="mdi:skull-crossbones" class="w-6 h-6" />
+						<span>黑暗料理四绝技</span>
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="dishes">
+						<div class="dish-badge px-4 py-3 min-w-[200px] justify-center">
+							<Icon name="mdi:chef-hat" class="w-5 h-5" />
+							<span class="truncate text-base font-bold text-red-600" id="dish1"></span>
+						</div>
+						<div class="dish-badge px-4 py-3 min-w-[200px] justify-center">
+							<Icon name="mdi:chef-hat" class="w-5 h-5" />
+							<span class="truncate text-base font-bold text-pink-600" id="dish2"></span>
+						</div>
+						<div class="dish-badge px-4 py-3 min-w-[200px] justify-center">
+							<Icon name="mdi:chef-hat" class="w-5 h-5" />
+							<span class="truncate text-base font-bold text-yellow-600" id="dish3"></span>
+						</div>
+						<div class="dish-badge px-4 py-3 min-w-[200px] justify-center">
+							<Icon name="mdi:chef-hat" class="w-5 h-5" />
+							<span class="truncate text-base font-bold text-cyan-600" id="dish4"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</MainCard>
+		<div class="divider my-8">
+			<Icon name="lucide:heart-pulse" class="w-10 h-10 text-primary" />
+			<strong>请勿尝试这些料理</strong>
+		</div>
+		<script>
+			// @ts-ignore
+			import { cuisine } from "https://cdn.jsdelivr.net/gh/daeroa/nrcdn2/js/dcuisine.js";
+			function toggle(aa : boolean) {
+				const ia = document.getElementById('search'),
+					  err = 'border-red-500',  
+					  nor = 'border-teal-500'; 
+				if (aa) {
+					ia.classList.remove(nor);
+					ia.classList.add(err);
+				} else {
+					ia.classList.remove(err);
+					ia.classList.add(nor);
+				}
+			}
+			function render(result) {
+				const perc = document.getElementById('percent'),
+					  comm = document.getElementById('comment');
+				if(!perc || !comm) return;
+				let current = 0;
+				const animate = () => {
+					if (current < result.perc) {
+						current++;
+						perc.textContent = current;
+						setTimeout(animate, 7.5);
+					}
+				}
+				animate();
+				comm.textContent = result.comment;
+				for(let i=1; i<=4; i++) {
+					const elem = document.getElementById(`dish${i}`);
+					if(elem) elem.innerHTML = `${result.dishes[i-1]}`;
+				}
+			}
+			function executed(){
+				const input = document.getElementById("search") as HTMLInputElement;
+				const name = input.value;
+				if(name.length === 0){
+					document.getElementById("searcht").textContent = "请勿留空！";
+					document.getElementById('bs').classList.add('hidden');
+					toggle(true);
+					return;
+				}
+				document.getElementById("searcht").textContent = "查询！";
+				toggle(false);
+				document.getElementById('bs').classList.remove('hidden');
+				var dark = cuisine(name);
+				render(dark);
+			}
+			document.querySelector("#search")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });
+			document.querySelector("#searchx")?.addEventListener("click", executed);
+		</script>
+		<Plicense
+			title="功能·黑暗料理"
+			url={urlNow}
+			productionDate={latestDt}
+			tags={pgTags}
+		/>
+	</MainCard>
+</BaseLayout>

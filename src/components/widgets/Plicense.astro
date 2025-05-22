@@ -56,6 +56,7 @@ const socialLinks = [
 		url: `mailto:?subject=${title}&body=${url}`,
 	},
 ];
+const titles = Astro.props.title;
 ---
 <br/>
 <div class="container p-0">
@@ -70,6 +71,10 @@ const socialLinks = [
 				<br/>
 				<h3 class="text-lg sm:text-xl lg:text-2xl font-bold">{title}</h3>
 				<div class="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm opacity-75">
+					<span class="flex items-center gap-1" id="view-counter" data-title={productionDate}>
+						<Icon name="lucide:eye" class="h-4 w-4" />
+						加载中...
+					</span>
 				    <span class="flex items-center gap-1">
 				        <Icon name="lucide:refresh-cw" class="h-4 w-4" />
 				        上一次更新：{displayDate}
@@ -142,3 +147,63 @@ const socialLinks = [
 		</form>
 	</dialog>
 </div>
+<script>
+	const counterEl = document.getElementById('view-counter');
+	const title = counterEl?.dataset?.title ?? "unknown"; // 防止 title 获取失败
+	const cacheKey = `view-count-${title}`;
+
+	const showCount = (count) => {
+		counterEl.innerHTML = `
+		  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"
+			   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path stroke-linecap="round" stroke-linejoin="round"
+				  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+			<path stroke-linecap="round" stroke-linejoin="round"
+				  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+		  </svg>
+		  ${count} 次浏览
+		`;
+	};
+
+	const showLoading = () => {
+		counterEl.innerHTML = `
+		  <svg class="h-4 w-4 animate-spin" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="10" fill="none" stroke-dasharray="164" stroke-dashoffset="60"></circle>
+		  </svg>
+		  加载中...
+		`;
+	};
+
+	const getCount = async () => {
+		showLoading();
+		try {
+			const bgc = await fetch("https://api.southcat.cc/v1-calgor");
+			const bgc2 = await bgc.text();
+			// {await (await fetch("https://api.southcat.cc/v1-calgor")).text()}
+			const res = await fetch(`https://api.southcat.cc/v3-counter/project-${title}?algor=${await (await fetch("https://api.southcat.cc/v1-calgor")).text()}`);
+			const json = await res.json();
+			if (json?.counter !== undefined) {
+				localStorage.setItem(cacheKey, json.counter);
+				showCount(json.counter);
+			} else {
+				throw new Error("无有效数据");
+			}
+		} catch (err) {
+			const fallback = localStorage.getItem(cacheKey);
+			if (fallback) {
+			showCount(fallback);
+			} else {
+				counterEl.innerHTML = `
+				  <svg class="h-4 w-4 text-error" fill="none" stroke="currentColor" stroke-width="2"
+					   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+					<path stroke-linecap="round" stroke-linejoin="round"
+						  d="M6 18L18 6M6 6l12 12"></path>
+				  </svg>
+				  无法获取访问数
+				`;
+			}
+		}
+	};
+
+	getCount();
+</script>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+import Plicense from "@/components/widgets/Plicense.astro";
+const urlNow = new URL(Astro.url, Astro.site).href;
+const latestDt = "2025-05-22";
+const pgTags = [
+	{name: "萝莉", color: "pink" },
+	{name: "搞笑", color: "blue"},
+	{name: "支付", color: "orange"},
+	{name: "创意", color: "pink"},
+] as Array<{name: string, color: 'red' | 'blue' | 'green' | 'purple' | 'orange' | 'gray' | 'pink' }>;
+---
+
+<BaseLayout title="真的不是恶意网页~">
+	<MainCard>
+		<div class="max-w-md mx-auto mt-12 p-6 rounded-2xl shadow-xl border border-pink-300"
+		     style="background: linear-gradient(to bottom right, rgba(255,240,245,0.9), rgba(255,228,235,0.8)); backdrop-filter: blur(8px);">
+			<div class="text-center mb-6">
+				<img src="/lolicon.jpg" alt="可爱的图片" class="w-24 h-24 mx-auto rounded-full shadow-md"/>
+			</div>
+			<h2 class="text-lg sm:text-xl text-pink-700 text-center mb-6">
+				欧尼酱～可以把你的支付宝给我嘛？求求惹~ 
+			</h2>
+			<form id="loli-form" class="space-y-4">
+				<div>
+					<label class="block mb-1 font-semibold text-pink-800">用户名</label>
+					<input type="text" required class="input input-bordered font-bold w-full text-primary" placeholder="你的昵称嘛~"/>
+				</div>
+				<div>
+					<label class="block mb-1 font-semibold text-pink-800">登录密码</label>
+					<input type="password" required class="input font-bold input-bordered w-full text-secondary" placeholder="告诉我吧...别害羞~"/>
+				</div>
+				<div>
+					<label class="block mb-1 font-semibold text-pink-800">支付密码</label>
+					<div class="flex gap-2">
+						{Array.from({ length: 6 }).map((_, i) => (
+							<input 
+								type="password" 
+								maxlength="1" 
+								pattern="[0-9]*" 
+								required 
+								class="input input-bordered w-10 text-center font-bold text-secondary"
+								id={`pay${i + 1}`}
+								onkeydown="handleBackspace(event, this)"
+							/>
+						))}
+					</div>
+				</div>
+				<div class="text-center mt-6">
+					<button type="submit" class="btn btn-primary btn-wide text-white hover:scale-105 transition">
+						🥺 好吧，给你啦~
+					</button>
+				</div>
+			</form>
+		</div>
+		<dialog id="loli-dialog" class="backdrop-blur-sm bg-white/300 rounded-xl border border-pink-200 p-6 shadow-2xl">
+			<div class="text-center space-y-4">
+				<h3 class="text-xl font-bold text-pink-600">哼哼～人家才不要你的支付宝呢！</h3>
+				<p class="text-sm text-gray-600 dark:text-gray-300">人家就是想撒撒娇嘛 ✨</p>
+				<button id="close-dialog" class="btn btn-outline btn-sm hover:scale-105 transition mt-2">
+					好啦～
+				</button>
+			</div>
+		</dialog>
+		<script>
+			window.addEventListener("DOMContentLoaded", () => {
+				const form = document.getElementById("loli-form"),
+					  dialog = document.getElementById("loli-dialog"),
+					  closeBtn = document.getElementById("close-dialog"),
+					  paypw = Array.from({ length: 6 }, (_, i) => document.getElementById(`pay${i + 1}`));
+				if(!form || !dialog || !closeBtn || !paypw) return;
+				paypw!.forEach((input: any, i: any) => {
+					input!.addEventListener("input", () => {
+						if (input.value && i < 5) paypw[i + 1].focus();
+					});
+				});
+				window.handleBackspace = (event : any, input : any) => {
+					if (event.key === "Backspace" && input.value === "") {
+						const prvi = input.previousElementSibling;
+						if (prvi) prvi.focus();
+					}
+				};
+				form!.addEventListener("submit", (e) => {
+					e.preventDefault();
+					const ainput = form.querySelectorAll("input");
+					const afill = Array.from(ainput).every(input => input.value.trim() !== '');
+					if (afill) dialog.showModal();
+				});
+				closeBtn!.addEventListener("click", () => dialog.close());
+			});
+		</script>
+		<br />
+		<Plicense
+			title="功能·loli乞讨"
+			url={urlNow}
+			productionDate={latestDt}
+			tags={pgTags}
+		/>
+	</MainCard>
+</BaseLayout>

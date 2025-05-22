@@ -6,9 +6,11 @@ import FeatureCard from "@/components/mdx/FeatureCard.astro";
 import TimeLine from "@/components/mdx/TimeLine.astro";
 import { getCollection } from "astro:content";
 import MainCard from "@/components/MainCard.astro";
+import { USER_NAME } from "@config";
 
 const abp = await getCollection("blog");
 const ap = import.meta.env.PROD ? abp.filter((post) => !post.data.draft) : abp;
+
 const posts = ap.length;
 ---
 <BaseLayout title="主页">
@@ -17,6 +19,7 @@ const posts = ap.length;
 	        from { opacity: 0; transform: translateY(20px); }
 	        to { opacity: 1; transform: translateY(0); }
 	    }
+		
 	    .animate-fade-in {
 	        animation: fade-in 1s ease-out forwards;
 	    }
@@ -32,12 +35,22 @@ const posts = ap.length;
 	        -webkit-background-clip: text;
 	        color: transparent;
 	    }
+		@keyframes gradient {
+		  0% { background-position: 0% 50% }
+		  50% { background-position: 100% 50% }
+		  100% { background-position: 0% 50% }
+		}
+		.animate-gradient { 
+			animation: gradient 8s ease infinite;
+		}
 	</style>
     <section class="hero min-h-[60vh] bg-gradient-to-br from-base-200 to-base-300 rounded-3xl mb-12">
         <div class="hero-content text-center">
             <div class="max-w-4xl animate-fade-in">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    🌌 欢迎来到southcatsm的博客！
+                <h1 class="text-4xl animate-gradient bg-[length:400%_400%] bg-gradient-to-r from-primary 
+				via-accent to-secondary bg-clip-text md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary 
+				to-accent bg-clip-text text-transparent">
+                    🌌 欢迎来到{USER_NAME}的博客！
                 </h1>
                 <p class="text-xl md:text-2xl mb-8 text-base-content/80" id="typewriter-text"></p>
                 <div class="flex flex-wrap justify-center gap-4">
@@ -74,7 +87,7 @@ const posts = ap.length;
                     <Icon name="lucide:letter-text" class="w-8 h-8" />
                 </div>
                 <div class="stat-title">文章总字数</div>
-                <div class="stat-value text-secondary">≥10.7k</div>
+                <div class="stat-value text-secondary">≥11.8k</div>
                 <div class="stat-desc">个文字</div>
             </div>
             
@@ -152,28 +165,32 @@ const posts = ap.length;
     </MainCard>
 
     <MainCard title="📅 近期动态" class="mb-12">
-        <TimeLine items={[
-            {
-                year: "2025-02",
-                event: "开始全线重组",
-            },
+		<TimeLine items={[
 			{
-			    year: "2024-06",
-			    event: "更多功能!",
+				year: "2025-02",
+				event: "开始全线重组",
+				icon: "lucide:refresh-cw",
+				details: "全面重构网站架构和设计"
 			},
-            {
-                year: "2024-04",
-                event: "全站基本建成",
-            },
-            {
-                year: "2023-09",
-                event: "正式建站",
-            },
 			{
-			    year: "2021-09",
-			    event: "在Github建站",
+				year: "2024-01",
+				event: "全站基本建成",
+				icon: "lucide:check-circle",
+				details: "核心功能基本完成开发"
+			},
+			{
+				year: "2023-09",
+				event: "southcat.cc建站",
+				icon: "lucide:rocket",
+				details: "全新域名正式上线"
+			},
+			{
+				year: "2021-09",
+				event: "在Github建站",
+				icon: "lucide:github",
+				details: "首次在Github-Pages搭建静态站点"
 			}
-        ]} />
+		]} />
     </MainCard>
     <div class="divider my-12">
         <Icon name="lucide:flower" class="w-10 h-10 text-primary" />
@@ -188,7 +205,7 @@ const posts = ap.length;
 		        typeWrit(data.hitokoto);
 		    } catch (error) {
 		        typeWrit("代码是用来让人读的，只是顺便让机器执行而已");
-				console.log("......");
+				console.log("liubailiushiliu");
 		    }
 		}
 		function typeWrit(text, speed = 150) {
