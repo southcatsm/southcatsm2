@@ -43,7 +43,7 @@ const pgTags = [
 								required 
 								class="input input-bordered w-10 text-center font-bold text-secondary"
 								id={`pay${i + 1}`}
-								onkeydown="handleBackspace(event, this)"
+								onkeydown="{(e) => handleBackspace(e, e.currentTarget)}"
 							/>
 						))}
 					</div>
@@ -78,7 +78,7 @@ const pgTags = [
 				});
 				const handleBackspace = (event: KeyboardEvent, input: any) => {
 			  if (event.key === "Backspace" && input.value === "") {
-						const prvi = input.previousElementSibling;
+						const prvi = input.previousElementSibling as HTMLInputElement | null;
 						if (prvi) prvi.focus();
 					}
 				};
