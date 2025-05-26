@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Icon } from "astro-icon/components";
+// import { Icon } from "astro-icon/components";
 import MainCard from "@/components/MainCard.astro";
 import Plicense from "@/components/widgets/Plicense.astro";
 const urlNow = new URL(Astro.url, Astro.site).href;
@@ -67,7 +67,7 @@ const pgTags = [
 		<script>
 			window.addEventListener("DOMContentLoaded", () => {
 				const form = document.getElementById("loli-form"),
-					  dialog = document.getElementById("loli-dialog"),
+					  dialog = document.getElementById("loli-dialog") as HTMLDialogElement | null;,
 					  closeBtn = document.getElementById("close-dialog"),
 					  paypw = Array.from({ length: 6 }, (_, i) => document.getElementById(`pay${i + 1}`));
 				if(!form || !dialog || !closeBtn || !paypw) return;
@@ -76,12 +76,14 @@ const pgTags = [
 						if (input.value && i < 5) paypw[i + 1].focus();
 					});
 				});
-				window.handleBackspace = (event : any, input : any) => {
-					if (event.key === "Backspace" && input.value === "") {
+				const handleBackspace = (event: KeyboardEvent, input: any) => {
+			  if (event.key === "Backspace" && input.value === "") {
 						const prvi = input.previousElementSibling;
 						if (prvi) prvi.focus();
 					}
 				};
+				document.addEventListener('keydown', (e) => 
+					handleBackspace(e, input));
 				form!.addEventListener("submit", (e) => {
 					e.preventDefault();
 					const ainput = form.querySelectorAll("input");
