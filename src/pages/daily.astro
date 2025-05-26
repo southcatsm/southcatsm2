@@ -155,7 +155,7 @@ const logs = [
 		command: "$ jvap upload /uploading --platform=github",
 		code: "daf6bd9c"
 	},
-].sort((a, b) => new Date(b.date) - new Date(a.date));
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
 <BaseLayout title="更新日志">
