@@ -125,7 +125,7 @@ const pgTags = [
 				const animate = () => {
 					if (current < result.perc) {
 						current++;
-						perc.textContent = current;
+						perc.textContent = current.toString();
 						setTimeout(animate, 7.5);
 					}
 				}
