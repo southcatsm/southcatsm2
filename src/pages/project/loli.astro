@@ -67,7 +67,7 @@ const pgTags = [
 		<script>
 			window.addEventListener("DOMContentLoaded", () => {
 				const form = document.getElementById("loli-form"),
-					  dialog = document.getElementById("loli-dialog") as HTMLDialogElement | null;,
+					  dialog = document.getElementById("loli-dialog") as HTMLDialogElement | null,
 					  closeBtn = document.getElementById("close-dialog"),
 					  paypw = Array.from({ length: 6 }, (_, i) => document.getElementById(`pay${i + 1}`));
 				if(!form || !dialog || !closeBtn || !paypw) return;
