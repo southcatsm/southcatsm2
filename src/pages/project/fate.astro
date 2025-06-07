@@ -57,7 +57,7 @@ const pgTags = [
 			</div>
 		</div>
 		<MainCard>
-			<div id="bar" class="hidden">
+			<div id="bar" class="hidden ">
 				<div class="animate-fade-in">
 					<div class="flex justify-between mb-2">
 						<span class="font-semibold text-rose-700">夫妻</span>
@@ -121,6 +121,7 @@ const pgTags = [
 					  ib = document.getElementById('searchb'),  
 					  err = 'border-red-500',  
 					  nor = 'border-teal-500'; 
+				if(!ia || !ib) return;
 			    if (aa) {
 			        ia.classList.remove(nor);
 			        ia.classList.add(err);
@@ -145,18 +146,18 @@ const pgTags = [
 					else toggle(false,false);
 					if(nb.length === 0)toggle(false,true);
 					else toggle(false,false);
-					document.getElementById("searcht").textContent = "请勿留空！";
-					document.getElementById('bar').classList.add('hidden');
+					document.getElementById("searcht")!.textContent = "请勿留空！";
+					document.getElementById('bar')!.classList.add('hidden');
 					return;
 				}
 				toggle(false,false);
-				document.getElementById("searcht").textContent = "查询！";
+				document.getElementById("searcht")!.textContent = "查询！";
 				const res = fate(na,nb), ids = ['fq', 'gm', 'py', 'sd', 'br'];
 				for (let i = 0; i < ids.length; i++) {
-				    document.getElementById(ids[i]).textContent = `${res[i].value}%`;
-				    document.getElementById(`${ids[i]}p`).style.width = `${res[i].value}%`;
+				    document.getElementById(ids[i])!.textContent = `${res[i].value}%`;
+				    document.getElementById(`${ids[i]}p`)!.style.width = `${res[i].value}%`;
 				}
-				document.getElementById('bar').classList.remove('hidden');
+				document.getElementById('bar')!.classList.remove('hidden');
 			}
 			document.querySelector("#searchx")?.addEventListener("click", executed);
 			document.querySelector("#searcha")?.addEventListener("keydown", (e: KeyboardEvent) => { if (e.key === "Enter") executed(); return; });

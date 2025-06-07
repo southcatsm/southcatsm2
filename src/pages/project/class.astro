@@ -122,6 +122,7 @@ const pgTags = [
 			    const ia = document.getElementById('search'),
 					  err = 'border-red-500',  
 					  nor = 'border-teal-500'; 
+				if(!ia) return;
 			    if (aa) {
 			        ia.classList.remove(nor);
 			        ia.classList.add(err);
@@ -146,18 +147,18 @@ const pgTags = [
 				const input = document.getElementById("search") as HTMLInputElement;
 				const name = input.value;
 				if(name.length === 0){
-					document.getElementById("searcht").textContent = "请勿留空！";
-					document.getElementById('result').classList.add('hidden');
+					document.getElementById("searcht")!.textContent = "请勿留空！";
+					document.getElementById('result')!.classList.add('hidden');
 					toggle(true);
 					return;
 				}
-				document.getElementById("searcht").textContent = "查询！";
+				document.getElementById("searcht")!.textContent = "查询！";
 				toggle(false);
 				var jj = rank(name);
 				const resultDiv = document.getElementById('result');
-				resultDiv.classList.remove('hidden');
+				resultDiv!.classList.remove('hidden');
 				
-				const cards = resultDiv.querySelectorAll('div');
+				const cards = resultDiv!.querySelectorAll('div');
 				cards.forEach(card => {
 					card.style.opacity = '0';
 					card.style.transform = 'scale(0.8) translateY(20px)';
@@ -180,7 +181,7 @@ const pgTags = [
 					fields.forEach(({ elSuffix, prop }) => {
 						const elementId = `${idPart}${elSuffix}`;
 						const propName = `${prefix}${prop}`;
-						document.getElementById(elementId).textContent = jj[propName];
+						document.getElementById(elementId)!.textContent = jj[propName];
 					});
 				});
 				setTimeout(animateCards, 50);

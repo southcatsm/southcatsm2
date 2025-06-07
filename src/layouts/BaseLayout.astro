@@ -54,6 +54,12 @@ const { title, image, headings = [], showTOC = false } = Astro.props;
     </script>
   </head>
   <body>
+    <!-- 
+    <div class="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
+        style="background-image: url('https://cdn.rdpcs.southcat.cc/img/IMG_7043.PNG');">
+      <div class="w-full h-full backdrop-blur-md"></div>
+    </div>
+    -->
     <!-- Mobile Navbar - Hidden on desktop -->
     <Navbar />
 
@@ -121,6 +127,13 @@ const { title, image, headings = [], showTOC = false } = Astro.props;
         });
       });
     </script>
+    <script>
+      const tname = document.title;
+			document.addEventListener("visibilitychange", function() {
+			    if(document.hidden) document.title='该回莱惹qwq - Southcatsm';
+			    else document.title= tname;
+			});
+		</script>
 
     <style is:inline>
       .btn-copy {

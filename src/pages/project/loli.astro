@@ -59,38 +59,42 @@ const pgTags = [
 			<div class="text-center space-y-4">
 				<h3 class="text-xl font-bold text-pink-600">哼哼～人家才不要你的支付宝呢！</h3>
 				<p class="text-sm text-gray-600 dark:text-gray-300">人家就是想撒撒娇嘛 ✨</p>
-				<button id="close-dialog" class="btn btn-outline btn-sm hover:scale-105 transition mt-2">
-					好啦～
-				</button>
+				<form method="dialog">
+					<button class="btn btn-outline btn-sm hover:scale-105 transition mt-2">
+						好啦～
+					</button>
+				</form>
+				
 			</div>
+			<form method="dialog" class="modal-backdrop">
+				<button>close</button>
+			</form>
 		</dialog>
 		<script>
 			window.addEventListener("DOMContentLoaded", () => {
 				const form = document.getElementById("loli-form"),
 					  dialog = document.getElementById("loli-dialog") as HTMLDialogElement | null,
-					  closeBtn = document.getElementById("close-dialog"),
 					  paypw = Array.from({ length: 6 }, (_, i) => document.getElementById(`pay${i + 1}`));
-				if(!form || !dialog || !closeBtn || !paypw) return;
+				if(!form || !dialog || !paypw) return;
 				paypw!.forEach((input: any, i: any) => {
-					input!.addEventListener("input", () => {
-						if (input.value && i < 5) paypw[i + 1].focus();
+					if (!input) return;
+					input.addEventListener("input", () => {
+						if (input.value && i < 5 && paypw[i + 1]) {
+							paypw[i + 1].focus();
+						}
+					});
+					input.addEventListener("keydown", (event : KeyboardEvent) => {
+						if (event.key === "Backspace" && input.value === "" && i > 0) {
+							paypw[i - 1].focus();
+						}
 					});
 				});
-				const handleBackspace = (event: KeyboardEvent, input: any) => {
-			  if (event.key === "Backspace" && input.value === "") {
-						const prvi = input.previousElementSibling as HTMLInputElement | null;
-						if (prvi) prvi.focus();
-					}
-				};
-				//document.addEventListener('keydown', (e) => 
-					//handleBackspace(e, input));
 				form!.addEventListener("submit", (e) => {
 					e.preventDefault();
 					const ainput = form.querySelectorAll("input");
 					const afill = Array.from(ainput).every(input => input.value.trim() !== '');
 					if (afill) dialog.showModal();
 				});
-				closeBtn!.addEventListener("click", () => dialog.close());
 			});
 		</script>
 		<br />

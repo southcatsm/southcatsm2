@@ -140,14 +140,14 @@ const pgTags = [
 				const input = document.getElementById("search") as HTMLInputElement;
 				const name = input.value;
 				if(name.length === 0){
-					document.getElementById("searcht").textContent = "请勿留空！";
-					document.getElementById('bs').classList.add('hidden');
+					document.getElementById("searcht")!.textContent = "请勿留空！";
+					document.getElementById('bs')!.classList.add('hidden');
 					toggle(true);
 					return;
 				}
-				document.getElementById("searcht").textContent = "查询！";
+				document.getElementById("searcht")!.textContent = "查询！";
 				toggle(false);
-				document.getElementById('bs').classList.remove('hidden');
+				document.getElementById('bs')!.classList.remove('hidden');
 				var dark = cuisine(name);
 				render(dark);
 			}
